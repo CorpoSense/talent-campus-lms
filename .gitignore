@@ -152,5 +152,6 @@ dmypy.json
 run.bat
 run.sh
 req.txt
- # Mac
- .DS_Store
+
+# Mac
+.DS_Store
