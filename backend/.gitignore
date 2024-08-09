@@ -1,0 +1,55 @@
+# Python-related
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.env
+*.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django-related
+db.sqlite3
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.py~
+*.so
+*.pyd
+*.swp
+.coverage
+*.coverage.*
+.cache
+scrapy.cfg
+local_settings.py
+settings_local.py
+media/
+
+# Logs
+*.log
+*.log.*
+
+# Virtual Environment
+.vscode/
+.idea/
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+pip-wheel-metadata/
+*.egg-info/
+.insta
