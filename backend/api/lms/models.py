@@ -9,15 +9,15 @@ class CourseCategorie(models.Model):
 
 
 class Course(models.Model):
-    title = models.CharField()
-    desc = models.TextField()
+    title = models.CharField(max_length=100)
+    desc = models.TextField(max_length=300)
     instructor = models.ForeignKey(Instructor,on_delete=models.CASCADE,related_name="courses")
     categories = models.ManyToManyField(CourseCategorie,related_name="courses")
     rating = models.FloatField(default=1.0)
 
 class Video(models.Model):
     url = models.URLField()
-    title = models.CharField()
+    title = models.CharField(max_length=100)
     description = models.TextField()
     course= models.ForeignKey(Course,on_delete=models.CASCADE,related_name="videos")
 
@@ -61,11 +61,11 @@ class Quiz(models.Model):
 
 class QuizChoice(models.Model):
     quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE,related_name="quiz")
-    content = models.CharField()
+    content = models.CharField(max_length=255)
     isCorrect= models.BooleanField(default=False)
 
 class QA(models.Model):
-    quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE,related_name="quiz")
+    quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE,related_name="qa_question")
     answer = models.TextField()
     explanation = models.TextField()
 
