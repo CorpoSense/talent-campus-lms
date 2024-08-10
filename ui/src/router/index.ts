@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 // import AboutView from '@/views/AboutView.vue'
 import NotFound from "@/views/NotFound.vue"
 import NetworkError from "@/views/NetworkError.vue"
-import Home from '@/components/Home.vue'
+import Home from '@/views/Home.vue'
 
 
 const About = () => import(/* webpackChunkName: "about", */ '@/views/About.vue')
