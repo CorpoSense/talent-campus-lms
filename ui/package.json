@@ -11,6 +11,9 @@
   "dependencies": {
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.3",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "bootstrap-vue-next": "^0.24.6",
     "nprogress": "^0.2.0",
     "pinia": "^2.2.1",
     "vue": "^3.4.31",
