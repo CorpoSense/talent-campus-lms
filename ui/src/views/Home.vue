@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+    const featuredCourses = ref([
+      { id: 1, title: 'Introduction to AI', description: 'Learn the basics of Artificial Intelligence', image: 'ai-course.jpg' },
+      { id: 2, title: 'Data Science Fundamentals', description: 'Master the essentials of data analysis', image: 'data-science.jpg' },
+      { id: 3, title: 'Web Development Bootcamp', description: 'Build modern web applications', image: 'web-dev.jpg' },
+    ]);
+
+    const features = ref([
+      { id: 1, title: 'Personalized Learning', description: 'Tailored courses adapted to your goals', icon: 'bi bi-person-check' },
+      { id: 2, title: 'Expert Mentorship', description: 'Guidance from industry professionals', icon: 'bi bi-people' },
+      { id: 3, title: 'Career Opportunities', description: 'Direct connections with top employers', icon: 'bi bi-briefcase' },
+    ]);
+
+    const partners = ref([
+      { id: 1, name: 'Tech Co', logo: 'tech-co-logo.png' },
+      { id: 2, name: 'Innovate Inc', logo: 'innovate-logo.png' },
+      { id: 3, name: 'Future Systems', logo: 'future-systems-logo.png' },
+      { id: 4, name: 'Global Edu', logo: 'global-edu-logo.png' },
+    ]);
+
+    const testimonials = ref([
+      { id: 1, text: 'TalentCampus helped me transition into a new career in tech. The courses and mentorship were invaluable.', author: 'Jane Doe', role: 'Software Developer' },
+      { id: 2, text: 'The personalized learning path kept me motivated and on track to achieve my goals.', author: 'John Smith', role: 'Data Analyst' },
+      { id: 3, text: 'I landed my dream job thanks to the skills I gained and the connections I made through TalentCampus.', author: 'Emily Brown', role: 'UX Designer' },
+    ]);
+
+</script>
+
 <template>
   <div id="app">
     <header class="navbar navbar-expand-lg navbar-light bg-light">
@@ -150,47 +180,6 @@
     </footer>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  name: 'App',
-  setup() {
-    const featuredCourses = ref([
-      { id: 1, title: 'Introduction to AI', description: 'Learn the basics of Artificial Intelligence', image: 'ai-course.jpg' },
-      { id: 2, title: 'Data Science Fundamentals', description: 'Master the essentials of data analysis', image: 'data-science.jpg' },
-      { id: 3, title: 'Web Development Bootcamp', description: 'Build modern web applications', image: 'web-dev.jpg' },
-    ]);
-
-    const features = ref([
-      { id: 1, title: 'Personalized Learning', description: 'Tailored courses adapted to your goals', icon: 'bi bi-person-check' },
-      { id: 2, title: 'Expert Mentorship', description: 'Guidance from industry professionals', icon: 'bi bi-people' },
-      { id: 3, title: 'Career Opportunities', description: 'Direct connections with top employers', icon: 'bi bi-briefcase' },
-    ]);
-
-    const partners = ref([
-      { id: 1, name: 'Tech Co', logo: 'tech-co-logo.png' },
-      { id: 2, name: 'Innovate Inc', logo: 'innovate-logo.png' },
-      { id: 3, name: 'Future Systems', logo: 'future-systems-logo.png' },
-      { id: 4, name: 'Global Edu', logo: 'global-edu-logo.png' },
-    ]);
-
-    const testimonials = ref([
-      { id: 1, text: 'TalentCampus helped me transition into a new career in tech. The courses and mentorship were invaluable.', author: 'Jane Doe', role: 'Software Developer' },
-      { id: 2, text: 'The personalized learning path kept me motivated and on track to achieve my goals.', author: 'John Smith', role: 'Data Analyst' },
-      { id: 3, text: 'I landed my dream job thanks to the skills I gained and the connections I made through TalentCampus.', author: 'Emily Brown', role: 'UX Designer' },
-    ]);
-
-    return {
-      featuredCourses,
-      features,
-      partners,
-      testimonials,
-    };
-  },
-});
-</script>
 
 <style>
 @import 'bootstrap/dist/css/bootstrap.min.css';
