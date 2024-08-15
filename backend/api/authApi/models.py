@@ -1,9 +1,11 @@
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser,Group,Permission
 import enum
+from django.dispatch import receiver
 # Create your models here.
 
-class userType(enum.Enum):
+class userType(models.TextChoices):
     STUDENT = "student"
     EMPLOYEE = "employee"
     INSTRUCTOR = "instructor"
@@ -12,7 +14,7 @@ class userType(enum.Enum):
 class User(AbstractUser):
     email = models.EmailField(blank=False)
     username= models.CharField(blank=False,max_length=40)
-    type=models.CharField(max_length=40,choices=[(tag,tag.value) for tag in userType])
+    type=models.CharField(max_length=40,choices=[(tag,tag.value) for tag in userType],default=userType.STUDENT)
     groups = models.ManyToManyField(Group, related_name='authApi_user_groups')
     user_permissions = models.ManyToManyField(Permission, related_name='authApi_user_permissions')
 
@@ -42,10 +44,8 @@ class IndustryChoices(models.TextChoices):
     BUSINESS = "BUSINESS"
     InfrastructureANDContractors="Infrastructure and Contractors"
 
-class Language(enum.Enum):
-    ARABIC="arabic"
-    FRENCH="français"
-    ENGLISH="english"
+class Language(models.Model):
+    language = models.CharField(max_length=60)
 
 
 class Student(models.Model):
@@ -64,12 +64,12 @@ class Instructor(models.Model):
     user= models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     industry = models.CharField(max_length=255,choices=IndustryChoices)
 
-class sexeEnum(enum.Enum):
+class sexeEnum(models.TextChoices):
     MALE="MALE"
     FEMALE="FEMALE"
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name="profile")
     firstName = models.CharField(max_length=50,blank=True)
     lastName = models.CharField(max_length=50,blank=True)
     phoneNumber = models.CharField(max_length=255)
@@ -92,5 +92,10 @@ class JobPosting(models.Model):
     contract=models.CharField(max_length=50,choices=[(tag,tag.value) for tag in ContractTypes])
     skillCategory=models.ManyToManyField(Skill,related_name="job_skills")
     industry= models.CharField(max_length=100,choices=[(tag,tag.value) for tag in IndustryChoices])
-    languages = models.CharField(max_length=20,choices=[(tag,tag.value) for tag in Language])
+    languages = models.ManyToManyField(Language,related_name="related_jobs")
 
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
