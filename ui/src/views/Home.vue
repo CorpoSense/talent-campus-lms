@@ -30,7 +30,6 @@ import { ref } from 'vue'
 
 <template>
   <div id="main">
-
     <Navbar />
 
     <main>

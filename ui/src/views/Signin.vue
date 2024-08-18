@@ -3,7 +3,6 @@
   import { useRouter } from 'vue-router'
 //   import { useAuthStore } from '../stores/auth'
 //   import { useNotification } from '../composables/useNotification'
-  import { useToast } from 'bootstrap-vue-next'
 import axios from 'axios'
 
 const client = axios.create({
@@ -14,7 +13,6 @@ const client = axios.create({
 //   const authStore = useAuthStore()
 //   const { addNotification } = useNotification()
 
-  const toast = useToast()
 
   const username = ref('')
   const password = ref('')
@@ -22,18 +20,23 @@ const client = axios.create({
   
   const handleLogin = async () => {
     try {
+
+      
         // const response = await client.get('/users/register', { username: username.value, hashed_password: password.value })
-        const response = await client.get('/users/')
-        console.log(response);
+        const response = await client.get('/users/', {
+          auth: {
+            username: username.value,
+            password: password.value  }
+        })
+        console.log(response.data['results'][0]);
         
     //   await authStore.login(username.value, password.value)
     //   addNotification('Login successful', 'success')
     //   router.push('/dashboard')
     } catch (error: any) {
-      errorLogin.value = error['response']['data']['detail'] || 'Please check your credentials.'
-      toast.show?.({
-        props: {title: errorLogin.value, value: true, variant: 'danger'}
-      })
+      errorLogin.value = error['response'] //['data']['detail'] || 'Please check your credentials.'
+      console.log(errorLogin.value)
+      
     //   addNotification(`Login failed. ${errorLogin.value}.`, 'error')
     }
   }
