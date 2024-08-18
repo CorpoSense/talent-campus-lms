@@ -4,6 +4,7 @@ import NProgress from 'nprogress'
 import NotFound from "@/views/NotFound.vue"
 import NetworkError from "@/views/NetworkError.vue"
 import Home from '@/views/Home.vue'
+import Signin from '@/views/Signin.vue'
 
 
 const About = () => import(/* webpackChunkName: "about", */ '@/views/About.vue')
@@ -19,11 +20,15 @@ const router = createRouter({
       name: 'home',
       component: Home
     },
-
     {
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Signin
     },
     {
       path: "/:catchAll(.*)",

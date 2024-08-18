@@ -7,8 +7,28 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BButton: typeof import('bootstrap-vue-next')['BButton']
+    BCol: typeof import('bootstrap-vue-next')['BCol']
+    BCollapse: typeof import('bootstrap-vue-next')['BCollapse']
+    BDropdownItem: typeof import('bootstrap-vue-next')['BDropdownItem']
+    BForm: typeof import('bootstrap-vue-next')['BForm']
+    BFormGroup: typeof import('bootstrap-vue-next')['BFormGroup']
+    BFormInput: typeof import('bootstrap-vue-next')['BFormInput']
+    BIcon: typeof import('./src/components/BIcon.vue')['default']
+    BNavbar: typeof import('bootstrap-vue-next')['BNavbar']
+    BNavbarBrand: typeof import('bootstrap-vue-next')['BNavbarBrand']
+    BNavbarNav: typeof import('bootstrap-vue-next')['BNavbarNav']
+    BNavbarToggle: typeof import('bootstrap-vue-next')['BNavbarToggle']
+    BNavForm: typeof import('bootstrap-vue-next')['BNavForm']
+    BNavItem: typeof import('bootstrap-vue-next')['BNavItem']
+    BNavItemDropdown: typeof import('bootstrap-vue-next')['BNavItemDropdown']
+    BRow: typeof import('bootstrap-vue-next')['BRow']
     Home: typeof import('./src/components/Home.vue')['default']
+    Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface ComponentCustomProperties {
+    vBColorMode: typeof import('bootstrap-vue-next')['vBColorMode']
   }
 }

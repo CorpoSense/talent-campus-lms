@@ -1,10 +1,6 @@
-<script setup lang="ts">
-import Home from './views/Home.vue'
-</script>
-
 <template>
-  <div id="container">
-    <Home />
+  <div id="container" class="container-fluid">
+    <RouterView />
   </div>
 </template>
 

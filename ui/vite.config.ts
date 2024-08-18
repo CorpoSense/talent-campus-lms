@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
+import { BootstrapVueNextResolver } from 'bootstrap-vue-next'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
     Components({
       dts: true, // default: `true` if package typescript is installed
       dirs: ['src/components'],
+      resolvers: [ BootstrapVueNextResolver() ],
     }),
     // Auto import APIs on-demand
     AutoImport({

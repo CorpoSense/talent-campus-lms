@@ -29,35 +29,9 @@ import { ref } from 'vue'
 </script>
 
 <template>
-  <div id="app">
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="#">TalentCampus</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#courses">Courses</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#features">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#partners">Partners</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#testimonials">Testimonials</a>
-            </li>
-          </ul>
-          <div class="d-flex">
-            <button class="btn btn-outline-primary me-2">Sign In</button>
-            <button class="btn btn-primary">Register</button>
-          </div>
-        </div>
-      </div>
-    </header>
+  <div id="main">
+
+    <Navbar />
 
     <main>
       <section class="text-dark py-5">
