@@ -1,4 +1,4 @@
-from .models import User,Student,Skill,Interest,Employee,JobPosting,Instructor,Language,Profile
+from .models import User,Student,Skill,Interest,Employee,Instructor
 from rest_framework.views import APIView
 from .serializers import UserSerializer
 from django.contrib import messages
@@ -66,16 +66,16 @@ class RegisterUserView(APIView):
                 ## case Employee 
                 employee_skills=request.data["skills"]
                 employee_interets=request.data["interests"]
-                emp_jobPosting = request.data["job"]
+                #emp_jobPosting = request.data["job"]
                 employee = Employee.objects.create(user=user,industry = request.data["industry_name"])
-                job_posting = JobPosting.objects.create(employee=employee,title=emp_jobPosting["title"],description=emp_jobPosting["description"],
-                                                       experience=emp_jobPosting["experience"],companyName=emp_jobPosting["companyName"],
-                                                       date_posed=emp_jobPosting["date_posed"],region=emp_jobPosting["region"],
-                                                       contract=emp_jobPosting["contract"],industry=emp_jobPosting["industry"])
-                for lang in emp_jobPosting["languages"]:
-                    langue,created= Language.objects.get_or_create(language=lang)
-                    job_posting.languages.add(langue)
-                    job_posting.save()
+                #job_posting = JobApplication.objects.create(employee=employee,title=emp_jobPosting["title"],description=emp_jobPosting["description"],
+                 #                                      experience=emp_jobPosting["experience"],companyName=emp_jobPosting["companyName"],
+                  #                                     date_posed=emp_jobPosting["date_posed"],region=emp_jobPosting["region"],
+                   #                                    contract=emp_jobPosting["contract"],industry=emp_jobPosting["industry"])
+                #for lang in emp_jobPosting["languages"]:
+                 #   langue,created= Language.objects.get_or_create(language=lang)
+                  #  job_posting.languages.add(langue)
+                   # job_posting.save()
         
                 # handle skills 
                 for skill_data in employee_skills:

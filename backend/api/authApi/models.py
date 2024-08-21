@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser,Group,Permission
-import enum
 from django.dispatch import receiver
 # Create your models here.
 
@@ -74,26 +73,6 @@ class Profile(models.Model):
     lastName = models.CharField(max_length=50,blank=True)
     phoneNumber = models.CharField(max_length=255)
     sexe= models.CharField(max_length=6,choices=[(tag,tag.value) for tag in sexeEnum ])
-
-class ContractTypes(enum.Enum):
-    PARTTIME="part time"
-    FULLTIME="full time"
-    FREELANCECONTRACT="Freelance Contract"
-    FIXEDTERM="Fixed-term"
-
-class JobPosting(models.Model):
-    employee = models.ForeignKey(Employee,on_delete=models.CASCADE,related_name="job_posting")
-    title = models.CharField(max_length=50)
-    description= models.TextField()
-    companyName = models.CharField(max_length=255)
-    region = models.CharField(max_length=255)
-    experience = models.TextField()
-    date_posed = models.DateField()
-    contract=models.CharField(max_length=50,choices=[(tag,tag.value) for tag in ContractTypes])
-    skillCategory=models.ManyToManyField(Skill,related_name="job_skills")
-    industry= models.CharField(max_length=100,choices=[(tag,tag.value) for tag in IndustryChoices])
-    languages = models.ManyToManyField(Language,related_name="related_jobs")
-
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
