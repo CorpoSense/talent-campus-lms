@@ -1,3 +1,65 @@
-from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from authApi.models import User
+import json
+from .models import CourseCategorie,Course,Video
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+@method_decorator(csrf_exempt, name='dispatch')
+class CourseView(APIView):
+    def post(self,request):
+        data=json.loads(request.body)
+        print(data)
+        if(not data.get("instructor_id")):
+            print('cammmm')
+            return Response({
+                "error":True,
+                "message":"missing instructor id"
+            })
+        try:
+            instructor = User.objects.get(pk=data.get("instructor_id"))
+            print(instructor)
+        except User.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"invalid instructor id"
+            })
+        course_name = data.get("course_name")
+        course_description=data.get("course_descr")
+        course_categories=data.get("course_categories")
+        course_videos = data.get("video_links")
+
+        if(not course_name or not course_description or not len(course_categories) or not len(course_videos)):
+            return Response({
+                "error":True,
+                "message":"some fields are required"
+            })
+        #categories
+        course = Course.objects.create(desc=course_description,title=course_name,instructor=instructor.instructor)
+        for category in course_categories:
+            cat,created=CourseCategorie.objects.get_or_create(categorieName=category)
+            course.categories.add(cat)
+        #videos 
+        for video_data in course_videos:
+            if not video_data:
+                return Response({
+                    "error":True,
+                    "message":"video Data is missing"
+                })
+            if((not video_data.get("url")) or (not video_data.get("title")) or (not video_data.get("description"))):
+                print("hi from algeria")
+                return Response({
+                    "error":True,
+                    "message":"video data are missing"
+                })
+            vid,created = Video.objects.get_or_create(url=video_data.get("url"),title=video_data.get("title"),description=video_data.get("description"),course=course)
+            course.videos.add(vid)
+        course.save()
+        return Response({
+            "success":True,
+            "message":"course has been created successufuly"
+        })
+    
+
+        

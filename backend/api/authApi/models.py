@@ -49,19 +49,19 @@ class Language(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name="student")
     skills = models.ManyToManyField(Skill,related_name="std_skills")
     interests = models.ManyToManyField(Interest,related_name="std_interests")
     industry = models.CharField(max_length=255,choices=IndustryChoices)
 
 class Employee(models.Model):
-    user= models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+    user= models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name="employee")
     skills = models.ManyToManyField(Skill,related_name="emp_skills")
     interests = models.ManyToManyField(Interest,related_name="emp_interests")
     industry = models.CharField(max_length=255,choices=IndustryChoices)
 
 class Instructor(models.Model):
-    user= models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+    user= models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name="instructor")
     industry = models.CharField(max_length=255,choices=IndustryChoices)
 
 class sexeEnum(models.TextChoices):

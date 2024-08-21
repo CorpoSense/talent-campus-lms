@@ -1,10 +1,13 @@
-from .models import User,Student,Skill,Interest,Employee,JobPosting,Instructor,Language
+from .models import User,Student,Skill,Interest,Employee,JobPosting,Instructor,Language,Profile
 from rest_framework.views import APIView
 from .serializers import UserSerializer
 from django.contrib import messages
 from django.shortcuts import redirect
+import json
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse_lazy
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from api.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail,BadHeaderError
@@ -54,6 +57,7 @@ class RegisterUserView(APIView):
                     #print(skill_data)
                     ineterst,created = Interest.objects.get_or_create(interest = interest_data)
                     student.interests.add(ineterst)
+                student.save()
                 #print(student)
                 return Response({
                     "success": True
@@ -63,7 +67,6 @@ class RegisterUserView(APIView):
                 employee_skills=request.data["skills"]
                 employee_interets=request.data["interests"]
                 emp_jobPosting = request.data["job"]
-                print(emp_jobPosting)
                 employee = Employee.objects.create(user=user,industry = request.data["industry_name"])
                 job_posting = JobPosting.objects.create(employee=employee,title=emp_jobPosting["title"],description=emp_jobPosting["description"],
                                                        experience=emp_jobPosting["experience"],companyName=emp_jobPosting["companyName"],
@@ -72,16 +75,19 @@ class RegisterUserView(APIView):
                 for lang in emp_jobPosting["languages"]:
                     langue,created= Language.objects.get_or_create(language=lang)
                     job_posting.languages.add(langue)
+                    job_posting.save()
         
                 # handle skills 
                 for skill_data in employee_skills:
                     #print(skill_data)
                     skill,created = Skill.objects.get_or_create(name = skill_data)
                     employee.skills.add(skill)
+
                 for interest_data in employee_interets:
                     #print(skill_data)
                     ineterst,created = Interest.objects.get_or_create(interest = interest_data)
                     employee.interests.add(ineterst)
+                employee.save()
                 return Response({
                     "success": True
                 })
@@ -199,5 +205,112 @@ class customPasswordResetConfirm(PasswordResetConfirmView):
         return redirect("/auth/reset_done/")
 class customPasswordResetCompleteView(PasswordResetCompleteView):
     template_name="reset/password_reset_complete.html"
+
+
+class ProfileView(APIView):
+    def get(self,request,user_id):
+        try:
+            user= User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"profile doesn't exist"
+            })
+        # get the profile 
+        profile = user.profile 
+        # prepare the data 
+         # Prepare the response data
+        data = {}
+        if(user.type == "student"):
+            data = {
+                "user_id": user.id,
+                "email": user.email,
+                "username": user.username,
+                "first_name": profile.firstName,
+                "last_name": profile.lastName,
+                "phone_number": profile.phoneNumber,
+                "sexe": profile.sexe,
+                "type": user.type,
+                "skills":list(user.student.skills.values("id","name")),
+                "interests":list(user.student.interests.values("id","interest"))
+            }
+        elif(user.type == "employee"):
+            data = {
+                "user_id": user.id,
+                "email": user.email,
+                "username": user.username,
+                "first_name": profile.firstName,
+                "last_name": profile.lastName,
+                "phone_number": profile.phoneNumber,
+                "sexe": profile.sexe,
+                "type": user.type,
+                "skills":user.employee.skills,
+                "interests":user.employee.interests,
+                "job_posting_info":user.employee.job_posting
+            }
+        else:
+            data={
+                 "user_id": user.id,
+                "email": user.email,
+                "username": user.username,
+                "first_name": profile.firstName,
+                "last_name": profile.lastName,
+                "phone_number": profile.phoneNumber,
+                "sexe": profile.sexe,
+                "type": user.type,
+            }
+        return Response(data)
+    def put(self,request,user_id):
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({
+                "error" : True,
+                "message":"User doesn't exist"
+            })
+        # get profile to update 
+        profile = user.profile
+        # get request body 
+        body = json.loads(request.body)
+        print(body)
+        profile.firstName = body.get("first_name",profile.firstName) ## default value in case first_name absent
+        profile.lastName = body.get("last_name",profile.lastName) ## default value in case last name not provided
+        profile.sexe = body.get("sexe",profile.sexe)
+        profile.phoneNumber = body.get("phone_number",profile.phoneNumber)
+        profile.save()
+
+        if(user.type == "student" or user.type == "employee"):
+            if(user.type=="student"):
+                user.student.industry=body.get("industry_name",user.student.industry)
+            else :
+                user.employee.industry=body.get("industry_name",user.employee.industry)
+            # skills 
+            skills = body.get("skills",[])
+            user.student.skills.set([])
+            if(len(skills)!=0):
+                for skill in skills:
+                    sk,created = Skill.objects.get_or_create(name = skill)
+                    user.student.skills.add(sk)
+            #interests
+            interests = body.get("interests",[])
+            user.student.interests.set([])
+            if(len(interests)!=0):
+                for interest in interests:
+                    it,created = Interest.objects.get_or_create(interest = interest)
+                    user.student.interests.add(it)
+            if(user.type == "student"):
+                user.student.save()
+            else:
+                user.employee.save()
+        return Response({
+            "success":True,
+            "message":"Profile updated successfully"
+        })
+        
+
+
+
+
+
 
 
