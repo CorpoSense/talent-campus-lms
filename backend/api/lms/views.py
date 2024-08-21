@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from authApi.models import User
+from django.views import View
+from django.http import JsonResponse
 import json
 from .models import CourseCategorie,Course,Video
 from django.utils.decorators import method_decorator
@@ -76,6 +78,7 @@ class CourseViewDetails(APIView):
                 "error":True,
                 "message":"course not found"
             })
+        print(course.videos)
         data_to_return = {
             "course_id" :course.pk,
             "course_title" : course.title,
@@ -91,3 +94,51 @@ class CourseViewDetails(APIView):
         }
         return Response(data=data_to_return,status=200)
         
+class CourseUpdateView(APIView):
+    def put(self,request,course_id):
+        try:
+            existingCourse = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return Response({"error":True,"message":"course not found"},status=400)
+        data = json.loads(request.body)
+        print(data.get("videos"))
+        existingCourse.title = data.get("title",existingCourse.title)
+        existingCourse.desc= data.get("description",existingCourse.desc)
+
+        #set videos 
+        if(not len(data.get("videos"))):
+            existingCourse.save()
+        else:
+            existingCourse.videos.set([])
+            for vid in data.get("videos"):
+                video,created = Video.objects.get_or_create(url=vid.get("url"),title=vid.get("title"),description=vid.get("description"),course=existingCourse)
+                existingCourse.videos.add(video)
+        existingCourse.save()
+        return Response({
+            "success":True,
+            "message":"Course updated successufully"
+        },status=200)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CourseDeleteView(View):
+    def delete(self,request,course_id):
+        print("hello world")
+        if(not course_id):
+            return JsonResponse({
+                "error":True,
+                "message":"missing course id"
+            })
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return JsonResponse({
+                "error":True,
+                "message":"course not found"
+            })
+        course.delete()
+        return JsonResponse({
+            "success":True,
+            "message":"course deleted successufully"
+        })
+    

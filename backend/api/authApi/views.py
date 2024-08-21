@@ -38,6 +38,7 @@ class RegisterUserView(APIView):
             profile = user.profile 
             profile.firstName = request.data["firstName"]
             profile.lastName = request.data["lastName"]
+            profile.save()
             #profile.phoneNumber = request.data["phoneNumber"]
             if(userType == "student"):
                 #print("called from student")
@@ -94,6 +95,7 @@ class RegisterUserView(APIView):
             else : 
                 # Instructor
                 instructor = Instructor.objects.create(user = user,industry=request.data["industry_name"])
+                instructor.save()
                 return Response({
                     "success":True
                 })
@@ -272,7 +274,6 @@ class ProfileView(APIView):
         profile = user.profile
         # get request body 
         body = json.loads(request.body)
-        print(body)
         profile.firstName = body.get("first_name",profile.firstName) ## default value in case first_name absent
         profile.lastName = body.get("last_name",profile.lastName) ## default value in case last name not provided
         profile.sexe = body.get("sexe",profile.sexe)
