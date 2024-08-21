@@ -62,4 +62,32 @@ class CourseView(APIView):
         })
     
 
+
+class CourseViewDetails(APIView):
+    def get(self,request,course_id):
+        if(not course_id):
+            return Response({
+                "error":True,"message":"missing course id"
+            })
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"course not found"
+            })
+        data_to_return = {
+            "course_id" :course.pk,
+            "course_title" : course.title,
+            "course_description" : course.desc,
+            "course_categories": list(course.categories.values("categorieName")),
+            "course_videos" : list(course.videos.values("id","url","title","description")),
+            "course_instructor" :  {
+                "id":course.instructor.user.pk,
+                "username":course.instructor.user.username,
+                "firstName":course.instructor.user.profile.firstName,
+                "lastName":course.instructor.user.profile.lastName
+            }
+        }
+        return Response(data=data_to_return,status=200)
         
