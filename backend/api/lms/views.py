@@ -4,11 +4,11 @@ from authApi.models import User
 from django.views import View
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 import json
-from .models import CourseCategorie,Course,Video,Enrollement,UserProgress
+from .models import CourseCategorie,Course,Video,Enrollement,UserProgress,Review,Discussion,DiscussionComment
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.permissions import IsAuthenticated
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CourseView(APIView):
@@ -85,7 +85,7 @@ class CourseViewDetails(APIView):
             "course_title" : course.title,
             "course_description" : course.desc,
             "course_categories": list(course.categories.values("categorieName")),
-            "course_videos" : list(course.videos.values("id","url","title","description")),
+            #"course_videos" : list(course.videos.values("id","url","title","description")),
             "course_instructor" :  {
                 "id":course.instructor.user.pk,
                 "username":course.instructor.user.username,
@@ -143,6 +143,8 @@ class CourseDeleteView(View):
             "message":"course deleted successufully"
         })
     
+
+# Enrollements
 
 class CourseEnrollementView(APIView):
     def post(self,request,course_id):
@@ -204,7 +206,6 @@ class CourseEnrollementView(APIView):
 #@login_required
 @method_decorator(csrf_exempt, name='dispatch')
 class GetEnrolledCoursesView(APIView):
-
     def post(self,request):
         body = json.loads(request.body)
         user_id = body.get("user_id")
@@ -218,7 +219,6 @@ class GetEnrolledCoursesView(APIView):
     # check user type :
         enrolledCourses=[]
         data = []
-        print(user.type)
         if(user.type=="student"):
             enrolledCourses=user.student.myEnrollements.all()
         elif(user.type == "employee"):
@@ -233,8 +233,155 @@ class GetEnrolledCoursesView(APIView):
             "instructor": enroll.course.instructor.user.username,
             "rating":enroll.course.rating,
                 } for enroll in enrolledCourses]
-
-        print(data)
         if not len(data):
             return Response({"message":"no enrolled courses for now"})
         return Response(data,status=200)
+    
+class EnrolledCourseViewDetails(APIView):
+    def get(self,request,enroll_id):
+        try:
+            enroll = Enrollement.objects.get(pk=enroll_id)
+        except Enrollement.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"invalid enrollementId"
+            })
+        print(enroll.course.videos)
+        data = {
+            "enroll_id":enroll_id,
+            "course_id": enroll.course.id,
+            "title": enroll.course.title,
+            "description": enroll.course.desc,
+            "instructor": enroll.course.instructor.user.username,
+            "rating":enroll.course.rating,
+            "videos":[
+                {
+                    "url" : video.url,
+                    "title":video.title,
+                    "description":video.description
+                } for video in enroll.course.videos.all()
+            ]
+            }
+        return Response(data=data,status=200)
+
+
+## Rating
+
+class RatingView(APIView):
+    #permission_classes=[IsAuthenticated]
+    def post(self,request):
+        data = json.loads(request.body)
+        user_id = data.get("user_id")
+        course_id = data.get("course_id")
+        comment = data.get("comment")
+        rating = data.get("rating")
+        if((not user_id) or (not course_id) or (not comment) or(not rating)):
+            return Response({
+                "error":True,
+                "message":"missing fields"
+            })
+        # check if the course already exist
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"course not found"
+            })
+         # Check if the rating is valid
+        if not (1 <= int(rating) <= 5):
+            return Response({"error": True, "message": "Rating must be between 1 and 5"}, status=400)
+        # Check if the user has already reviewed this course
+        user = User.objects.get(pk=user_id)
+        existing_review = Review.objects.filter(course=course, user=user).first()
+        if existing_review:
+            return Response({"error": True, "message": "You have already reviewed this course"}, status=400)
+        
+        # else we add the review 
+        Review.objects.create(course=course,user=user,comment=comment,rating=rating)
+        # update the global rating 
+        self.update_course_rating(course=course)
+
+        return Response({
+            "success":True,
+            "message":"Review added successfully"
+        })
+
+    def update_course_rating(self, course):
+        reviews = course.course_reviews.all()
+        total_rating = sum(review.rating for review in reviews)
+        course.rating = total_rating / reviews.count()
+        course.save()
+
+
+
+## Discussions
+class CreateDiscussionCourseView(APIView):
+    def post(self,request,course_id):
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"course not found"
+            })
+        data = json.loads(request.body)
+        title = data.get("title")
+        content = data.get("content")
+        user_id = data.get("user_id")
+
+        if((not title) or (not content) or (not user_id)):
+            return Response({
+                "error":True,
+                "message":"something went wrong"
+            })
+        user = User.objects.get(pk=user_id)
+        discussion = Discussion.objects.create(course=course, user=user, title=title, content=content)
+        return Response({"success": True, "message": "Discussion created successfully", "discussion_id": discussion.id})
+    
+class CourseDiscussionsView(APIView):
+    def get(self,request,course_id):
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist :
+            return Response({
+                "error":True,
+                "message":"course not found"
+            })
+        #course = get_object_or_404(Course, pk=course_id)
+        discussions = course.discussions.all()
+
+        data = [{
+            "discussion_id": discussion.id,
+            "title": discussion.title,
+            "content": discussion.content,
+            "user": discussion.user.username,
+            "created_at": discussion.createdAt,
+            "comments": list(discussion.comments.values('user__username', 'content', 'createdAt'))
+        } for discussion in discussions]
+
+        return Response({"course_id": course.id, "discussions": data})
+
+
+class AddDiscussionCommentView(APIView):
+    #permission_classes = [IsAuthenticated]
+
+    def post(self, request, discussion_id):
+        try:
+            discussion = get_object_or_404(Discussion, pk=discussion_id)
+        except Discussion.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"discussion not found"
+            })
+        body = json.loads(request.body)
+        user = body.get("user_id")
+        content = body.get('content')
+
+        if not content:
+            return Response({"error": True, "message": "Content is required"}, status=400)
+
+        comment = DiscussionComment.objects.create(discussion=discussion, user=user, content=content)
+        return Response({"success": True, "message": "Comment added successfully", "comment_id": comment.id})
+
+        

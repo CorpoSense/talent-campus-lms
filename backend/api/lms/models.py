@@ -38,6 +38,8 @@ class Discussion(models.Model):
     course=models.ForeignKey(Course,on_delete=models.CASCADE,related_name="discussions")
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="my_discussions")
     title = models.TextField(null=False)
+    discussion_content = models.TextField(default="")
+    createdAt = models.DateTimeField(auto_now_add=True)
 
 class DiscussionComment(models.Model):
     discussion=models.ForeignKey(Discussion,on_delete=models.CASCADE,related_name="comments")
@@ -133,7 +135,7 @@ class Review(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="MyReviews")
     course= models.ForeignKey(Course,on_delete=models.CASCADE,related_name="course_reviews")
     comment = models.TextField()
-    rating = models.IntegerField()
+    rating = models.FloatField()
 
 class quizType(enum.Enum):
     MULTIPLECHOICES="multiple choices"
