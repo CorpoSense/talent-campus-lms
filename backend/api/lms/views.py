@@ -2,9 +2,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from authApi.models import User
 from django.views import View
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 import json
-from .models import CourseCategorie,Course,Video
+from .models import CourseCategorie,Course,Video,Enrollement,UserProgress
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -14,7 +16,6 @@ class CourseView(APIView):
         data=json.loads(request.body)
         print(data)
         if(not data.get("instructor_id")):
-            print('cammmm')
             return Response({
                 "error":True,
                 "message":"missing instructor id"
@@ -142,3 +143,98 @@ class CourseDeleteView(View):
             "message":"course deleted successufully"
         })
     
+
+class CourseEnrollementView(APIView):
+    def post(self,request,course_id):
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return Response({
+                "error":True,"message":"course not found"
+            })
+        data = json.loads(request.body.decode('utf-8'))
+        user_id = data.get('user_id')
+        user = get_object_or_404(User, pk=user_id)
+        if(user.type == "student"):
+            ## create enrollment 
+            enrollement = Enrollement.objects.create(course=course,student=user.student)
+            UserProgress.objects.create(enrollement=enrollement,progress_percentage=0.0)
+        if(user.type == "employee"):
+            ## create enrollment 
+            enrollement = Enrollement.objects.create(course=course,student=user.employee)
+            UserProgress.objects.create(enrollement=enrollement,progress_percentage=0.0)
+        return Response({
+            "success":True,
+            "message": "Student enrolled successfully"
+        })
+    
+    def delete(self,request,course_id):
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"course not found"
+            })
+        data = json.loads(request.body.decode('utf-8'))
+        user_id = data.get('user_id')
+        try:
+            user = get_object_or_404(User, pk=user_id)
+        except User.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"user not found"
+            })
+        # delete enrollement ---> delete all user progress 
+        if user.type == "student":
+            enrollment = Enrollement.objects.filter(course=course, student=user.student).first()
+        elif user.type == "employee":
+            enrollment = Enrollement.objects.filter(course=course, employee=user.employee).first()
+        else:
+            return Response({"error": True, "message": "Invalid user type"}, status=400)
+
+        if enrollment:
+            enrollment.delete()
+            #UserProgress.objects.filter(enrollment=enrollment).delete()
+            return Response({"success": True, "message": "Enrollment removed successfully"})
+        else:
+            return Response({"error": True, "message": "Enrollment not found"}, status=404)
+
+    
+#@login_required
+@method_decorator(csrf_exempt, name='dispatch')
+class GetEnrolledCoursesView(APIView):
+
+    def post(self,request):
+        body = json.loads(request.body)
+        user_id = body.get("user_id")
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({
+                'error':True,
+                "message":"user doesn't exist !"
+            })
+    # check user type :
+        enrolledCourses=[]
+        data = []
+        print(user.type)
+        if(user.type=="student"):
+            enrolledCourses=user.student.myEnrollements.all()
+        elif(user.type == "employee"):
+            enrolledCourses= user.employee.enrolled_employees.all()
+        else :
+            return Response({'error':True,'message':"something went wrong"})
+        print(enrolledCourses)
+        data = [{
+            "course_id": enroll.course.id,
+            "title": enroll.course.title,
+            "description": enroll.course.desc,
+            "instructor": enroll.course.instructor.user.username,
+            "rating":enroll.course.rating,
+                } for enroll in enrolledCourses]
+
+        print(data)
+        if not len(data):
+            return Response({"message":"no enrolled courses for now"})
+        return Response(data,status=200)

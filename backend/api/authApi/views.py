@@ -35,6 +35,9 @@ class RegisterUserView(APIView):
         else:
             user = User.objects.create(email = request.data["email"],username = request.data["username"],password=request.data["password"])
             # setup profile information 
+            if(request.data["type"]):
+                user.type = request.data["type"]
+            user.save()
             profile = user.profile 
             profile.firstName = request.data["firstName"]
             profile.lastName = request.data["lastName"]

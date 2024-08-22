@@ -26,7 +26,6 @@ class Enrollement(models.Model):
     course= models.ForeignKey(Course,on_delete=models.CASCADE,related_name="enrolled_students")
     employee = models.ForeignKey(Employee,on_delete=models.CASCADE,related_name="enrolled_employees",null=True,blank=True)
     startedAt = models.DateField(auto_now=True)
-    progress = models.IntegerField()
 
     def save(self, *args, **kwargs):
         if self.student is None and self.employee is None:
@@ -64,8 +63,8 @@ class AssessementSubmission(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="my_submissions")
 
 class UserProgress(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='progress')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='user_progress')
+    #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='progress')
+    enrollement = models.ForeignKey(Enrollement, on_delete=models.CASCADE, related_name='user_progresses',default=None)
     progress_percentage = models.FloatField()
     last_accessed = models.DateTimeField(auto_now=True)
 
@@ -106,8 +105,8 @@ class SkillMatch(models.Model):
 
 
 class Recommendation(models.Model):
-    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name="my_recommendations",null=True)
-    employee=models.ManyToManyField(Employee,related_name="my_recommendations",null=True)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name="my_recommendations",null=True,blank=True)
+    employee=models.ManyToManyField(Employee,related_name="my_recommendations",null=True,blank=True)
     degree = models.IntegerField()
     recommendationType=models.CharField(max_length=100,choices=[("course","COURSE"),("job","JOB")],default="course")
 
