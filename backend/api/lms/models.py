@@ -50,7 +50,7 @@ class DiscussionComment(models.Model):
 class AssessmentType(models.Model):
     type_name = models.CharField(max_length=100)
 
-
+#An assessment could consist of multiple quizzes or just be a larger form of a quiz.
 class Assessment(models.Model):
     course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="course_assessements")
     title = models.TextField(null=False)
@@ -137,25 +137,48 @@ class Review(models.Model):
     comment = models.TextField()
     rating = models.FloatField()
 
-class quizType(enum.Enum):
+
+
+class questionType(enum.Enum):
     MULTIPLECHOICES="multiple choices"
     QA= "qa"
 
-class Quiz(models.Model):
-    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="quizzes")
-    question=models.TextField()
-    quiztype = models.CharField(max_length=20,choices=[(tag,tag.value) for tag in quizType])
-    #answer= models.TextField(null=True)
-
-class QuizChoice(models.Model):
-    quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE,related_name="quiz")
+class QuestionChoice(models.Model):
+    #question = models.ManyToManyField(Question,related_name="question_choices")
     content = models.CharField(max_length=255)
     isCorrect= models.BooleanField(default=False)
 
 class QA(models.Model):
-    quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE,related_name="qa_question")
+    #question = models.ManyToManyField(Question,related_name="qa_question")
     answer = models.TextField()
     explanation = models.TextField()
+
+class Question(models.Model):
+    #quiz=models.ManyToManyField(Quiz,related_name="questions")
+    text = models.TextField(null=False)
+    questionType=models.CharField(max_length=50,choices=[(tag,tag.value) for tag in questionType])
+    choices = models.ManyToManyField(QuestionChoice,related_name="question_choices")
+    qas=models.ManyToManyField(QA,related_name="qa_questions")
+class Quiz(models.Model):
+    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="quizzes")
+    title=models.TextField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    createdBy= models.ForeignKey(Instructor,on_delete=models.CASCADE,related_name="myQuestions")
+    questions = models.ManyToManyField(Question,related_name="quiz_questions")
+    #quiztype = models.CharField(max_length=20,choices=[(tag,tag.value) for tag in quizType])
+    #answer= models.TextField(null=True)
+
+
+
+class UserQuizSubmission(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quiz_submissions')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='submissions')
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    score = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return f"{self.user.username}'s submission for {self.quiz.title}"
+
 
 class Subscription(models.Model):
     student= models.ForeignKey(Student,on_delete=models.CASCADE,related_name="student")

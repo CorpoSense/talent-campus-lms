@@ -1,6 +1,7 @@
 from .models import User,Student,Skill,Interest,Employee,Instructor
 from rest_framework.views import APIView
 from .serializers import UserSerializer
+from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.shortcuts import redirect
 import json
@@ -61,6 +62,8 @@ class RegisterUserView(APIView):
                     #print(skill_data)
                     ineterst,created = Interest.objects.get_or_create(interest = interest_data)
                     student.interests.add(ineterst)
+                #learner_group= Group.objects.get(name="Learner")
+                #user.groups.add(learner_group)
                 student.save()
                 #print(student)
                 return Response({
@@ -91,6 +94,7 @@ class RegisterUserView(APIView):
                     #print(skill_data)
                     ineterst,created = Interest.objects.get_or_create(interest = interest_data)
                     employee.interests.add(ineterst)
+                #user.groups.add(learner_group)
                 employee.save()
                 return Response({
                     "success": True
@@ -98,6 +102,9 @@ class RegisterUserView(APIView):
             else : 
                 # Instructor
                 instructor = Instructor.objects.create(user = user,industry=request.data["industry_name"])
+                # add permission to instructor 
+                #instructor_group = Group.objects.get(name="Instructor")
+                #user.groups.add(instructor_group)
                 instructor.save()
                 return Response({
                     "success":True

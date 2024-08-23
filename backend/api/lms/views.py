@@ -5,15 +5,15 @@ from django.views import View
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 import json
-from .models import CourseCategorie,Course,Video,Enrollement,UserProgress,Review,Discussion,DiscussionComment
+from .models import CourseCategorie,Course,Video,Question,Enrollement,Quiz,QA,QuestionChoice,UserProgress,Review,Discussion,DiscussionComment
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.mixins import PermissionRequiredMixin
 @method_decorator(csrf_exempt, name='dispatch')
-class CourseView(PermissionRequiredMixin,APIView):
-    permission_required="lms.create_course"
-    raise_exception=True
+class CourseView(APIView):
+    #permission_required="lms.create_course"
+    #raise_exception=True
     def post(self,request):
         data=json.loads(request.body)
         print(data)
@@ -97,8 +97,9 @@ class CourseViewDetails(APIView):
         }
         return Response(data=data_to_return,status=200)
         
-class CourseUpdateView(APIView):
-    
+class CourseUpdateView(PermissionRequiredMixin,APIView):
+    permission_required="lms.change_course"
+    raise_exception=True
     def put(self,request,course_id):
         try:
             existingCourse = Course.objects.get(pk=course_id)
@@ -396,4 +397,47 @@ class AddDiscussionCommentView(APIView):
         comment = DiscussionComment.objects.create(discussion=discussion, user=user, content=content)
         return Response({"success": True, "message": "Comment added successfully", "comment_id": comment.id})
 
+# quizzes :
+class CreateQuizView(APIView):
+    #permission_classes = [IsAuthenticated]
+
+    def post(self, request, course_id):
+        try:
+            course = get_object_or_404(Course, pk=course_id)
+        except Course.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"course not found"
+            })
+        instructor_id = request.data.get("instructor_id")
+        title = request.data.get('title')
+        questions=request.data.get("questions")
+        #quizType = request.data.get("type")
+        if ((not instructor_id ) or (not title) or (not len(questions))):
+            return Response({
+                "error":True,
+                "message":"missing information !"
+            },status=400)
+        user = get_object_or_404(User,pk=instructor_id)
+        quiz = Quiz.objects.create(course=course,title=title,createdBy=user.instructor)
         
+        # loop over questions 
+        for question in questions:
+            if(question["questionType"]=="multiple choices"):
+                ques,_=Question.objects.get_or_create(text=question.get("text"),questionType=question.get("questionType"))
+                choices = question.get("choices")
+                for choice in choices:
+                 ch,created = QuestionChoice.objects.get_or_create(content=choice["content"],isCorrect=choice["isCorrect"])
+                 ques.choices.add(ch)
+                 #quiz.quiz_choices.add(ch)
+            else:
+                # it QA question
+                qa,created=QA.objects.get_or_create(answer=question.get("answer"),explanation=question.get("explanation"))
+                ques.qas.add(qa)
+            #save question 
+            ques.save()
+            # set quiz 
+            quiz.questions.add(ques)
+        quiz.save()
+        return Response({"message": "Quiz created successfully"})   
+    
