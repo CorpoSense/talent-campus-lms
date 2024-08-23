@@ -9,9 +9,11 @@ from .models import CourseCategorie,Course,Video,Enrollement,UserProgress,Review
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 @method_decorator(csrf_exempt, name='dispatch')
-class CourseView(APIView):
+class CourseView(PermissionRequiredMixin,APIView):
+    permission_required="lms.create_course"
+    raise_exception=True
     def post(self,request):
         data=json.loads(request.body)
         print(data)
@@ -96,6 +98,7 @@ class CourseViewDetails(APIView):
         return Response(data=data_to_return,status=200)
         
 class CourseUpdateView(APIView):
+    
     def put(self,request,course_id):
         try:
             existingCourse = Course.objects.get(pk=course_id)
@@ -246,7 +249,7 @@ class EnrolledCourseViewDetails(APIView):
                 "error":True,
                 "message":"invalid enrollementId"
             })
-        print(enroll.course.videos)
+        #print(enroll.course.videos)
         data = {
             "enroll_id":enroll_id,
             "course_id": enroll.course.id,
@@ -317,6 +320,9 @@ class RatingView(APIView):
 
 ## Discussions
 class CreateDiscussionCourseView(APIView):
+    #method : Post 
+    #request paarms : course_id : Int 
+    #request body : {user_id : Int,title:string,content : string}
     def post(self,request,course_id):
         try:
             course = Course.objects.get(pk=course_id)
@@ -336,10 +342,12 @@ class CreateDiscussionCourseView(APIView):
                 "message":"something went wrong"
             })
         user = User.objects.get(pk=user_id)
-        discussion = Discussion.objects.create(course=course, user=user, title=title, content=content)
+        discussion = Discussion.objects.create(course=course, user=user, title=title, discussion_content=content)
         return Response({"success": True, "message": "Discussion created successfully", "discussion_id": discussion.id})
     
 class CourseDiscussionsView(APIView):
+    # method == GET 
+    # request params : course_id : Int
     def get(self,request,course_id):
         try:
             course = Course.objects.get(pk=course_id)
@@ -354,10 +362,10 @@ class CourseDiscussionsView(APIView):
         data = [{
             "discussion_id": discussion.id,
             "title": discussion.title,
-            "content": discussion.content,
+            "content": discussion.discussion_content,
             "user": discussion.user.username,
             "created_at": discussion.createdAt,
-            "comments": list(discussion.comments.values('user__username', 'content', 'createdAt'))
+            "comments": list(discussion.comments.values('user__username', 'content', 'created_at'))
         } for discussion in discussions]
 
         return Response({"course_id": course.id, "discussions": data})
@@ -365,7 +373,11 @@ class CourseDiscussionsView(APIView):
 
 class AddDiscussionCommentView(APIView):
     #permission_classes = [IsAuthenticated]
-
+    # method : Post 
+    # request body : {
+    #  user_id : Int, content:string
+    #}
+    # params = discussion_id : Int
     def post(self, request, discussion_id):
         try:
             discussion = get_object_or_404(Discussion, pk=discussion_id)
@@ -375,12 +387,12 @@ class AddDiscussionCommentView(APIView):
                 "message":"discussion not found"
             })
         body = json.loads(request.body)
-        user = body.get("user_id")
+        userId = body.get("user_id")
         content = body.get('content')
 
         if not content:
             return Response({"error": True, "message": "Content is required"}, status=400)
-
+        user = get_object_or_404(User,pk=userId)
         comment = DiscussionComment.objects.create(discussion=discussion, user=user, content=content)
         return Response({"success": True, "message": "Comment added successfully", "comment_id": comment.id})
 

@@ -43,7 +43,7 @@ class Discussion(models.Model):
 
 class DiscussionComment(models.Model):
     discussion=models.ForeignKey(Discussion,on_delete=models.CASCADE,related_name="comments")
-    createdAt = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField(null=False)
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="my_comments")
 
