@@ -1,10 +1,15 @@
+# Uncomment this line if you've created ".gitpod.Dockerfile" file to customize the workspace image. Lean more: https://www.gitpod.io/docs/configure/workspaces/workspace-image#using-a-custom-dockerfile
+# image:
+#   file: .gitpod.Dockerfile
+
 # List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
 tasks:
   - name: Script Task
-    init: |
-      pip install -r requirements.txt  # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
+    init: | # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
+      cd /workspace/talent-campus-lms/backend/api
+      pip install -r requirements.txt
     command: |
-      cd backend/api 
+      cd /workspace/talent-campus-lms/backend/api
       python manage.py runserver
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
