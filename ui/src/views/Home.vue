@@ -4,7 +4,7 @@ import { ref } from 'vue'
     const featuredCourses = ref([
       { id: 1, title: 'Introduction to AI', description: 'Learn the basics of Artificial Intelligence', image: 'ai-course.jpg' },
       { id: 2, title: 'Data Science Fundamentals', description: 'Master the essentials of data analysis', image: 'data-science.jpg' },
-      { id: 3, title: 'Web Development Bootcamp', description: 'Build modern web applications', image: 'web-dev.jpg' },
+      { id: 3, title: 'Full Stack Development Bootcamp', description: 'Build modern full stack web applications', image: 'web-dev.jpg' },
     ]);
 
     const features = ref([
@@ -13,11 +13,11 @@ import { ref } from 'vue'
       { id: 3, title: 'Career Opportunities', description: 'Direct connections with top employers', icon: 'bi bi-briefcase' },
     ]);
 
-    const partners = ref([
-      { id: 1, name: 'Tech Co', logo: 'tech-co-logo.png' },
-      { id: 2, name: 'Innovate Inc', logo: 'innovate-logo.png' },
-      { id: 3, name: 'Future Systems', logo: 'future-systems-logo.png' },
-      { id: 4, name: 'Global Edu', logo: 'global-edu-logo.png' },
+    const clients = ref([
+      { id: 1, name: 'Tech Co', logo: 'clients/pharmalliance_logo.png' },
+      { id: 2, name: 'Innovate Inc', logo: 'clients/Linde_logo.png' },
+      { id: 3, name: 'Future Systems', logo: 'clients/lncpp_logo.png' },
+      { id: 4, name: 'Global Edu', logo: 'clients/yalidine.png' },
     ]);
 
     const testimonials = ref([
@@ -81,11 +81,11 @@ import { ref } from 'vue'
         </div>
       </section>
 
-      <section id="partners" class="py-5">
+      <section id="clients" class="py-5">
         <div class="container">
-          <h2 class="text-center mb-5">Our Partners</h2>
+          <h2 class="text-center mb-5">Some of our Clients</h2>
           <div class="row align-items-center">
-            <div v-for="partner in partners" :key="partner.id" class="col-md-3 col-6 mb-4">
+            <div v-for="partner in clients" :key="partner.id" class="col-md-3 col-6 mb-4">
               <img :src="partner.logo" :alt="partner.name" class="img-fluid">
             </div>
           </div>
