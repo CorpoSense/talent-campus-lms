@@ -1,9 +1,18 @@
 <script lang="ts" setup>
 // import { usePreferredLanguage, getSupportedLanguages } from '../composables/locale'
-const title = import.meta.env.VITE_APP_TITLE
+import { useAuthStore } from '../stores/auth'
 
 // const preferredLanguage = usePreferredLanguage()
 // const supportedLanguages = getSupportedLanguages()
+const title = import.meta.env.VITE_APP_TITLE
+
+const useAuth = useAuthStore()
+const isLoggedIn = useAuth.isAuthenticated
+const doLogout = () => {
+  alert('doLogout...')
+}
+
+
 </script>
 
 <template>
@@ -20,8 +29,13 @@ const title = import.meta.env.VITE_APP_TITLE
 
     <!-- Right aligned nav items -->
     <BNavbarNav class="ms-auto mb-2 mb-lg-0">
-      <BNavItem to="/login" variant="outline-success">Signin</BNavItem>
-      <BNavItem to="/register" variant="info">Register</BNavItem>
+      
+      <BNavItem to="/" variant="info" v-if="isLoggedIn" @click="doLogout">Logout</BNavItem>
+      <div v-else>
+        <BNavItem to="/login" variant="outline-success">Signin</BNavItem>
+        <BNavItem to="/register" variant="info">Register</BNavItem>
+      </div>
+
 
       <!-- BNavItemDropdown :text="preferredLanguage?.toUpperCase()" right>
         <BDropdownItem href="#" v-for="lang in supportedLanguages" :key="lang">{{ lang?.toLocaleUpperCase() }}</BDropdownItem>

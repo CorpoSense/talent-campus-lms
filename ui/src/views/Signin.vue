@@ -1,18 +1,17 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-//   import { useAuthStore } from '../stores/auth'
+  import { useAuthStore } from '../stores/auth'
 //   import { useNotification } from '../composables/useNotification'
-import axios from 'axios'
+// import axios from 'axios'
 
-const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
-})
+// const client = axios.create({
+//   baseURL: 'http://127.0.0.1:8000',
+// })
 
   const router = useRouter()
-//   const authStore = useAuthStore()
+  const authStore = useAuthStore()
 //   const { addNotification } = useNotification()
-
 
   const username = ref('')
   const password = ref('')
@@ -20,22 +19,13 @@ const client = axios.create({
   
   const handleLogin = async () => {
     try {
-
-      
-        // const response = await client.get('/users/register', { username: username.value, hashed_password: password.value })
-        const response = await client.get('/users/', {
-          auth: {
-            username: username.value,
-            password: password.value  }
-        })
-        console.log(response.data['results'][0]);
-        
-    //   await authStore.login(username.value, password.value)
+      await authStore.login(username.value, password.value)
     //   addNotification('Login successful', 'success')
-    //   router.push('/dashboard')
-    } catch (error: any) {
-      errorLogin.value = error['response'] //['data']['detail'] || 'Please check your credentials.'
-      console.log(errorLogin.value)
+      router.push('/')
+      // router.push('/dashboard')
+    } catch (error: any) {      
+      errorLogin.value = error['response']['data']['detail'] || 'Please check your credentials.'
+      // console.error(`Login failed: ${errorLogin.value}`)
       
     //   addNotification(`Login failed. ${errorLogin.value}.`, 'error')
     }
@@ -55,6 +45,13 @@ const client = axios.create({
           <b-form-group label="Password" label-for="password">
             <b-form-input id="password" v-model="password" type="password" required></b-form-input>
           </b-form-group>
+
+          <br>
+
+          <b-alert variant="danger" :modelValue="errorLogin.length">
+            {{ errorLogin }}
+          </b-alert>
+
           <b-button type="submit" variant="primary" size="lg" class="my-2">Login</b-button>
         </b-form>
         <p>Don't have an account? <a href="#" @click.prevent="$router.push('/signup')">Signup</a></p>
