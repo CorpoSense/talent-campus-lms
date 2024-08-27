@@ -5,7 +5,7 @@ from django.views import View
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 import json
-from .models import CourseCategorie,Course,Video,Question,Enrollement,Quiz,QA,QuestionChoice,UserProgress,Review,Discussion,DiscussionComment
+from .models import CourseCategorie,Course,Video,Question,Assessment,Enrollement,Quiz,QA,QuestionChoice,UserProgress,Review,Discussion,DiscussionComment,AssessmentType
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
@@ -441,3 +441,48 @@ class CreateQuizView(APIView):
         quiz.save()
         return Response({"message": "Quiz created successfully"})   
     
+
+class AssessmentView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request,course_id):
+        try:
+            course = Course.objects.get(pk=course_id)
+        except Course.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"invalid course id"
+            },status=400)
+        title = request.data.get('title')
+        description = request.data.get('description')
+        assessmentType = request.data.get("assessementType")
+        quiz_ids = request.data.get('quiz_ids', [])
+        # validate data
+        if not title:
+            return Response({"error": "Title is required"}, status=400)
+        if not description:
+            return Response({"error": "Description is required"}, status=400)
+        if not assessmentType:
+            return Response({
+                "error":True,
+                "message":"assessementType is required"
+            })
+
+        asseType = AssessmentType.objects.get_or_create(type_name = assessmentType)
+        # Create the assessment
+        assessment = Assessment.objects.create(title=title, description=description,assessmentType=asseType,course=course)
+
+        # map over quizzes 
+        for quiz_id in quiz_ids:
+            quiz = Quiz.objects.get(pk=quiz_id)
+            assessment.quizzes.add(quiz)
+
+        # Add quizzes to the assessment
+        quizzes = Quiz.objects.filter(id__in=quiz_ids)
+        assessment.quizzes.set(quizzes)
+
+        return Response({
+            "message": "Assessment created successfully",
+            "assessment_id": assessment.id,
+            "quizzes": [quiz.title for quiz in quizzes]
+        })

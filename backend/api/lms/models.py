@@ -51,18 +51,8 @@ class AssessmentType(models.Model):
     type_name = models.CharField(max_length=100)
 
 #An assessment could consist of multiple quizzes or just be a larger form of a quiz.
-class Assessment(models.Model):
-    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="course_assessements")
-    title = models.TextField(null=False)
-    description = models.TextField(null=False)
-    assessementType=models.ForeignKey(AssessmentType,on_delete=models.CASCADE,related_name="assessements")
-    createdAt = models.DateTimeField(auto_now_add=True)
+
     
-class AssessementSubmission(models.Model):
-    assessement = models.ForeignKey(Assessment,on_delete=models.CASCADE,related_name="sumissions")
-    score = models.FloatField()
-    submittedAt = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="my_submissions")
 
 class UserProgress(models.Model):
     #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='progress')
@@ -168,6 +158,19 @@ class Quiz(models.Model):
     #quiztype = models.CharField(max_length=20,choices=[(tag,tag.value) for tag in quizType])
     #answer= models.TextField(null=True)
 
+class Assessment(models.Model):
+    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="course_assessements")
+    title = models.TextField(null=False)
+    description = models.TextField(null=False)
+    assessementType=models.ForeignKey(AssessmentType,on_delete=models.CASCADE,related_name="assessements")
+    createdAt = models.DateTimeField(auto_now_add=True)
+    quizzes = models.ManyToManyField(Quiz,related_name="assessements")
+
+class AssessementSubmission(models.Model):
+    assessement = models.ForeignKey(Assessment,on_delete=models.CASCADE,related_name="sumissions")
+    score = models.FloatField()
+    submittedAt = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="my_submissions")
 
 
 class UserQuizSubmission(models.Model):
