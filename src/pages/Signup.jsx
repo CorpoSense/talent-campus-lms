@@ -103,7 +103,7 @@ export const Signup = () => {
           Create an account 
           </button>
           <h1 className="text-right underline cursor-pointer text-[12px] md:text-[14px] text-[#202121]/80">
-            <Link to="./Login">Login in instead</Link>
+            <Link to="/Login">Login in instead</Link>
           </h1>
         </form>
         <img

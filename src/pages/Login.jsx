@@ -70,7 +70,7 @@ export const Login = () => {
             Log In
           </button>
           <h1 className="text-right underline cursor-pointer text-[12px] md:text-[15px] text-[#202121]/80">
-            <Link to="./Signup">Sign Up instead</Link>
+            <Link to="/Signup">Sign Up instead</Link>
           </h1>
         </form>
         <img
