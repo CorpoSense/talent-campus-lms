@@ -21,9 +21,10 @@ import { ref } from 'vue'
     ]);
 
     const testimonials = ref([
-      { id: 1, text: 'TalentCampus helped me transition into a new career in tech. The courses and mentorship were invaluable.', author: 'Jane Doe', role: 'Software Developer' },
-      { id: 2, text: 'The personalized learning path kept me motivated and on track to achieve my goals.', author: 'John Smith', role: 'Data Analyst' },
-      { id: 3, text: 'I landed my dream job thanks to the skills I gained and the connections I made through TalentCampus.', author: 'Emily Brown', role: 'UX Designer' },
+      { id: 1, text: 'I had the chance to be part of an amazing team, mentored by an awesome developer with strong knowledge in software architecture and data science. We collaborated on several projects during my journey as a software developer. The knowledge I gained from CorpoSense is unparalleled and incomparable to any other place.', author: 'Ammar DJEBABLA', role: 'Full Stack Developer' },
+      { id: 2, text: 'I had the privilege of completing my end-of-study project with CorpoSense Campany, and the experience was nothing short of exceptional. Their professionalism stood out from day one. The team at CorpoSense demonstrated a deep understanding of industry standards and provided invaluable insights that greatly enhanced my project. Their support and guidance were consistent and thorough, ensuring that I had everything I needed to succeed. I highly recommend CorpoSense to anyone seeking top-tier consulting services.', author: 'Meriem B.', role: 'Data Analyst' },
+      { id: 3, text: "Learning machine learning and programming through CorpoSense Company has been an exceptional experience. Their expertise and guidance made complex concepts easy to understand. The hands-on projects provided practical insights, greatly enhancing my technical skills and opening new research opportunities. I highly recommend CorpoSense for anyone looking to build a solid machine learning and programming foundation.", author: 'Mahedi MAHALAL', role: 'Assistant Professor at UNH' },
+      { id: 3, text: "Joining CorpoSense has been a transformative experience for me as a web developer. From day one, I was welcomed into a collaborative team environment where I had the opportunity to learn and grow. Over the years, I've had the chance to work with new technologies and take on challenging project that significantly enhanced my skills. The company's dedication to continuous Learning and innovation is inspiring, and I'm proud to be part of a team that values and nurtures talent.", author: 'Imene BARAITAME', role: 'Assistant Professor Math' },
     ]);
 
 </script>
@@ -94,7 +95,7 @@ import { ref } from 'vue'
 
       <section id="testimonials" class="bg-primary text-white py-5">
         <div class="container">
-          <h2 class="text-center mb-5">What Our Students Say</h2>
+          <h2 class="text-center mb-5">Testimonials</h2>
           <div class="row">
             <div v-for="testimonial in testimonials" :key="testimonial.id" class="col-md-4 mb-4">
               <div class="card bg-light text-dark h-100">
