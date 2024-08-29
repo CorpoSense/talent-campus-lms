@@ -40,7 +40,7 @@ import { ref } from 'vue'
             <div class="col-lg-6">
               <h1 class="display-4 fw-bold mb-3">Empower Your Future with TalentCampus</h1>
               <p class="lead mb-4">Unlock your potential with personalized learning paths, expert mentorship, and career opportunities.</p>
-              <button class="btn btn-light btn-lg">Get Started</button>
+              <b-button variant="outline-success" size="lg" class="mb-2">Get Started</b-button>
             </div>
             <div class="col-lg-6">
               <img src="/public/hero-image.jpeg" alt="Students learning" class="img-fluid rounded">
