@@ -4,6 +4,7 @@ import NProgress from 'nprogress'
 import NotFound from "@/views/NotFound.vue"
 import NetworkError from "@/views/NetworkError.vue"
 import Home from '@/views/Home.vue'
+import Courses from '@/views/Courses.vue'
 import Signin from '@/views/Signin.vue'
 
 
@@ -29,6 +30,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Signin
+    },
+    {
+      path: '/courses',
+      name: 'courses',
+      component: Courses
     },
     {
       path: "/:catchAll(.*)",

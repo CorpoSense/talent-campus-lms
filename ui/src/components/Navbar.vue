@@ -41,6 +41,7 @@ const doLogout = () => {
       
       <BNavItem to="/" variant="info" v-if="isLoggedIn" @click="doLogout">Logout</BNavItem>
       <template v-else>
+        <BNavItem to="/courses" variant="outline-success">Signin</BNavItem>
         <BNavItem to="/login" variant="outline-success">Signin</BNavItem>
         <BNavItem to="/register" variant="info">Register</BNavItem>
       </template>
