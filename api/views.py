@@ -3,6 +3,8 @@ from rest_framework import permissions, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from tutorial.quickstart.serializers import GroupSerializer, UserSerializer
+from .models import Course
+from .serializers import CourseSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -27,3 +29,7 @@ class ProfileView(APIView):
 
     def get(self, request):
         return Response({"message": "This is your profile."})
+
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer

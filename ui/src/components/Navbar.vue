@@ -39,9 +39,11 @@ const doLogout = () => {
     <!-- Right aligned nav items -->
     <BNavbarNav class="ms-auto mb-2 mb-lg-0">
       
-      <BNavItem to="/" variant="info" v-if="isLoggedIn" @click="doLogout">Logout</BNavItem>
+      <template v-if="isLoggedIn">
+        <BNavItem to="/courses" variant="outline-success">My Courses</BNavItem>
+        <BNavItem to="/" variant="info" @click="doLogout">Logout</BNavItem>
+      </template>
       <template v-else>
-        <BNavItem to="/courses" variant="outline-success">Signin</BNavItem>
         <BNavItem to="/login" variant="outline-success">Signin</BNavItem>
         <BNavItem to="/register" variant="info">Register</BNavItem>
       </template>
