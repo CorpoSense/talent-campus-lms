@@ -3,11 +3,6 @@
   import { useRouter } from 'vue-router'
   import { useAuthStore } from '../stores/auth'
 //   import { useNotification } from '../composables/useNotification'
-// import axios from 'axios'
-
-// const client = axios.create({
-//   baseURL: 'http://127.0.0.1:8000',
-// })
 
   const router = useRouter()
   const authStore = useAuthStore()

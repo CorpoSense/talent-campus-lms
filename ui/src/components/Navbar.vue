@@ -1,12 +1,17 @@
 <script lang="ts" setup>
-// import { usePreferredLanguage, getSupportedLanguages } from '../composables/locale'
-import { computed } from 'vue'
+import { usePreferredLanguage, getSupportedLanguages } from '../composables/locale'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
-// const preferredLanguage = usePreferredLanguage()
-// const supportedLanguages = getSupportedLanguages()
 const title = import.meta.env.VITE_APP_TITLE
+
+const preferredLanguage = ref(usePreferredLanguage())
+const supportedLanguages = getSupportedLanguages()
+const switchLanguageTo = (lang: string) => {
+  preferredLanguage.value = lang
+}
+
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -17,8 +22,6 @@ const doLogout = () => {
   auth.logout()
   router.push('/')
 }
-
-
 </script>
 
 <template>
@@ -42,10 +45,15 @@ const doLogout = () => {
         <BNavItem to="/register" variant="info">Register</BNavItem>
       </template>
 
+      <BNavItemDropdown right>
+        <template #button-content>
+          <b-icon name="globe" :size="24" /> {{ preferredLanguage?.toLocaleUpperCase() }}
+        </template>
+        <BDropdownItem href="#" v-for="lang in supportedLanguages" :key="lang" @click="switchLanguageTo(lang)">
+          {{ lang?.toLocaleUpperCase() }}
+        </BDropdownItem>
+      </BNavItemDropdown>
 
-      <!-- BNavItemDropdown :text="preferredLanguage?.toUpperCase()" right>
-        <BDropdownItem href="#" v-for="lang in supportedLanguages" :key="lang">{{ lang?.toLocaleUpperCase() }}</BDropdownItem>
-      </BNavItemDropdown -->
     </BNavbarNav>
 
     <!-- <BNavForm class="d-flex">
