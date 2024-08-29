@@ -6,7 +6,7 @@
 tasks:
   - name: Script Task
     init: | # runs during prebuild => https://www.gitpod.io/docs/configure/projects/prebuilds
-      cd /workspace/talent-campus-lms/backend/api
+      cd /workspace/talent-campus-lms/backend
       pip install -r requirements.txt
     command: |
       cd /workspace/talent-campus-lms/backend/api
