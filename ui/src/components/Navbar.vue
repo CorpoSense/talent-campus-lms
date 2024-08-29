@@ -1,15 +1,21 @@
 <script lang="ts" setup>
 // import { usePreferredLanguage, getSupportedLanguages } from '../composables/locale'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
 // const preferredLanguage = usePreferredLanguage()
 // const supportedLanguages = getSupportedLanguages()
 const title = import.meta.env.VITE_APP_TITLE
 
-const useAuth = useAuthStore()
-const isLoggedIn = useAuth.isAuthenticated
+const auth = useAuthStore()
+const router = useRouter()
+
+const isLoggedIn = computed(() => auth.isAuthenticated);
+
 const doLogout = () => {
-  alert('doLogout...')
+  auth.logout()
+  router.push('/')
 }
 
 
@@ -31,10 +37,10 @@ const doLogout = () => {
     <BNavbarNav class="ms-auto mb-2 mb-lg-0">
       
       <BNavItem to="/" variant="info" v-if="isLoggedIn" @click="doLogout">Logout</BNavItem>
-      <div v-else>
+      <template v-else>
         <BNavItem to="/login" variant="outline-success">Signin</BNavItem>
         <BNavItem to="/register" variant="info">Register</BNavItem>
-      </div>
+      </template>
 
 
       <!-- BNavItemDropdown :text="preferredLanguage?.toUpperCase()" right>

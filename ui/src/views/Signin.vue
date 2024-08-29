@@ -23,9 +23,13 @@
     //   addNotification('Login successful', 'success')
       router.push('/')
       // router.push('/dashboard')
-    } catch (error: any) {      
-      errorLogin.value = error['response']['data']['detail'] || 'Please check your credentials.'
-      // console.error(`Login failed: ${errorLogin.value}`)
+    } catch (error: any) {
+      if (error['response']){
+        errorLogin.value = error['response']['data']['detail'] || 'Please check your credentials.'
+      } else {
+        errorLogin.value = 'Error server. Please check your connexion.'
+        console.error(`Login failed: ${error['response']}`)
+      }
       
     //   addNotification(`Login failed. ${errorLogin.value}.`, 'error')
     }
@@ -40,7 +44,7 @@
 
         <b-form @submit.prevent="handleLogin">
           <b-form-group label="Username" label-for="username">
-            <b-form-input id="username" v-model="username" required></b-form-input>
+            <b-form-input id="username" v-model="username" required autofocus></b-form-input>
           </b-form-group>
           <b-form-group label="Password" label-for="password">
             <b-form-input id="password" v-model="password" type="password" required></b-form-input>
