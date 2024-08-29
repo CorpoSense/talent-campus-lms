@@ -66,5 +66,14 @@ export const useAuthStore = defineStore('auth', {
       this.token = null
       delete client.defaults.headers.common['Authorization']
     },
+    async getCourses() {
+      try {
+        const courses = await client.get('/courses')
+        return courses
+      } catch (error) {
+        console.error(error)
+        throw error        
+      }
+    }
   },
 })

@@ -25,6 +25,7 @@ declare module 'vue' {
     BNavItemDropdown: typeof import('bootstrap-vue-next')['BNavItemDropdown']
     BRow: typeof import('bootstrap-vue-next')['BRow']
     BToastOrchestrator: typeof import('bootstrap-vue-next')['BToastOrchestrator']
+    Footer: typeof import('./src/components/Footer.vue')['default']
     Home: typeof import('./src/components/Home.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

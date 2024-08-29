@@ -34,7 +34,8 @@ const router = createRouter({
     {
       path: '/courses',
       name: 'courses',
-      component: MyCourses
+      component: MyCourses,
+      meta: { requiresAuth: true }
     },
     {
       path: "/:catchAll(.*)",

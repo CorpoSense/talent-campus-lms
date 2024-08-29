@@ -18,6 +18,8 @@ const router = useRouter()
 
 const isLoggedIn = computed(() => auth.isAuthenticated);
 
+const currentRoute = computed(() => router.currentRoute.value.path)
+
 const doLogout = () => {
   auth.logout()
   router.push('/')
@@ -26,10 +28,10 @@ const doLogout = () => {
 
 <template>
 <BNavbar toggleable="lg" variant="primary" v-b-color-mode="'dark'">
-  <BNavbarBrand href="#">{{ title }}</BNavbarBrand>
+  <BNavbarBrand to="/">{{ title }}</BNavbarBrand>
   <BNavbarToggle target="nav-collapse" />
   <BCollapse id="nav-collapse" is-nav>
-    <BNavbarNav>
+    <BNavbarNav v-show="currentRoute=='/'">
       <BNavItem href="#courses">Courses</BNavItem>
       <BNavItem href="#features">Features</BNavItem>
       <BNavItem href="#partners">Partners</BNavItem>

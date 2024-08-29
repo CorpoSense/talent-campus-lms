@@ -14,14 +14,14 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 class CourseSerializer(serializers.ModelSerializer):
-    instructor = UserSerializer(read_only=True)
+    # instructor = UserSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Course
         fields = [
             'id', 'title', 'description', 'createdAt', 'categories',
-            'rating', 'instructor', 'user_id'
+            'rating', 'image', 'user_id'
         ]
         read_only_fields = ['id', 'createdAt']
 
@@ -40,7 +40,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['title'] = instance.get_title_display()
-        representation['description'] = instance.get_description_display()
-        representation['status'] = instance.get_status_display()
+        representation['title'] = instance.title
+        representation['description'] = instance.description
+        representation['status'] = instance.status
         return representation
