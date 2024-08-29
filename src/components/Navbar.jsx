@@ -42,9 +42,7 @@ visible == false ? setVisible(true) : setVisible(false);
     };
   }, []);
 
-    return (
-
-          <div className='sticky'>
+    return (<div className='sticky'>
           <div className='w-full z-50 bg-white py-2 border border-x-0 border-b-1'>
           <div className="sticky  h-[50px] items-center flex justify-between  w-[90%] mx-auto  ">
          <h3 className='text-[18px]'> <span className='text-[#ffc107] font-bold italic'>Talent</span>  <span className='text-[#20b486] italic font-bold'>Campus

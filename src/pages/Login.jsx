@@ -25,7 +25,7 @@ export const Login = () => {
 
   return (
     
-      <div className="flex sm:flex-row flex-col-reverse py-5 w-[90%] justify-center items-center sm:justify-between min-h-[100vh] mx-auto sm:h-[80vh]">
+      <div className="flex text-lato sm:flex-row flex-col-reverse py-5 w-[90%] justify-center items-center sm:justify-between min-h-[100vh] mx-auto sm:h-[80vh]">
         <form
           onSubmit={formik.handleSubmit}
           className="flex flex-col space-y-2"

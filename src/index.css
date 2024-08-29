@@ -11,3 +11,19 @@
 .remaining-height-element {
     height: calc(100vh - 70px);
   }
+  body
+  {
+    font-family: 'lato';
+  }
+.bgHome
+{
+  background-image: url('../public/bgHome.svg');
+  background-size: cover;  
+  background-position: center; 
+  background-repeat: repeat;
+}
+.shadow
+{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+/* HTML: <div class="cloud"></div> */
