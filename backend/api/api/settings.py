@@ -7,12 +7,12 @@ load_dotenv()
 
 
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER='corposenseteam@gmail.com'
-EMAIL_HOST_PASSWORD='ixcyyceomkflmzcl'
+EMAIL_BACKEND= os.getenv("EMAIL_BACKEND")
+EMAIL_HOST=os.getenv("EMAIL_HOST")
+EMAIL_PORT= os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS= os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER= os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD= os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # This is crucial
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -150,6 +150,16 @@ SIMPLE_JWT = {
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
+# settings.py
+
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins, or
+
+# Alternatively, specify your Gitpod URL
+CORS_ALLOWED_ORIGINS = [
+    "https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io",
+]
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS= True

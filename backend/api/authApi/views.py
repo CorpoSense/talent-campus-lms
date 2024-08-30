@@ -20,10 +20,21 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from rest_framework.authtoken.models import Token
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from rest_framework.permissions import AllowAny
 #import json
 # Create your views here.
 
+class TestView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        return Response({"message": "Test successful"}, status=status.HTTP_200_OK)
+
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterUserView(APIView):
+    permission_classes = [AllowAny]
     def post(self,request):
         userType = request.data['type']
         existingStd = User.objects.filter(email=request.data["email"]).exists()

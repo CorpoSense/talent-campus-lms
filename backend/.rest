@@ -1,0 +1,14 @@
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/auth/register/
+Content-Type: application/json
+
+{
+    "username":"lahcen",
+    "email":"h.bencharef79@esi-sba.dz",
+    "password":"password",
+    "firstName":"Hassane",
+    "lastName":"BENCHAREF",    
+    "type":"student",
+    "skills":["js"],
+    "interests":["devops"],
+    "industry_name":"IT"
+}
