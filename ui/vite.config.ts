@@ -30,6 +30,9 @@ export default defineConfig({
      // Icons as components on-demand universally
      Icons({ /* options */ }),
   ],
+  build: {
+    outDir: '../static'
+  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL('./src', import.meta.url))
