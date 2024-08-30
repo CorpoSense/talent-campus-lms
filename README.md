@@ -16,4 +16,3 @@ We envision a world where students are not only academically proficient but also
 - Certification and Recognition
 - Community Engagement
 - Exclusive Offers and Discounts
-

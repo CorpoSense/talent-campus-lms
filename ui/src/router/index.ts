@@ -12,6 +12,7 @@ const About = () => import(/* webpackChunkName: "about", */ '@/views/About.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory('/static/'), // <-- to allow django easily serve images
   scrollBehavior(_to, _from, savedPosition) {
       return savedPosition || { top: 0}
   },

@@ -30,6 +30,7 @@ export default defineConfig({
      // Icons as components on-demand universally
      Icons({ /* options */ }),
   ],
+  base: '/static/', // <-- to allow django serve images
   build: {
     outDir: '../static'
   },

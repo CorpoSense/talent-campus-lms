@@ -5,8 +5,12 @@ from rest_framework.response import Response
 from tutorial.quickstart.serializers import GroupSerializer, UserSerializer
 from .models import Course
 from .serializers import CourseSerializer
+from django.shortcuts import render
 
 
+def index(request):
+    return render(request, 'index.html')
+    
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
