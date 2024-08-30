@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NProgress from 'nprogress'
-// import AboutView from '@/views/AboutView.vue'
+// import About from "@/views/About.vue"
 import NotFound from "@/views/NotFound.vue"
 import NetworkError from "@/views/NetworkError.vue"
 import Home from '@/views/Home.vue'

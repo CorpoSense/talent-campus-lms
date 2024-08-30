@@ -37,6 +37,9 @@ devDependencies:
   '@types/node':
     specifier: ^22.1.0
     version: 22.1.0
+  '@types/nprogress':
+    specifier: ^0.2.3
+    version: 0.2.3
   '@vitejs/plugin-vue':
     specifier: ^5.0.5
     version: 5.1.2(vite@5.3.4)(vue@3.4.35)
@@ -575,6 +578,10 @@ packages:
     resolution: {integrity: sha512-AOmuRF0R2/5j1knA3c6G3HOk523Ga+l+ZXltX8SF1+5oqcXijjfTd8fY3XRZqSihEu9XhtQnKYLmkFaoxgsJHw==}
     dependencies:
       undici-types: 6.13.0
+    dev: true
+
+  /@types/nprogress@0.2.3:
+    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
     dev: true
 
   /@types/web-bluetooth@0.0.20:
