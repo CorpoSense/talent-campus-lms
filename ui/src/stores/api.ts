@@ -4,7 +4,7 @@ import axios from 'axios'
 
 
 const client = axios.create({
-  baseURL: `${import.meta.env.VITE_HOSTNAME}`,
+  baseURL: `${import.meta.env.VITE_HOSTNAME}/api`,
 })
 
 export const useApi = defineStore('api', {
