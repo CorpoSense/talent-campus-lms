@@ -1,14 +1,14 @@
 from .models import User,Student,Skill,Interest,Employee,Instructor
 from rest_framework.views import APIView
-from .serializers import UserSerializer
-from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.shortcuts import redirect
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError,AuthenticationFailed
+from rest_framework_simplejwt.tokens import RefreshToken
 import json
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse_lazy
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from api.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail,BadHeaderError
@@ -20,7 +20,6 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
 #import json
 # Create your views here.
 
@@ -67,8 +66,8 @@ class RegisterUserView(APIView):
                 student.save()
                 #print(student)
                 return Response({
-                    "success": True
-                })
+                    "success": True,"message":"student created successufully"
+                },status=201)
             elif(request.data["type"]=="employee") :
                 ## case Employee 
                 employee_skills=request.data["skills"]
@@ -97,8 +96,8 @@ class RegisterUserView(APIView):
                 #user.groups.add(learner_group)
                 employee.save()
                 return Response({
-                    "success": True
-                })
+                    "success": True,"message":"Employee created successufuly"
+                },status=201)
             else : 
                 # Instructor
                 instructor = Instructor.objects.create(user = user,industry=request.data["industry_name"])
@@ -107,36 +106,42 @@ class RegisterUserView(APIView):
                 #user.groups.add(instructor_group)
                 instructor.save()
                 return Response({
-                    "success":True
-                })
+                    "success":True,
+                    "message":"Instructor created successufully"
+                },status=201)
 
 
 
 class LoginUserView(APIView):
-    authentication_classes=[TokenAuthentication]
+    #authentication_classes=[TokenAuthentication]
     def authenticateUser(self,email,password):
         try:
             user = User.objects.get(email = email)
+            print(user.pk)
         except User.DoesNotExist:
-            return Response({
-                "error" : True,
-                "message": "wrong email entered"
-            })
-        if(user.check_password(password)):
-            return UserSerializer(user).data
+            raise ValidationError("User not found")
+        if(user.password == password):
+            return user
         else:
             return Response({"error":True,"message":"Invalid password"})
         
     def post(self,request):
-        user = self.authenticateUser(email = request.data["email"],password=request.data["password"])
+        try:
+            user = self.authenticateUser(email = request.data.get("email"),password=request.data.get("password"))
+        except:
+            return Response({
+                "error":True,
+                "message":"user not found, invalid credentials"
+            })
+        #print(request.data.get("username"),request.data.get("password"))
+        #print("user is ",user.password,user.pk)
         if(user):
             #userDic = json.
             #userToDic = json.loads(user)
-            print(user["id"])
-            token,created = Token.objects.get_or_create(user=user)
+            refresh = RefreshToken.for_user(user=user)
             return Response({
-                "userId" : user["id"],
-                "token":token
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
             })
         else :
             return Response({
@@ -221,6 +226,13 @@ class customPasswordResetCompleteView(PasswordResetCompleteView):
 
 class ProfileView(APIView):
     def get(self,request,user_id):
+        # get request headers 
+        auth_header = request.headers.get("Authorization")
+        if(auth_header is None):
+            return Response({
+                "error":True,
+                "message":"Unauthorized action"
+            },status=401)
         try:
             user= User.objects.get(pk=user_id)
         except User.DoesNotExist:
@@ -230,6 +242,7 @@ class ProfileView(APIView):
             })
         # get the profile 
         profile = user.profile 
+        print("here",user.profile)
         # prepare the data 
          # Prepare the response data
         data = {}

@@ -30,9 +30,9 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        'rest_framework.authentication.TokenAuthentication'
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'authApi',
     'lms'
@@ -55,9 +56,16 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # This is crucial
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.middleware.security.SecurityMiddleware',
+    #'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.middleware.common.CommonMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #'django.contrib.messages.middleware.MessageMiddleware',
+    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
 
@@ -128,6 +136,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+DEBUG=True
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Set the access token lifetime
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Set the refresh token lifetime
+    'ROTATE_REFRESH_TOKENS': False,  # Whether to rotate refresh tokens on each use
+    'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old refresh tokens after rotation
+    'UPDATE_LAST_LOGIN': False,  # Update the user's last login field when they obtain a new token
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
