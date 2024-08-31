@@ -1,16 +1,18 @@
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link, useNavigate } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 import { useEffect, useState } from 'react';
 import algiers from '../../public/algiers.png';
 import menu from '../../public/menu.svg';
 import close from '../../public/close.svg';
-import profile from '../../public/profile.svg'; 
-import out from '../../public/logout.svg'; // Ensure to import the logout icon
+import profile from '../../public/profile.svg';
+import out from '../../public/logout.svg'; 
 
 export const AdminNavbar = () => {
   const [visible, setVisible] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [activeLink, setActiveLink] = useState('Dashboard'); // Updated default active link
+
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setVisible(!visible);
@@ -21,7 +23,7 @@ export const AdminNavbar = () => {
   };
 
   const goToProfile = () => {
-    // Logic to navigate to the profile page
+    navigate('/admin/profil'); // Navigate to profile page
   };
 
   const logOut = () => {
