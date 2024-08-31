@@ -171,7 +171,7 @@ export const AdminChangepw = () => {
           </form>
           <img
             src={profile}
-            className="lg:w-[150px] font-['Lato'] md:w-[20px] xxs:w-[150px] w-[150px] items-center mt-24 transform translate-x-20"
+            className="lg:w-[150px] font-['Lato'] md:w-[20px] xxs:w-[150px] w-[150px] items-center mt-24 transform -translate-x-5"
             alt="Profile"
           />
         </div>
