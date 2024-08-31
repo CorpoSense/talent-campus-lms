@@ -24,17 +24,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from rest_framework.permissions import AllowAny
 #import json
-# Create your views here.
-
-class TestView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        return Response({"message": "Test successful"}, status=status.HTTP_200_OK)
-
-@method_decorator(csrf_exempt, name='dispatch')
 class RegisterUserView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes=[AllowAny]
     def post(self,request):
         userType = request.data['type']
         existingStd = User.objects.filter(email=request.data["email"]).exists()
@@ -134,16 +125,16 @@ class LoginUserView(APIView):
         if(user.password == password):
             return user
         else:
-            return Response({"error":True,"message":"Invalid password"})
+            raise ValidationError("invalid password !")
         
     def post(self,request):
         try:
             user = self.authenticateUser(email = request.data.get("email"),password=request.data.get("password"))
-        except:
+        except ValidationError as e:
             return Response({
-                "error":True,
-                "message":"user not found, invalid credentials"
-            })
+                "error": True,
+                "message": "invalid credentials"
+            }, status=400)
         #print(request.data.get("username"),request.data.get("password"))
         #print("user is ",user.password,user.pk)
         if(user):
@@ -173,7 +164,7 @@ class CustomPasswordResetView(PasswordResetView):
         email = form.cleaned_data['email']
         domain = self.request.headers["Host"]
         existUser = User.objects.get(email=email)
-        print(existUser.pk)
+        print(existUser)
         if not existUser:
             messages.error(self.request, "There is no user registered with the specified email address.")
             return self.form_invalid(form)
@@ -239,7 +230,7 @@ class ProfileView(APIView):
     def get(self,request,user_id):
         # get request headers 
         auth_header = request.headers.get("Authorization")
-        if(auth_header is None):
+        if(auth_header is None or not auth_header):
             return Response({
                 "error":True,
                 "message":"Unauthorized action"
@@ -297,6 +288,12 @@ class ProfileView(APIView):
             }
         return Response(data)
     def put(self,request,user_id):
+        auth_header = request.headers.get("Authorization")
+        if(auth_header is None or not auth_header):
+            return Response({
+                "error":True,
+                "message":"Unauthorized action"
+            },status=401)
         try:
             user = User.objects.get(pk=user_id)
         except User.DoesNotExist:

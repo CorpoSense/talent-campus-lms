@@ -15,6 +15,12 @@ class CourseView(APIView):
     #permission_required="lms.create_course"
     #raise_exception=True
     def post(self,request):
+        auth_header = request.headers.get("Authorization")
+        if(auth_header is None or not auth_header):
+            return Response({
+                "error":True,
+                "message":"Unauthorized action"
+            },status=401)
         data=json.loads(request.body)
         print(data)
         if(not data.get("instructor_id")):
@@ -24,7 +30,7 @@ class CourseView(APIView):
             })
         try:
             instructor = User.objects.get(pk=data.get("instructor_id"))
-            print(instructor)
+            #print(instructor)
         except User.DoesNotExist:
             return Response({
                 "error":True,
@@ -35,7 +41,7 @@ class CourseView(APIView):
         course_categories=data.get("course_categories")
         course_videos = data.get("video_links")
 
-        if(not course_name or not course_description or not len(course_categories) or not len(course_videos)):
+        if((not course_name) or (not course_description) or (not len(course_categories)) or (not len(course_videos))):
             return Response({
                 "error":True,
                 "message":"some fields are required"
@@ -60,6 +66,7 @@ class CourseView(APIView):
                 })
             vid,created = Video.objects.get_or_create(url=video_data.get("url"),title=video_data.get("title"),description=video_data.get("description"),course=course)
             course.videos.add(vid)
+        print(course.pk)
         course.save()
         return Response({
             "success":True,
@@ -70,6 +77,12 @@ class CourseView(APIView):
 
 class CourseViewDetails(APIView):
     def get(self,request,course_id):
+        auth_header = request.headers.get("Authorization")
+        if(auth_header is None or not auth_header):
+            return Response({
+                "error":True,
+                "message":"Unauthorized action"
+            },status=401)
         if(not course_id):
             return Response({
                 "error":True,"message":"missing course id"
@@ -81,7 +94,7 @@ class CourseViewDetails(APIView):
                 "error":True,
                 "message":"course not found"
             })
-        print(course.videos)
+        #print(course.videos)
         data_to_return = {
             "course_id" :course.pk,
             "course_title" : course.title,
@@ -97,16 +110,16 @@ class CourseViewDetails(APIView):
         }
         return Response(data=data_to_return,status=200)
         
-class CourseUpdateView(PermissionRequiredMixin,APIView):
-    permission_required="lms.change_course"
-    raise_exception=True
+class CourseUpdateView(APIView):
+    #permission_required="lms.change_course"
+    #raise_exception=True
     def put(self,request,course_id):
         try:
             existingCourse = Course.objects.get(pk=course_id)
         except Course.DoesNotExist:
             return Response({"error":True,"message":"course not found"},status=400)
         data = json.loads(request.body)
-        print(data.get("videos"))
+        #print(data.get("videos"))
         existingCourse.title = data.get("title",existingCourse.title)
         existingCourse.desc= data.get("description",existingCourse.desc)
 
@@ -128,7 +141,7 @@ class CourseUpdateView(PermissionRequiredMixin,APIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class CourseDeleteView(View):
     def delete(self,request,course_id):
-        print("hello world")
+        #print("hello world")
         if(not course_id):
             return JsonResponse({
                 "error":True,
@@ -160,19 +173,35 @@ class CourseEnrollementView(APIView):
             })
         data = json.loads(request.body.decode('utf-8'))
         user_id = data.get('user_id')
+        if(not user_id):
+            return Response({
+                "error":True,
+                "message":"invalid user id"
+            },status=400)
         user = get_object_or_404(User, pk=user_id)
         if(user.type == "student"):
             ## create enrollment 
             enrollement = Enrollement.objects.create(course=course,student=user.student)
             UserProgress.objects.create(enrollement=enrollement,progress_percentage=0.0)
-        if(user.type == "employee"):
+            print(enrollement.pk)
+            return Response({
+                "success":True,
+                "message": "student enroll the course successufully"
+            })
+        elif(user.type == "employee"):
             ## create enrollment 
             enrollement = Enrollement.objects.create(course=course,student=user.employee)
+            print(enrollement.pk)
             UserProgress.objects.create(enrollement=enrollement,progress_percentage=0.0)
-        return Response({
+            return Response({
+                "success":True,
+                "message": "employee enroll the course successufully"
+            })
+        else:
+            return Response({
             "success":True,
-            "message": "Student enrolled successfully"
-        })
+            "message": "instructor can not enroll the course"
+            })
     
     def delete(self,request,course_id):
         try:
@@ -213,6 +242,11 @@ class GetEnrolledCoursesView(APIView):
     def post(self,request):
         body = json.loads(request.body)
         user_id = body.get("user_id")
+        if(not user_id):
+            return Response({
+                "error":True,
+                "message":"invalid user_id"
+            })
         try:
             user = User.objects.get(pk=user_id)
         except User.DoesNotExist:
@@ -325,6 +359,12 @@ class CreateDiscussionCourseView(APIView):
     #request paarms : course_id : Int 
     #request body : {user_id : Int,title:string,content : string}
     def post(self,request,course_id):
+        auth_header = request.headers.get("Authorization")
+        if(auth_header is None or not auth_header):
+            return Response({
+                "error":True,
+                "message":"Unauthorized action"
+            },status=401)
         try:
             course = Course.objects.get(pk=course_id)
         except Course.DoesNotExist:
@@ -387,9 +427,10 @@ class AddDiscussionCommentView(APIView):
                 "error":True,
                 "message":"discussion not found"
             })
-        body = json.loads(request.body)
-        userId = body.get("user_id")
-        content = body.get('content')
+        print("callledd")
+        data = json.loads(request.body)
+        userId = request.data.get("user_id")
+        content = request.data.get("content")
 
         if not content:
             return Response({"error": True, "message": "Content is required"}, status=400)
@@ -400,15 +441,16 @@ class AddDiscussionCommentView(APIView):
 # quizzes :
 class CreateQuizView(APIView):
     #permission_classes = [IsAuthenticated]
-
     def post(self, request, course_id):
         try:
+            ##print("called",course_id)
             course = get_object_or_404(Course, pk=course_id)
         except Course.DoesNotExist:
             return Response({
                 "error":True,
                 "message":"course not found"
             })
+        ##print(request.data)
         instructor_id = request.data.get("instructor_id")
         title = request.data.get('title')
         questions=request.data.get("questions")
@@ -439,11 +481,62 @@ class CreateQuizView(APIView):
             # set quiz 
             quiz.questions.add(ques)
         quiz.save()
-        return Response({"message": "Quiz created successfully"})   
+        return Response({"message": "Quiz created successfully"},status=201)
     
+class QuizDeleteView(APIView):
+    def delete(self,request,quiz_id):
+        try:
+            quiz=Quiz.objects.get(pk=quiz_id)
+        except Quiz.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"invalid quiz id"
+            })
+        quiz.delete()
+        return Response({
+            "success":True,
+            "message":"Quiz deleted successufully"
+        })
+
+class UpdateQuizView(APIView):
+    def put(self,request,quiz_id):
+        try:
+            quiz = Quiz.objects.get(pk=quiz_id)
+            print(quiz.title)
+        except Quiz.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"invalid quiz id"
+            })
+        
+        quiz_title = request.data.get("title")
+        if(quiz_title):
+            quiz.title = quiz_title
+        if(not len(request.data.get("questions"))):
+            quiz.questions.set([])
+            for ques in request.data.get("questions"):
+                que,_=Question.objects.get_or_create(questionType = ques.get("questionType"),text = ques.get("text"))
+                if(ques.get("questionType"=="multiple choices")):
+                    choices = question.get("choices")
+                    for choice in choices:
+                        ch,created = QuestionChoice.objects.get_or_create(content=choice["content"],isCorrect=choice["isCorrect"])
+                        que.choices.add(ch)
+                else:
+                    # it QA question
+                    qa,_=QA.objects.get_or_create(answer=question.get("answer"),explanation=question.get("explanation"))
+                    que.qas.add(qa)
+                que.save()
+                quiz.questions.add(que)
+        quiz.save()
+        return Response({
+            "success":True,"message":"quiz updated usccessufully"
+        })
+        
+        
+
 
 class AssessmentView(APIView):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
     def post(self, request,course_id):
         try:
@@ -468,13 +561,19 @@ class AssessmentView(APIView):
                 "message":"assessementType is required"
             })
 
-        asseType = AssessmentType.objects.get_or_create(type_name = assessmentType)
+        asseType,_ = AssessmentType.objects.get_or_create(type_name = assessmentType)
+        #print(asseType)
         # Create the assessment
-        assessment = Assessment.objects.create(title=title, description=description,assessmentType=asseType,course=course)
-
+        assessment = Assessment.objects.create(title=title, description=description,assessementType=asseType,course=course)
         # map over quizzes 
         for quiz_id in quiz_ids:
-            quiz = Quiz.objects.get(pk=quiz_id)
+            try:
+                quiz = Quiz.objects.get(pk=quiz_id)
+            except Quiz.DoesNotExist:
+                return Response({
+                    "error": True,
+                    "message": "Invalid quiz ID"
+                }, status=400)  
             assessment.quizzes.add(quiz)
 
         # Add quizzes to the assessment
@@ -485,4 +584,19 @@ class AssessmentView(APIView):
             "message": "Assessment created successfully",
             "assessment_id": assessment.id,
             "quizzes": [quiz.title for quiz in quizzes]
+        })
+    
+class DeleteAssessementView(APIView):
+    def delete(self,request,asse_id):
+        try:
+            assessement = Assessment.objects.get(pk=asse_id)
+        except Assessment.DoesNotExist:
+            return Response({
+                "error":True,
+                "message":"invalid assessement id"
+            })
+        assessement.delete()
+        return Response({
+            "success":True,
+            "message":"assessement deleted successufully"
         })

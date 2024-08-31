@@ -7,12 +7,12 @@ load_dotenv()
 
 
 
-EMAIL_BACKEND= os.getenv("EMAIL_BACKEND")
-EMAIL_HOST=os.getenv("EMAIL_HOST")
-EMAIL_PORT= os.getenv("EMAIL_PORT")
-EMAIL_USE_TLS= os.getenv('EMAIL_USE_TLS', 'True') == 'True'
-EMAIL_HOST_USER= os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD= os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER='corposenseteam@gmail.com'
+EMAIL_HOST_PASSWORD='ixcyyceomkflmzcl'
 DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,13 +28,6 @@ SECRET_KEY = 'django-insecure-5r9d^nm%@wv--ufn8*1u0=vr4#lv086vmry%8btom1cbua!q^=
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,25 +43,16 @@ INSTALLED_APPS = [
     'authApi',
     'lms'
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  # This is crucial
+    # Comment out CSRF middleware to check if it's causing the issue
+     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'django.middleware.security.SecurityMiddleware',
-    #'django.contrib.sessions.middleware.SessionMiddleware',
-    #'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
-    #'django.contrib.auth.middleware.AuthenticationMiddleware',
-    #'django.contrib.messages.middleware.MessageMiddleware',
-    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
-
 ROOT_URLCONF = 'api.urls'
 
 TEMPLATES = [
@@ -148,21 +132,27 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': False,  # Update the user's last login field when they obtain a new token
 }
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-# settings.py
+if __import__('os').environ.get('GITPOD_WORKSPACE_URL'):
+    try:
+        gp = __import__('subprocess').run(["gp", "url", "8000"], capture_output=True, text=True)
+        if gp.returncode == 0 and gp.stdout:
+            ALLOWED_HOSTS += [gp.stdout.strip().split('//', 1)[-1]]
+    except:
+        ALLOWED_HOSTS += ['*']
 
-CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins, or
 
-# Alternatively, specify your Gitpod URL
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins for testing purposes
+
+# Alternatively, if you need to be more restrictive:
 CORS_ALLOWED_ORIGINS = [
     "https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io",
 ]
 
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOW_ALL_ORIGINS= True
-CORS_ALLOW_CREDENTIALS=True
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io',
+    # Add other trusted origins if needed
+]
 
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 24
