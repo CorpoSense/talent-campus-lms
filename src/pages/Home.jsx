@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { data } from "../data/data"
 import { Hero } from "../components/Hero"
-import students from "../../public/students.svg";
-import camera from "../../public/camera.svg";
-import users from "../../public/users.svg";
-import graduation from "../../public/graduation.svg";
+import students from "/students.svg";
+import camera from "/camera.svg";
+import users from "/users.svg";
+import graduation from "/graduation.svg";
 import { Item } from "../components/Item";
 import { Slide } from "../components/Slider";
-import {Course} from '../components/Course';
 import { Category } from "../components/Category";
 import { categories } from "../data/data";
+import { Feedback } from "../components/Feedback";
+import { FeedbackSlider } from "../components/FeedbackSlider";
+import { Link } from "react-router-dom";
+import { Footer } from "../components/Footer";
 export const Home=()=>
 {
     
@@ -44,7 +47,7 @@ return (
                  </div>
             
             </div>
-            <h1 className="text-4xl text-center tracking-wid   font-bold">
+            <h1 className="text-4xl w-[90vw] text-center tracking-wid   font-bold">
                 Most   <span className="bg-gradient-to-r from-[#007bff] to-[rgb(32,180,134)]  inline-block text-transparent bg-clip-text"> 
                 Popular Courses
             </span>
@@ -56,7 +59,7 @@ return (
        <div className="flex flex-col mt-10 items-center ">
        <div className="  space-y-10 items-center mt-10 py-20 h-fit mb-10 bg-[#e7f2ff] w-[100vw]  ">
         
-       <h1 className="text-4xl text-center tracking-wide  mt-10 font-bold">
+       <h1 className="text-4xl tracking-wide text-center mt-10 font-bold">
                 Most   <span className="bg-gradient-to-r from-[#007bff] to-[rgb(32,180,134)]  inline-block text-transparent bg-clip-text"> 
                 Popular Catgories
             </span>
@@ -76,11 +79,33 @@ categories.map((item)=>
        
        </div>
 
-        <h1 className="text-4xl text-center tracking-wide  mt-10 font-bold">
+        <h1 className="text-4xl text-center tracking-wide  my-10 font-bold">
                 Students   <span className="bg-gradient-to-r from-[#007bff] to-[rgb(32,180,134)]  inline-block text-transparent bg-clip-text"> 
                 Feedback
             </span>
             </h1> 
+            <FeedbackSlider/>
+            <h1 className="text-4xl  text-center tracking-wide  my-10 font-bold">
+                Join   <span className="bg-gradient-to-r from-[#007bff] to-[rgb(32,180,134)] mt-10  inline-block text-transparent bg-clip-text mr-2"> 
+                the world's largest
+            </span>
+             learning platform today !
+            </h1> 
+            <h1 className="text-center font-semibold text-[#52565C]">
+            Start learning by registering for free
+            </h1>
+            <div className="flex flex-col justify-center">
+            <p className="text-center text-[#52565C] ">
+            Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. <br></br>
+            Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis.
+            </p>
+            <button className="w-[200px] bg-[#20b486]  justify-center  text-white rounded-[2px] px-[10px] py-[10px] sm:py-[12px]  items-center mx-auto my-10">
+                <Link to="/Signup">
+                Register for free 
+
+</Link></button>
+            </div>
+          <Footer/>
     </div>
 )
 }
