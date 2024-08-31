@@ -1,5 +1,7 @@
 # TalentCampus UI
 
+[![Open in GitPod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+
 This project uses **React** & **Vite** to create a fast and efficient development environment.
 
 ## Overview
