@@ -1,8 +1,8 @@
-export const PrivacyPolicy=()=>
+export const TermsAndConditions =()=>
     {
         return (
             <h1 className="text-4xl text-center font-bold">
-        Privacy policy
+        Terms and conditions
             </h1>
         )
     }

@@ -14,13 +14,10 @@ import { AdminChangepw } from "./pages/AdminChangepw";
 import { AdminUsers } from "./pages/AdminUsers";
 import { AdminCoursesOnhold } from "./pages/AdminCoursesOnhold";
 import { Careers } from "./pages/Careers";
-import { privacyPolicy } from "./pages/PrivacyPolicy";
-
-
-
-
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { TermsAndConditions } from "./pages/terms&conditions";
 function App() {
-  
+
  
   return (
     // bg-gradient-to-br from-transparent from-40% via-[#88baf0]/60 bg-opacity-15 to-[#fde18d]/60
@@ -35,8 +32,9 @@ function App() {
           <Route path="/admin/changepassword" element={<AdminChangepw/>}/>
           <Route path="/admin/users" element={<AdminUsers/>}/>
           <Route path="/admin/courseshold" element={<AdminCoursesOnhold/>}/>
-          <Route path="/privacypolicy" element={<privacyPolicy/>}/>
+          <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
           <Route path="/Careers" element={<Careers/>}/>
+          <Route path="/termsandconditions" element={<TermsAndConditions/>}/>
 
 
 
