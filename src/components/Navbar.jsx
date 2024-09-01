@@ -9,7 +9,7 @@ import out from '/out.svg'
 export const Navbar=()=>
 {
   const [visible,setVisible]=useState(false);
-  const [isConnected , setIsconnected]=useState(false);
+  const [isConnected , setIsconnected]=useState(true);
   const handleToggle=()=>
   {
 visible == false ? setVisible(true) : setVisible(false);
@@ -98,7 +98,7 @@ visible == false ? setVisible(true) : setVisible(false);
 
 {/* WHEN THE USER IS CONNECTED HOW DOES THE NAVBAR LOOKS ON THE PHONE */}
              {visible && isConnected &&  
-             <div className='mt-4 bg-white z-[99] absolute w-[90%] mx-auto'>
+             <div className='remaining-height-element bg-white z-[99] absolute p-3 w-[100vw] mx-auto'>
                <div className='mx-auto space-x-6 flex '>
                  <img src={algiers} className='rounded-full w-[80px] h-[80px] ' alt="Profile picture"/> 
                  <div className='flex-col flex items-left justify-center'>

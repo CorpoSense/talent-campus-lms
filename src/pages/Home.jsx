@@ -12,7 +12,7 @@ import { Category } from "../components/Category";
 import { categories } from "../data/data";
 import { FeedbackSlider } from "../components/FeedbackSlider";
 
-import { Link } from "react-router-dom";
+import { Link }  from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 export const Home=()=>

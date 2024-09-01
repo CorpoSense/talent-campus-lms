@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import curvedLine from "/curvedLine.svg";
 
 export const Footer = () => {
   return (

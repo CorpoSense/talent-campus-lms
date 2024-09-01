@@ -13,8 +13,8 @@ import { AdminProfil} from "./pages/AdminProfil";
 import { AdminChangepw } from "./pages/AdminChangepw";
 import { AdminUsers } from "./pages/AdminUsers";
 import { AdminCoursesOnhold } from "./pages/AdminCoursesOnhold";
-
-
+import { privacyPolicy } from "./pages/privacyPolicy";
+import { Careers } from "./pages/Carrers";
 
 
 function App() {
@@ -33,7 +33,8 @@ function App() {
           <Route path="/admin/changepassword" element={<AdminChangepw/>}/>
           <Route path="/admin/users" element={<AdminUsers/>}/>
           <Route path="/admin/courseshold" element={<AdminCoursesOnhold/>}/>
-
+          <Route path="/Careers" element={<Careers/>}/>
+          <Route path="/privacyPolicy" element={<privacyPolicy/>}/>
 
         </Routes> 
          </div>
