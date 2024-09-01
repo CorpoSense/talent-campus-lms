@@ -2,10 +2,10 @@
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 import { useEffect, useState } from 'react';
-import algiers from '../../public/algiers.png';
-import menu from '../../public/menu.svg';
-import close from '../../public/close.svg'
-import out from '../../public/out.svg'
+import algiers from '/algiers.png';
+import menu from '/menu.svg';
+import close from '/close.svg'
+import out from '/out.svg'
 export const Navbar=()=>
 {
   const [visible,setVisible]=useState(false);
@@ -42,9 +42,9 @@ visible == false ? setVisible(true) : setVisible(false);
     };
   }, []);
 
-    return (<div className='sticky'>
+    return (<div className=''>
           <div className='w-full z-50 bg-white py-2 border border-x-0 border-b-1'>
-          <div className="sticky  h-[50px] items-center flex justify-between  w-[90%] mx-auto  ">
+          <div className="  h-[50px] items-center flex justify-between  w-[90%] mx-auto  ">
          <h3 className='text-[18px]'> <span className='text-[#ffc107] font-bold italic'>Talent</span>  <span className='text-[#20b486] italic font-bold'>Campus
           </span> </h3>
          <SearchBar/>
@@ -53,10 +53,13 @@ visible == false ? setVisible(true) : setVisible(false);
          <div className="sm:grid font-medium hidden grid-cols-2 divide-x">
               <ul className=" text-[#6D737A]  text-[12px] items-center hidden sm:flex justify-between b-sm:justify-around
                space-x-3 mr-2">
-                <li> <a href="#Home">Home</a> </li>
-                <li><a href="#Courses">Courses</a> </li>
+                <li> <Link to="/">Home
+                </Link>  </li>
+                <li><Link to="/courses">Courses
+                </Link> </li>
                 {isConnected && <li visibility={isConnected} className='cursor-pointer' onClick={goToLearning}> My learning </li>}
-                <li><a href="#Contact">Contact</a></li>
+                <li> <Link to="/contact">Contact
+                </Link></li>
              </ul>
             { isConnected ? <img src={algiers} onClick={goToProfile} className='w-[37px] cursor-pointer h-[37px] rounded-full ml-auto'/> :
             (<ul className="flex items-center justify-end space-x-2 text-[12px]">
@@ -73,10 +76,16 @@ visible == false ? setVisible(true) : setVisible(false);
      </div>
      </div>
    {visible && !isConnected &&  <ul className="w-full bg-white z-50 absolute font-medium text-[#6D737A] text-[14px] flex-col items-center justify-center space-y-6 h-[350px]">
-                <li className='text-center mt-[50px]'> <a href="#Home">Home</a> </li>
-                <li className='text-center'><a href="#Courses">Courses</a> </li>
+                <li className='text-center mt-[50px]'>
+                  
+                  <Link to="/">Home
+                  </Link>
+                   </li>
+                <li className='text-center'><Link to="/courses">Courses
+                </Link> </li>
                 {isConnected && <li visibility={isConnected} className='cursor-pointer' onClick={goToLearning}> Mylearning </li>}
-                <li className='text-center'><a href="#Contact">Contact</a></li>
+                <li className='text-center'><Link to="/Contact">Contact
+                </Link></li>
                 <li className='w-8 mx-auto '>
                   <button className=' mx-auto text-center ' >   <Link to="./Login">Login </Link>
                   </button>
@@ -89,7 +98,7 @@ visible == false ? setVisible(true) : setVisible(false);
 
 {/* WHEN THE USER IS CONNECTED HOW DOES THE NAVBAR LOOKS ON THE PHONE */}
              {visible && isConnected &&  
-             <div className='mt-4 bg-white z-50 absolute w-[90%] mx-auto'>
+             <div className='mt-4 bg-white z-[99] absolute w-[90%] mx-auto'>
                <div className='mx-auto space-x-6 flex '>
                  <img src={algiers} className='rounded-full w-[80px] h-[80px] ' alt="Profile picture"/> 
                  <div className='flex-col flex items-left justify-center'>
@@ -103,9 +112,12 @@ visible == false ? setVisible(true) : setVisible(false);
              </div> 
              <hr className='my-4'></hr>
              <ul className='space-y-2'>
-              <li className='text-left  text-[13px]'> <a href="#Home">Home</a> </li>
-                <li className='text-left text-[13px]'><a href="#Courses">Courses</a> </li>
-                <li className='text-left text-[13px]'><a href="#Contact">Contact</a></li>
+              <li className='text-left  text-[13px]'><Link to="/">Home
+              </Link> </li>
+                <li className='text-left text-[13px]'><Link to="/courses">Courses
+                </Link> </li>
+                <li className='text-left text-[13px]'><Link to="/Contact">Contact
+                </Link></li>
              </ul>
              <hr className='my-4'></hr>
              <ul className='space-y-2'>
