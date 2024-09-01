@@ -3,8 +3,7 @@ import { AdminNavbar } from '../components/AdminNavbar';
 import { Pagination } from '../components/pagination';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
-import profile from '../../public/profile.svg';
-import logout from '../../public/logout.svg';
+import { Footer } from '../components/footer';
 
 // Sample course data for each category
 const sampleCourses = [
@@ -147,6 +146,7 @@ const sampleCourses = [
   
     return (
       <>
+      
         <AdminNavbar />
         <div className="min-h-[100vh] mx-auto w-[90%] mb-10 font-lato">
           <h1 className="text-4xl tracking-wide font-bold mt-10 text-gradient">Course Management</h1>
@@ -218,6 +218,7 @@ const sampleCourses = [
             />
           </div>
         </div>
+        <Footer />
       </>
     );
   };

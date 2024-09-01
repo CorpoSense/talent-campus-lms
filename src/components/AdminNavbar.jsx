@@ -10,7 +10,7 @@ import out from '../../public/logout.svg';
 export const AdminNavbar = () => {
   const [visible, setVisible] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [activeLink, setActiveLink] = useState('Dashboard'); // Updated default active link
+  const [activeLink, setActiveLink] = useState('Dashboard'); // Default active link
 
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export const AdminNavbar = () => {
   };
 
   const onResize = () => {
-    window.innerWidth >= 640 ? setVisible(false) : "";
+    if (window.innerWidth >= 640) setVisible(false);
   };
 
   useEffect(() => {
@@ -41,6 +41,9 @@ export const AdminNavbar = () => {
       window.removeEventListener('resize', onResize);
     };
   }, []);
+
+  const linkClasses = (linkName) =>
+    `hover:text-[#20B486] ${activeLink === linkName ? 'text-[#20B486]' : 'text-[#6D737A]'}`;
 
   return (
     <div className='sticky'>
@@ -66,12 +69,12 @@ export const AdminNavbar = () => {
             />
           )}
           <div className="sm:flex font-medium hidden items-center space-x-6 ml-20 mr-20">
-            <ul className="text-[#6D737A] text-[13px] flex items-center space-x-4">
+            <ul className="text-[13px] flex items-center space-x-4">
               <li>
                 <Link
                   to="/admin"
                   onClick={() => setActiveLink('Dashboard')}
-                  className={activeLink === 'Dashboard' ? 'text-[#20B486]' : ''}
+                  className={linkClasses('Dashboard')}
                 >
                   Dashboard
                 </Link>
@@ -80,7 +83,7 @@ export const AdminNavbar = () => {
                 <Link
                   to="./courseshold"
                   onClick={() => setActiveLink('Courses')}
-                  className={activeLink === 'Courses' ? 'text-[#20B486]' : ''}
+                  className={linkClasses('Courses')}
                 >
                   Courses
                 </Link>
@@ -89,7 +92,7 @@ export const AdminNavbar = () => {
                 <Link
                   to="./users"
                   onClick={() => setActiveLink('User Management')}
-                  className={activeLink === 'User Management' ? 'text-[#20B486]' : ''}
+                  className={linkClasses('User Management')}
                 >
                   User Management
                 </Link>
@@ -122,12 +125,12 @@ export const AdminNavbar = () => {
       </div>
 
       {visible && !isConnected && (
-        <ul className="w-full bg-white z-50 absolute font-medium text-[#6D737A] text-[14px] flex-col items-center justify-center space-y-6 h-[350px]">
+        <ul className="w-full bg-white z-50 absolute font-medium text-[14px] flex-col items-center justify-center space-y-6 h-[350px]">
           <li className='text-center mt-[50px]'>
             <Link
               to="/admin"
               onClick={() => setActiveLink('Dashboard')}
-              className={activeLink === 'Dashboard' ? 'text-[#20B486]' : ''}
+              className={linkClasses('Dashboard')}
             >
               Dashboard
             </Link>
@@ -136,7 +139,7 @@ export const AdminNavbar = () => {
             <Link
               to="./courseshold"
               onClick={() => setActiveLink('Courses')}
-              className={activeLink === 'Courses' ? 'text-[#20B486]' : ''}
+              className={linkClasses('Courses')}
             >
               Courses
             </Link>
@@ -145,7 +148,7 @@ export const AdminNavbar = () => {
             <Link
               to="./users"
               onClick={() => setActiveLink('User Management')}
-              className={activeLink === 'User Management' ? 'text-[#20B486]' : ''}
+              className={linkClasses('User Management')}
             >
               User Management
             </Link>
@@ -177,7 +180,7 @@ export const AdminNavbar = () => {
               <Link
                 to="./admin"
                 onClick={() => setActiveLink('Dashboard')}
-                className={activeLink === 'Dashboard' ? 'text-[#20B486]' : ''}
+                className={linkClasses('Dashboard')}
               >
                 Dashboard
               </Link>
@@ -186,7 +189,7 @@ export const AdminNavbar = () => {
               <Link
                 to="./courseshold"
                 onClick={() => setActiveLink('Courses')}
-                className={activeLink === 'Courses' ? 'text-[#20B486]' : ''}
+                className={linkClasses('Courses')}
               >
                 Courses
               </Link>
@@ -195,7 +198,7 @@ export const AdminNavbar = () => {
               <Link
                 to="./users"
                 onClick={() => setActiveLink('User Management')}
-                className={activeLink === 'User Management' ? 'text-[#20B486]' : ''}
+                className={linkClasses('User Management')}
               >
                 User Management
               </Link>

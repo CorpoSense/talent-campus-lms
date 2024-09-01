@@ -79,6 +79,7 @@ const options = {
 export const AdminStatistics = () => {
   return (
     <>
+
       <AdminNavbar />
       <div className="min-h-[100vh] mx-auto w-[90%]">
         <h1 className="text-4xl tracking-wide font-bold mt-10 text-gradient">Analytics Dashboard</h1>
