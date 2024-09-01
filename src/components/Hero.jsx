@@ -3,6 +3,7 @@ import wifi from "/wifi.svg";
 import curvedLine from "/curvedLine.svg";
 import cloud from "/cloud.svg";
 import star from "/star.svg";
+import { Link } from "react-router-dom";
 
 export const Hero=()=>
     {
@@ -17,7 +18,7 @@ export const Hero=()=>
           <img src={curvedLine} className="absolute  xxs:w-[100px] xxs:bottom-[10%] w-[50px] bottom-[7%] right-0" ></img>
           <img src={cloud} className="absolute xxs:w-[70px] sm:w-[100px] xxs:bottom-[10%] w-[50px] bottom-[7%] left-0" ></img>
           
-   <h1 className="sm:text-5xl z-10 text-4xl z-20 leading-[50px] sm:leading-[70px] font-bold text-center" > <span className=" bg-gradient-to-r from-[#007bff] to-[rgb(32,180,134)]    inline-block text-transparent bg-clip-text ">
+   <h1 className="sm:text-5xl z-10 text-4xl leading-[50px] sm:leading-[70px] font-bold text-center" > <span className=" bg-gradient-to-r from-[#007bff] to-[rgb(32,180,134)]    inline-block text-transparent bg-clip-text ">
       
           Shaping  </span> your future <br></br> with the skills that matter </h1>
        
@@ -25,8 +26,9 @@ export const Hero=()=>
           Talent Campus is an interesting platform <br></br>
           that will teach you in more an interactive way
           </p>
-          <button className=" sm:w-[200px] w-[150px]  bg-[#20b486]  justify-center  text-white rounded-[2px] px-[10px] py-[10px] sm:py-[15px]  items-center">
-            Let&apos;s start
+          <button className="cursor-pointer z-30 sm:w-[200px] w-[150px]  bg-[#20b486] justify-center  text-white rounded-[2px] px-[10px] py-[10px] sm:py-[15px]  items-center">
+            <Link to="/#what">Let&apos;s start</Link>
+           
           </button>
             </div>
         )

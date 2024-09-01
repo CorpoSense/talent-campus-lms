@@ -9,7 +9,7 @@ import out from '/out.svg'
 export const Navbar=()=>
 {
   const [visible,setVisible]=useState(false);
-  const [isConnected , setIsconnected]=useState(true);
+  const [isConnected , setIsconnected]=useState(false);
   const handleToggle=()=>
   {
 visible == false ? setVisible(true) : setVisible(false);
@@ -64,11 +64,12 @@ visible == false ? setVisible(true) : setVisible(false);
             { isConnected ? <img src={algiers} onClick={goToProfile} className='w-[37px] cursor-pointer h-[37px] rounded-full ml-auto'/> :
             (<ul className="flex items-center justify-end space-x-2 text-[12px]">
               <li>
-                  <button className=' text-[#6D737A] text-[12px]' >   <Link to="./Login"> Login </Link>
+                  <button className=' text-[#6D737A] text-[12px]' >   <Link to="/Login"> Login </Link>
                   </button>
               </li>
               <li className=''>
-                   <button className="bg-[#20b486] text-center text-white  font-medium font-['public Sans'] sm:w-[85px] w-[60px] leading-normal px-[15px] py-[8px] rounded-[2px]"><Link to="./Signup"> Sign up </Link></button>
+                   <button className="bg-[#20b486] text-center text-white  font-medium font-['public Sans'] sm:w-[85px] w-[60px] leading-normal px-[15px] py-[8px] rounded-[2px]"><Link to="
+                   /Signup"> Sign up </Link></button>
               </li>
           
             </ul>) }
@@ -87,11 +88,11 @@ visible == false ? setVisible(true) : setVisible(false);
                 <li className='text-center'><Link to="/Contact">Contact
                 </Link></li>
                 <li className='w-8 mx-auto '>
-                  <button className=' mx-auto text-center ' >   <Link to="./Login">Login </Link>
+                  <button className=' mx-auto text-center ' >   <Link to="/Login">Login </Link>
                   </button>
               </li>
               <li className='w-[120px] mx-auto '>
-                   <button className="bg-[#20b486] text-center mx-auto text-white  font-medium w-full font-['public Sans'] leading-normal px-[10px] py-[8px] rounded-[2px]"><Link to="./Signup"> Sign up </Link></button>
+                   <button className="bg-[#20b486] text-center mx-auto text-white  font-medium w-full font-['public Sans'] leading-normal px-[10px] py-[8px] rounded-[2px]"><Link to="/Signup"> Sign up </Link></button>
               </li>
              </ul>}
 

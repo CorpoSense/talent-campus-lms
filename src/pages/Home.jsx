@@ -23,7 +23,7 @@ return (
     <div className="w-[100vw] z-10">
 <div className="min-h-[100vh] z-10  mx-auto w-[90%]">
 <Hero />
-        <div className="flex mb-10 space-y-10 flex-col items-center">
+        <div id="what" className="flex  mb-10 space-y-10 flex-col items-center">
             <h1 className="text-4xl text-center tracking-wide	  font-bold">
                 What is
                 <span className=" bg-gradient-to-r from-[rgb(121,165,212)] to-[rgb(32,180,134)]    inline-block  text-transparent bg-clip-text ">

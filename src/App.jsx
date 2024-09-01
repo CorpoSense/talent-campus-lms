@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { Navbar } from "./components/Navbar"
-import { AdminNavbar } from "./components/AdminNavbar";
 import { Login } from "./pages/Login"
 import { Signup } from "./pages/Signup"
 import { Routes } from 'react-router-dom';
-import { Hero } from "./components/Hero";
 import { Route ,Navigate} from 'react-router-dom';
 import { Home } from "./pages/Home";
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -15,7 +12,7 @@ import { AdminUsers } from "./pages/AdminUsers";
 import { AdminCoursesOnhold } from "./pages/AdminCoursesOnhold";
 import { privacyPolicy } from "./pages/privacyPolicy";
 import { Careers } from "./pages/Carrers";
-
+import { Courses } from "./pages/Courses";
 
 function App() {
   
@@ -35,7 +32,7 @@ function App() {
           <Route path="/admin/courseshold" element={<AdminCoursesOnhold/>}/>
           <Route path="/Careers" element={<Careers/>}/>
           <Route path="/privacyPolicy" element={<privacyPolicy/>}/>
-
+          <Route path="/Courses" element={<Courses/>}/>
         </Routes> 
          </div>
       </Router>

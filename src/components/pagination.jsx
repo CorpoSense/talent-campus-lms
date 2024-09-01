@@ -1,5 +1,4 @@
-import React from 'react';
-
+/* eslint-disable react/prop-types */
 export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handlePageClick = (page) => {
     if (page >= 1 && page <= totalPages) {

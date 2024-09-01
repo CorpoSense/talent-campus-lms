@@ -1,5 +1,5 @@
-import { categories } from "../data/data"
-import arrow from "../../public/arrow.svg";
+/* eslint-disable react/prop-types */
+import arrow from "/arrow.svg";
 
 export const Category=(props)=>
 {

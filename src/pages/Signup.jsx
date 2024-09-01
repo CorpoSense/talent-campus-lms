@@ -83,7 +83,7 @@ export const Signup = () => {
             onClick={handleForget}
             className="text-right underline cursor-pointer text-[12px] md:text-[14px] text-[#202121]/80"
           >
-            <Link to="./ForgetPassword">Forget password?</Link>
+            <Link to="/ForgetPassword">Forget password?</Link>
           </h1>
           <div className="flex justify-around">
             <input type="checkbox">

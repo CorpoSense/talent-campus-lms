@@ -35,4 +35,23 @@
 {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
+.slick-slide div
+{
+  margin: 10px;
+}
+.slick-prev
+{
+  top: -40px;
+  left: 80%;
+}.slick-next
+{
+  top: -40px;
+  right: 5%;
+}
+.slick-arrow:before
+{
+  color: #20b486;
+  border: 0px;
+  font-size: 30px;
+}
 /* HTML: <div class="cloud"></div> */

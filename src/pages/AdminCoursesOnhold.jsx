@@ -1,97 +1,95 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { AdminNavbar } from '../components/AdminNavbar';
 import { Pagination } from '../components/pagination';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
-import profile from '../../public/profile.svg';
-import logout from '../../public/logout.svg';
 
 // Sample course data for each category
 const sampleCourses = [
     {
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Design',
       duration: '3h 45m',
       title: 'Course Title 1',
       description: 'Short description of the course.',
     },
     {
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Development',
       duration: '4h 30m',
       title: 'Course Title 2',
       description: 'Short description of the course.',
     },
     {
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Design',
       duration: '4h 30m',
       title: 'Course Title 3',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Development',
       duration: '4h 30m',
       title: 'Course Title 4',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Design',
       duration: '4h 30m',
       title: 'Course Title 5',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Design',
       duration: '4h 30m',
       title: 'Course Title 6',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Marketing',
       duration: '4h 00m',
       title: 'Course Title 7',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Marketing',
       duration: '3h 30m',
       title: 'Course Title 8',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Business',
       duration: '2h 30m',
       title: 'Course Title 9',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Business',
       duration: '3h 30m',
       title: 'Course Title 10',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Marketing',
       duration: '4h 30m',
       title: 'Course Title 11',
       description: 'Short description of the course.',
     },{
-      image: "../public/course.png",
+      image: "/course.png",
       category: 'Development',
       duration: '4h 30m',
       title: 'Course Title 12',
       description: 'Short description of the course.',
     },
     {
-        image: "../public/course.png",
+        image: "/course.png",
         category: 'Development',
         duration: '4h 30m',
         title: 'Course Title 13',
         description: 'Short description of the course.',
       },
       {
-        image: "../public/course.png",
+        image: "/course.png",
         category: 'Development',
         duration: '4h 30m',
         title: 'Course Title 14',
