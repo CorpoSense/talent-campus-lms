@@ -6,7 +6,7 @@ import { Signup } from "./pages/Signup"
 import { Routes } from 'react-router-dom';
 import { Hero } from "./components/Hero";
 import { Route ,Navigate} from 'react-router-dom';
-import { Home } from "./pages/Home";
+import { Home } from "./pages/Homelyna";
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AdminStatistics } from "./pages/AdminStatistics";
 import { AdminProfil} from "./pages/AdminProfil";

@@ -13,7 +13,7 @@ import { categories } from "../data/data";
 import { FeedbackSlider } from "../components/FeedbackSlider";
 
 import { Link }  from "react-router-dom";
-import { Footer } from "../components/footer";
+import { Footer } from "../components/Footerlyna";
 import { Navbar } from "../components/Navbar";;
 export const Home=()=>
 {

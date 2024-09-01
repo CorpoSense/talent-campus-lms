@@ -3,7 +3,7 @@ import { AdminNavbar } from '../components/AdminNavbar';
 import { Pagination } from '../components/pagination';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
-import { Footer } from '../components/footer';
+import { Footer } from '../components/Footerlyna';
 
 // Sample course data for each category
 const sampleCourses = [
