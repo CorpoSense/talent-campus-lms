@@ -8,7 +8,7 @@ import light from "../../public/light.svg";
 import photo from "../../public/photo.svg";
 import graph from "../../public/graph.svg";
 import database from "../../public/database.svg";
-
+import person from "../../public/person.svg"
 export const data=[
     {
      src : course ,
@@ -110,4 +110,35 @@ img : photo
 ]
 export const students =[
     
+]
+export const Feedbacks=[
+{img : person ,
+    name:"Guy Hawkinsr",
+    profession :"UI-UX Designer" ,
+    details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
+},{img : person ,
+    name:"Guy Hawkinsr",
+    profession :"UI-UX Designer" ,
+    details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
+},{img : person ,
+    name:"Guy Hawkinsr",
+    profession :"UI-UX Designer" ,
+    details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
+},{img : person ,
+    name:"Guy Hawkinsr",
+    profession :"UI-UX Designer" ,
+    details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
+},{img : person ,
+    name:"Guy Hawkinsr",
+    profession :"UI-UX Designer" ,
+    details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
+},{img : person ,
+    name:"Guy Hawkinsr",
+    profession :"UI-UX Designer" ,
+    details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
+},{img : person ,
+    name:"Guy Hawkinsr",
+    profession :"UI-UX Designer" ,
+    details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
+}
 ]

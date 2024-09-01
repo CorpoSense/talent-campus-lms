@@ -218,7 +218,6 @@ const sampleCourses = [
             />
           </div>
         </div>
-        <Footer />
       </>
     );
   };
