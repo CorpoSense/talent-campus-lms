@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -5,7 +6,6 @@ import { data } from "../data/data";
 import { useEffect } from "react";
 import { useState } from "react";
 import { CourseConnected } from "./CourseConnected";
-import { Footer } from "./Footer";
 export const SlideConnected=(props)=>
 {
    const [nb,setNb]=useState(3);

@@ -4,7 +4,7 @@ import { SearchBar } from "./SearchBar";
 import { Course } from "./Course";
 import { CourseConnected } from "./CourseConnected";
 import { Footer } from "./Footer";
-import { sampleCourses } from "../data/data";
+import { sampleCourses1 } from "../data/data";
 import { data } from "../data/data";
 export const Search = (props) => {
     const [nbpage,setNbPage] =useState(1) ; 
@@ -13,12 +13,12 @@ export const Search = (props) => {
     {
      setValue(e.target.value);
     }
-    const [filteredCourses, setFilteredCourses] = useState(sampleCourses);
+    const [filteredCourses, setFilteredCourses] = useState(sampleCourses1);
 
  
     function HandleSearch(e) {
         e.preventDefault();
-        const filtered = sampleCourses.filter((item) => {
+        const filtered = sampleCourses1.filter((item) => {
             return (
                 item.category.toLowerCase().includes(val.toLowerCase()) ||
                 item.Duration.toLowerCase().includes(val.toLowerCase()) ||

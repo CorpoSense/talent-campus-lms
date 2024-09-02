@@ -7,10 +7,13 @@ import menu from '/menu.svg';
 import close from '/close.svg'
 import out from '/out.svg' ;
 import logo from '/logo.svg';
+import { useNavigate } from 'react-router-dom';
+
 export const Navbar=()=>
 {
+  const navigate = useNavigate();
   const [visible,setVisible]=useState(false);
-  const [isConnected , setIsconnected]=useState(false);
+  const [isConnected , setIsconnected]=useState(true);
   const handleToggle=()=>
   {
 visible == false ? setVisible(true) : setVisible(false);
@@ -25,6 +28,7 @@ visible == false ? setVisible(true) : setVisible(false);
     }  
   const goToLearning=()=>
   {
+    navigate('/Mylearning');
 
   }
   const logOut=()=>
