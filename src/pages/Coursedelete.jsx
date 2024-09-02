@@ -4,9 +4,8 @@ import { sampleCourses } from '../data/data';
 import { AdminNavbar } from '../components/AdminNavbar';
 import { Footer } from '../components/Footerlyna';
 import x from "../../public/x.svg";
-import Correct from "../../public/Correct.svg";
 
-export const Courseaccept = () => {
+export const Coursedelete = () => {
   const { id } = useParams();
   const course = sampleCourses.find(course => course.id === parseInt(id));
 
@@ -60,14 +59,12 @@ export const Courseaccept = () => {
               </button>
             </div>
             <div>
-              <h1 className="font-bold mb-10">Course added successfully!</h1>
-              <div className="flex space-x-4 mb-10 flex items-center">
-                <img src={Correct} alt="correct"  />
-                <h1> The course has been successfully added to the platform. A notification will be sent to the course creator for confirmation.</h1>
-              </div>
+              <h1 className="font-bold mb-10">Delete the course?</h1>
+              <h1 className="mb-10">Are you sure you want to delete the course?</h1>
             </div>
             <div className="flex justify-end space-x-4 mb-2">
-              <button className="bg-[#20B486] text-white px-10 py-2 rounded">Ok</button>
+              <button className="bg-[#EFEFEF] text-black px-10 py-2 rounded">Cancel</button>
+              <button className="bg-red-500 text-white px-10 py-2 rounded">Yes</button>
             </div>
           </div>
         </div>

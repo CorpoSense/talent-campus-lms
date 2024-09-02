@@ -18,6 +18,7 @@ import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsAndConditions } from "./pages/terms&conditions";
 import { CourseDetail } from "./pages/CourseDetail";
 import { Courseaccept } from "./pages/courseaccept";
+import { Coursedelete } from "./pages/Coursedelete";
 function App() {
 
  
@@ -39,6 +40,8 @@ function App() {
           <Route path="/termsandconditions" element={<TermsAndConditions/>}/>
           <Route path="admin/courseshold/course/:id" element={<CourseDetail/>}/>
           <Route path="admin/courseshold/course/:id/accept" element={<Courseaccept/>}/>
+          <Route path="admin/courseshold/course/:id/delete" element={<Coursedelete/>}/>
+
 
 
 
