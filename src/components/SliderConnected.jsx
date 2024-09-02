@@ -5,7 +5,8 @@ import { data } from "../data/data";
 import { useEffect } from "react";
 import { useState } from "react";
 import { CourseConnected } from "./CourseConnected";
-export const SlideConnected=()=>
+import { Footer } from "./Footer";
+export const SlideConnected=(props)=>
 {
    const [nb,setNb]=useState(3);
 
@@ -57,12 +58,12 @@ export const SlideConnected=()=>
         })
     },[]);
       return (
-<div className="mt-20 before:bg-red-400 mx-auto w-[90vw]">
+<div className="mt-20 mx-auto w-[90vw]">
 <Slider {...settings}>
          {
               data.map((item,index)=>
               { 
-                  return <CourseConnected key={item.id} src={item.src} category={item.category} Duration={item.Duration} title={item.title} description={item.description} price={item.price} Constructor={item.Constructor} photo={item.photo} number={index+1} total={getNbLessons()} />;
+                  return <CourseConnected key={item.id} src={item.src} category={item.category} Duration={item.Duration} title={item.title} description={item.description} price={item.price} Constructor={item.Constructor}  photo={item.photo} number={index+1} total={getNbLessons()} />;
               })
           }  
         </Slider>

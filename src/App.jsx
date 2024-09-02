@@ -10,9 +10,10 @@ import { AdminProfil} from "./pages/AdminProfil";
 import { AdminChangepw } from "./pages/AdminChangepw";
 import { AdminUsers } from "./pages/AdminUsers";
 import { AdminCoursesOnhold } from "./pages/AdminCoursesOnhold";
-import { privacyPolicy } from "./pages/privacyPolicy";
 import { Careers } from "./pages/Carrers";
 import { Courses } from "./pages/Courses";
+import { MyLearning } from "./pages/MyLearning";
+
 
 function App() {
   
@@ -33,6 +34,8 @@ function App() {
           <Route path="/Careers" element={<Careers/>}/>
           <Route path="/privacyPolicy" element={<privacyPolicy/>}/>
           <Route path="/Courses" element={<Courses/>}/>
+          <Route path="/MyLearning" element={<MyLearning/>}/>
+          
         </Routes> 
          </div>
       </Router>

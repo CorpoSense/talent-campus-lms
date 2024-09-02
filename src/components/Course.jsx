@@ -32,7 +32,14 @@ export const Course =(props)=>
 {props.price}    
 </h1>
 
+
           </div> 
+          <div className="flex w-[90%] justify-start space-x-2 ">
+<h1 className="sm:text-[12px] text-[10px] text-black font-bold">
+                    { props.rating}
+                    </h1>  
+                    <img className="w-[90px]" src={props.ratingSrc} /> 
+</div>
         </div>
      )
 }

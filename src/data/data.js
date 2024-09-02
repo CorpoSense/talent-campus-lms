@@ -1,14 +1,15 @@
-import course from "../../public/course.png";
-import teacher from "../../public/teacher.png";
-import pen from "../../public/pen.svg";
-import html from "../../public/html.svg";
-import micro from "../../public/micro.svg";
-import business from "../../public/business.svg";
-import light from "../../public/light.svg";
-import photo from "../../public/photo.svg";
-import graph from "../../public/graph.svg";
-import database from "../../public/database.svg";
-import person from "../../public/person.svg"
+import course from "/public/course.png";
+import teacher from "/public/teacher.png";
+import pen from "/public/pen.svg";
+import html from "/public/html.svg";
+import micro from "/public/micro.svg";
+import business from "/public/business.svg";
+import light from "/public/light.svg";
+import photo from "/public/photo.svg";
+import graph from "/public/graph.svg";
+import database from "/public/database.svg";
+import person from "/person.svg"
+import rating from "/rating.svg"
 export const data=[
     {
      src : course ,
@@ -19,6 +20,8 @@ export const data=[
      price : '10000 DA' ,
      Constructor : 'K.Lyna' ,
      photo : teacher ,
+     rating : 4.7 ,
+        ratingPic : rating,
 
     },
     {
@@ -30,6 +33,8 @@ export const data=[
         price : '10000 DA' ,
         Constructor : 'K.Lyna' ,
         photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
    
        },
     {
@@ -41,6 +46,8 @@ export const data=[
         price : '10000 DA' ,
         Constructor : 'K.Lyna' ,
         photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
    
        }, 
       {
@@ -52,6 +59,8 @@ export const data=[
         price : '10000 DA' ,
         Constructor : 'K.Lyna' ,
         photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
    
        },    {
         src : course ,
@@ -62,6 +71,8 @@ export const data=[
         price : '10000 DA' ,
         Constructor : 'K.Lyna' ,
         photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
    
        },    {
         src : course ,
@@ -72,6 +83,8 @@ export const data=[
         price : '10000 DA' ,
         Constructor : 'K.Lyna' ,
         photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
    
        }
 ] 
@@ -142,3 +155,396 @@ export const Feedbacks=[
     details :"Ut pharetra ipsum nec leo blandit, sit amet tincidunt eros pharetra. Nam sed imperdiet turpis. In hac habitasse platea dictumst. Praesent nulla massa, hendrerit vestibulum gravida in, feugiat auctor felis."
 }
 ]
+export const sampleCourses =[
+    {
+     src : course ,
+     category : 'Design',
+     Duration : "3 months",
+     title :"AWS Certified Solutions Architect",
+     description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+     price : '10000 DA' ,
+     Constructor : 'K.Lyna' ,
+     photo : teacher ,
+     rating : 4.7 ,
+        ratingPic : rating,
+
+    },
+    {
+        src : course ,
+        category : 'Design',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
+   
+       },
+    {
+        src : course ,
+        category : 'Development',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
+   
+       }, 
+      {
+        src : course ,
+        category : 'Development',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
+   
+       },    {
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
+   
+       },    {
+        src : course ,
+        category : 'Maketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+        ratingPic : rating,
+   
+       } , {
+        src : course ,
+        category : 'Design',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       }, {
+        src : course ,
+        category : 'Design',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       }, {
+        src : course ,
+        category : 'Design',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       }, {
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },{
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },{
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },{
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },{
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },{
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },{
+        src : course ,
+        category : 'Marketing',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },  {
+        src : course ,
+        category : 'Design',
+        Duration : "3 months",
+        title :"AWS Certified Solutions Architect",
+        description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+        price : '10000 DA' ,
+        Constructor : 'K.Lyna' ,
+        photo : teacher ,
+        rating : 4.7 ,
+           ratingPic : rating,
+   
+       },
+       {
+           src : course ,
+           category : 'Design',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+           ratingPic : rating,
+      
+          },
+       {
+           src : course ,
+           category : 'Development',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+           ratingPic : rating,
+      
+          }, 
+         {
+           src : course ,
+           category : 'Development',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+           ratingPic : rating,
+      
+          },    {
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+           ratingPic : rating,
+      
+          },    {
+           src : course ,
+           category : 'Maketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+           ratingPic : rating,
+      
+          } , {
+           src : course ,
+           category : 'Design',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          }, {
+           src : course ,
+           category : 'Design',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          }, {
+           src : course ,
+           category : 'Design',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          }, {
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          },{
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          },{
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          },{
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          },{
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          },{
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          },{
+           src : course ,
+           category : 'Marketing',
+           Duration : "3 months",
+           title :"AWS Certified Solutions Architect",
+           description : 'Lorem ipsum dolor sit amet, consectetur adipising elit, sed do eiusmod tempor' ,
+           price : '10000 DA' ,
+           Constructor : 'K.Lyna' ,
+           photo : teacher ,
+           rating : 4.7 ,
+              ratingPic : rating,
+      
+          }
+] ;

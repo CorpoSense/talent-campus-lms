@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 import { useEffect, useState } from 'react';
 import algiers from '/algiers.png';
 import menu from '/menu.svg';
 import close from '/close.svg'
-import out from '/out.svg'
+import out from '/out.svg' ;
+import logo from '/logo.svg';
 export const Navbar=()=>
 {
   const [visible,setVisible]=useState(false);
@@ -45,13 +46,12 @@ visible == false ? setVisible(true) : setVisible(false);
     return (<div className=''>
           <div className='w-full z-50 bg-white py-2 border border-x-0 border-b-1'>
           <div className="  h-[50px] items-center flex justify-between  w-[90%] mx-auto  ">
-         <h3 className='text-[18px]'> <span className='text-[#ffc107] font-bold italic'>Talent</span>  <span className='text-[#20b486] italic font-bold'>Campus
-          </span> </h3>
+        <img className='md:w-[150px] sm:w-[120px] w-[110px]' src={logo}/>
          <SearchBar/>
        { !visible &&  <img className='sm:hidden h-8 cursor-pointer  block' src={menu} onClick={handleToggle} />}
         {visible && <img className='sm:hidden h-8 cursor-pointer  block' src={close} onClick={handleToggle} />}
          <div className="sm:grid font-medium hidden grid-cols-2 divide-x">
-              <ul className=" text-[#6D737A]  text-[12px] items-center hidden sm:flex justify-between b-sm:justify-around
+              <ul className=" text-[#6D737A] md:text-[13px] text-[11px] items-center hidden sm:flex justify-between b-sm:justify-around
                space-x-3 mr-2">
                 <li> <Link to="/">Home
                 </Link>  </li>
@@ -64,7 +64,7 @@ visible == false ? setVisible(true) : setVisible(false);
             { isConnected ? <img src={algiers} onClick={goToProfile} className='w-[37px] cursor-pointer h-[37px] rounded-full ml-auto'/> :
             (<ul className="flex items-center justify-end space-x-2 text-[12px]">
               <li>
-                  <button className=' text-[#6D737A] text-[12px]' >   <Link to="/Login"> Login </Link>
+                  <button className=' text-[#6D737A] md:text-[13px] text-[11px]' >   <Link to="/Login"> Login </Link>
                   </button>
               </li>
               <li className=''>

@@ -31,7 +31,7 @@ export const Slide=()=>
          {
               data.map((item)=>
               { 
-                  return <Course key={item.id} src={item.src} category={item.category} Duration={item.Duration} title={item.title} description={item.description} price={item.price} Constructor={item.Constructor} photo={item.photo} />;
+                  return <Course rating={item.rating} ratingSrc={item.ratingPic} key={item.id} src={item.src} category={item.category} Duration={item.Duration} title={item.title} description={item.description} price={item.price} Constructor={item.Constructor} photo={item.photo} />;
               })
           }  
         </Slider>

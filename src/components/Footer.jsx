@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <div className="mt-20 mx-auto flex flex-col">
+    <div className="mt-20 w-[90vw] mx-auto flex flex-col">
       <div className="w-[100%] mx-auto justify-between items-start flex flex-row">
         <div className="flex space-y-4 sm:w-[30%] w-[45%] flex-col z-20">
           <h1 className="font-bold">Contact Us</h1>
