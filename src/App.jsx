@@ -16,6 +16,8 @@ import { AdminCoursesOnhold } from "./pages/AdminCoursesOnhold";
 import { Careers } from "./pages/Careers";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsAndConditions } from "./pages/terms&conditions";
+import { CourseDetail } from "./pages/CourseDetail";
+import { Courseaccept } from "./pages/courseaccept";
 function App() {
 
  
@@ -35,6 +37,10 @@ function App() {
           <Route path="/privacypolicy" element={<PrivacyPolicy/>}/>
           <Route path="/Careers" element={<Careers/>}/>
           <Route path="/termsandconditions" element={<TermsAndConditions/>}/>
+          <Route path="admin/courseshold/course/:id" element={<CourseDetail/>}/>
+          <Route path="admin/courseshold/course/:id/accept" element={<Courseaccept/>}/>
+
+
 
 
 
