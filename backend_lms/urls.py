@@ -19,6 +19,8 @@ from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from api.views import UserViewSet, GroupViewSet, ProfileView, CourseViewSet, index
+from django.conf.urls.static import static
+from django.conf import settings
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -37,3 +39,7 @@ urlpatterns = [
     path('api/profile/', ProfileView.as_view(), name='profile'),
     re_path(r'^.*$', index, name='index'),
 ]
+
+# Just to avoid some issues in DEBUG mode
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
