@@ -1,0 +1,45 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ "main", "tc" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.11, 3.12]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Build the UI
+      run: cd ui && pnpm build && cd ..
+    
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      
+    
+    - name: Generate and apply migrations
+      run: |
+        python manage.py makemigrations --noinput
+        python manage.py migrate --noinput
+    
+    - name: Generate static files
+      run: |
+        python manage.py collectstatic --noinput
+    
+    - name: Run Tests
+      run: |
+        python manage.py test
