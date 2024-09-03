@@ -156,3 +156,6 @@ req.txt
 
 # Mac
 .DS_Store
+
+# static assets
+static/
