@@ -32,7 +32,11 @@ export default defineConfig({
   ],
   base: '/static/', // <-- to allow django serve images
   build: {
-    outDir: '../static'
+    manifest: true,
+    outDir: '../dist',
+    // rollupOptions: {
+    //   input: '/src/main.js',  // Your main entry file
+    // }
   },
   resolve: {
     alias: {
