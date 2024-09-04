@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { sampleCourses } from '../data/data';
 import { AdminNavbar } from '../components/AdminNavbar';
 import { Footer } from '../components/Footerlyna';
@@ -7,11 +7,16 @@ import x from "../../public/x.svg";
 
 export const Coursedelete = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const course = sampleCourses.find(course => course.id === parseInt(id));
 
   if (!course) {
     return <div>Course not found</div>;
   }
+
+  const handleNavigation = () => {
+    navigate(`/admin/courseshold/course/${id}`);
+  };
 
   const renderModuleContent = (module) => (
     <div key={module.title} className="mb-4">
@@ -54,7 +59,7 @@ export const Coursedelete = () => {
         <div className="fixed inset-0 flex justify-center items-center z-30">
           <div className="bg-white shadow-md rounded-lg p-10 w-[50%] relative">
             <div className="absolute top-2 right-2">
-              <button className="text-white px-1 py-1 rounded">
+              <button className="text-white px-1 py-1 rounded" onClick={handleNavigation}>
                 <img src={x} className='w-[40px] h-[40px]' alt="Close" />
               </button>
             </div>
@@ -63,8 +68,8 @@ export const Coursedelete = () => {
               <h1 className="mb-10">Are you sure you want to delete the course?</h1>
             </div>
             <div className="flex justify-end space-x-4 mb-2">
-              <button className="bg-[#EFEFEF] text-black px-10 py-2 rounded">Cancel</button>
-              <button className="bg-red-500 text-white px-10 py-2 rounded">Yes</button>
+              <button className="bg-[#EFEFEF] text-black px-10 py-2 rounded" onClick={handleNavigation}>Cancel</button>
+              <button className="bg-red-500 text-white px-10 py-2 rounded" onClick={handleNavigation}>Yes</button>
             </div>
           </div>
         </div>

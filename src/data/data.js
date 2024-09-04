@@ -10,6 +10,7 @@ import graph from "/public/graph.svg";
 import database from "/public/database.svg";
 import person from "/person.svg"
 import rating from "/rating.svg"
+import corposense from "/corposense.svg"
 export const data=[
     {
      src : course ,
@@ -1284,4 +1285,218 @@ export const sampleCourses = [
     }
     
     
+];
+
+export const sampleJobs = [
+    {
+        id: 1,
+        image: "/corposense.svg",
+        category: "Design",
+        title: "UI/UX Designer",
+        locations:"Alger",
+        description: "Create intuitive and visually appealing user interfaces and experiences for web and mobile applications",
+        keyResponsibilities: {
+            responsibility1: "Design user interfaces for web and mobile apps",
+            responsibility2: "Conduct user research and create user personas",
+            responsibility3: "Create wireframes, prototypes, and mockups",
+            responsibility4: "Collaborate with developers to ensure designs are implemented accurately",
+            responsibility5: "Conduct usability testing and gather feedback"
+        },
+        requiredSkillsAndQualifications: {
+            qualification1: "Experience with design tools like Sketch, Figma, or Adobe XD",
+            qualification2: "Strong understanding of UX principles and methodologies",
+            qualification3: "Knowledge of HTML, CSS, and responsive design",
+            qualification4: "Excellent communication and teamwork skills",
+            qualification5: "Portfolio showcasing previous UI/UX design work"
+        },
+        benefits: {
+            benefit1: "Competitive salary and health benefits",
+            benefit2: "Opportunity to work on innovative projects",
+            benefit3: "Flexible working hours and remote work options",
+            benefit4: "Access to professional development resources"
+        },
+        howToApply: "Submit your resume, portfolio, and a cover letter explaining your design process through our online application portal",
+        location: "Remote",
+        datePosted: "today"
+    },
+    {
+        id: 2,
+        image: "/corposense.svg",
+        category: "Development",
+        title: "Front-End Developer",
+        location:"Alger",
+        description: "Develop responsive and dynamic user interfaces for web applications using modern JavaScript frameworks",
+        keyResponsibilities: {
+            responsibility1: "Develop and maintain front-end components using React or Angular",
+            responsibility2: "Ensure the technical feasibility of UI/UX designs",
+            responsibility3: "Optimize applications for maximum speed and scalability",
+            responsibility4: "Collaborate with back-end developers and designers",
+            responsibility5: "Write clean, modular, and reusable code"
+        },
+        requiredSkillsAndQualifications: {
+            qualification1: "Strong proficiency in JavaScript, HTML, and CSS",
+            qualification2: "Experience with React, Angular, or Vue.js",
+            qualification3: "Understanding of responsive design principles",
+            qualification4: "Familiarity with version control tools like Git",
+            qualification5: "Strong problem-solving and debugging skills"
+        },
+        benefits: {
+            benefit1: "Competitive salary and performance bonuses",
+            benefit2: "Flexible work schedule and remote work options",
+            benefit3: "Health and wellness programs",
+            benefit4: "Opportunities for career advancement"
+        },
+        howToApply: "Apply online with your resume, cover letter, and GitHub profile or portfolio showcasing your work",
+        datePosted: "today"
+    },
+    {
+        id: 3,
+        image: "/corposense.svg",
+        location:"Alger",
+        category: "Marketing",
+        title: "Digital Marketing Specialist",
+        description: "Plan digital marketing campaigns to increase brand awareness and drive traffic to the company’s online platforms",
+        keyResponsibilities: {
+            responsibility1: "Develop and manage digital marketing campaigns across various channels (SEO, SEM, social media, email marketing)",
+            responsibility2: "Analyze and report on campaign performance using tools like Google Analytics",
+            responsibility3: "Optimize website content and landing pages for SEO",
+            responsibility4: "Manage social media accounts and content calendars",
+            responsibility5: "Collaborate with the design team to create digital content"
+        },
+        requiredSkillsAndQualifications: {
+            qualification1: "Proven experience in digital marketing and SEO/SEM",
+            qualification2: "Strong knowledge of web analytics tools (e.g., Google Analytics, SEMrush)",
+            qualification3: "Experience with content management systems (e.g., WordPress)",
+            qualification4: "Excellent communication and analytical skills",
+            qualification5: "Ability to work independently and in a team environment"
+        },
+        benefits: {
+            benefit1: "Competitive salary and marketing bonuses",
+            benefit2: "Professional development opportunities",
+            benefit3: "Flexible work environment and remote options",
+            benefit4: "Comprehensive health and dental coverage"
+        },
+        howToApply: "Send your resume, cover letter, and examples of successful marketing campaigns you’ve managed to our application portal",
+        datePosted: "today"
+    },
+    {
+        id: 4,
+        image: "/corposense.svg",
+        category: "Business",
+        title: "Product Manager",
+        location:"Alger",
+        description: "Lead cross-functional teams to deliver products that meet customer needs and align with business objectives",
+        keyResponsibilities: {
+            responsibility1: "Define product vision and strategy based on market research and customer feedback",
+            responsibility2: "Collaborate with engineering, design, and marketing teams to bring products to market",
+            responsibility3: "Manage product lifecycle from concept to launch",
+            responsibility4: "Prioritize features and create product roadmaps",
+            responsibility5: "Analyze product performance and gather insights for continuous improvement"
+        },
+        requiredSkillsAndQualifications: {
+            qualification1: "Experience in product management or related field",
+            qualification2: "Strong understanding of Agile methodologies",
+            qualification3: "Ability to prioritize tasks and manage multiple projects simultaneously",
+            qualification4: "Excellent communication and leadership skills",
+            qualification5: "Analytical mindset with a focus on data-driven decision making"
+        },
+        benefits: {
+            benefit1: "Competitive salary with stock options",
+            benefit2: "Opportunities for professional growth and leadership training",
+            benefit3: "Health, dental, and vision insurance",
+            benefit4: "Flexible work arrangements and unlimited PTO"
+        },
+        howToApply: "Apply with your resume and a cover letter detailing your experience managing products and leading teams",
+        datePosted: "today"
+    },
+    {
+        id: 5,
+        image: "/corposense.svg",
+        category: "Design",
+        title: "Graphic Designer",
+        description: "Create visually engaging graphics and marketing materials for both digital and print mediums",
+        keyResponsibilities: {
+            responsibility1: "Design graphics for social media, websites, and print materials",
+            responsibility2: "Collaborate with marketing and content teams to create cohesive brand visuals",
+            responsibility3: "Maintain brand consistency across all design projects",
+            responsibility4: "Stay updated with industry trends and software tools",
+            responsibility5: "Manage multiple design projects simultaneously with attention to detail"
+        },
+        requiredSkillsAndQualifications: {
+            qualification1: "Proficiency in Adobe Creative Suite (Photoshop, Illustrator, InDesign)",
+            qualification2: "Strong portfolio showcasing a range of design projects",
+            qualification3: "Understanding of design principles and typography",
+            qualification4: "Ability to work under tight deadlines and manage time effectively",
+            qualification5: "Strong communication and collaboration skills"
+        },
+        benefits: {
+            benefit1: "Competitive salary and creative project bonuses",
+            benefit2: "Access to the latest design tools and software",
+            benefit3: "Professional development and learning opportunities",
+            benefit4: "Remote work options and flexible hours"
+        },
+        howToApply: "Submit your resume, cover letter, and portfolio through our online application portal",
+        location: "Remote",
+        datePosted: "today"
+    },
+    {
+        id: 6,
+        image: "/corposense.svg",
+        category: "Development",
+        location:"Alger",
+        title: "Backend Developer",
+        description: "Build and maintain the server-side logic and database structures that power web applications",
+        keyResponsibilities: {
+            responsibility1: "Develop and maintain server-side code and APIs",
+            responsibility2: "Optimize application performance and scalability",
+            responsibility3: "Collaborate with front-end developers to integrate user-facing elements",
+            responsibility4: "Ensure data security and compliance with industry standards",
+            responsibility5: "Troubleshoot and debug applications to resolve issues"
+        },
+        requiredSkillsAndQualifications: {
+            qualification1: "Proficiency in server-side languages (e.g., Node.js, Python, Java)",
+            qualification2: "Experience with database management systems (e.g., MySQL, MongoDB)",
+            qualification3: "Understanding of RESTful API design principles",
+            qualification4: "Familiarity with cloud services (e.g., AWS, Azure)",
+            qualification5: "Strong problem-solving skills and attention to detail"
+        },
+        benefits: {
+            benefit1: "Competitive salary and performance-based bonuses",
+            benefit2: "Health and wellness benefits",
+            benefit3: "Opportunities for career advancement",
+            benefit4: "Flexible work hours and remote work options"
+        },
+        howToApply: "Apply online with your resume, cover letter, and a link to your GitHub or portfolio",
+        datePosted: "today"
+    },
+    {
+        id: 7,
+        image: "/corposense.svg",
+        category: "Marketing",
+        title: "Social Media Manager",
+        description: "Develop and execute social media strategies to engage audiences, build brand loyalty, and drive traffic to online platforms",
+        keyResponsibilities: {
+            responsibility1: "Create and schedule engaging content across social media platforms",
+            responsibility2: "Monitor social media channels and respond to customer inquiries",
+            responsibility3: "Analyze social media performance metrics and adjust strategies accordingly",
+            responsibility4: "Collaborate with the marketing team to align social media efforts with overall brand strategy",
+            responsibility5: "Stay updated with social media trends and emerging platforms"
+        },
+        requiredSkillsAndQualifications: {
+            qualification1: "Proven experience managing social media accounts for brands",
+            qualification2: "Strong understanding of social media analytics tools",
+            qualification3: "Creative mindset with the ability to generate engaging content",
+            qualification4: "Excellent communication and customer service skills",
+            qualification5: "Ability to multitask and manage multiple social media platforms"
+        },
+        benefits: {
+            benefit1: "Competitive salary and social media performance bonuses",
+            benefit2: "Flexible work environment and remote options",
+            benefit3: "Access to the latest social media management tools",
+            benefit4: "Professional development and training opportunities"
+        },
+        howToApply: "Submit your resume, cover letter, and examples of successful social media campaigns you’ve managed to our online portal",
+        location: "Alger",
+        datePosted: "today"
+    }
 ];

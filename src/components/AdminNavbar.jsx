@@ -7,6 +7,8 @@ import menu from '../../public/menu.svg';
 import close from '../../public/close.svg';
 import profile from '../../public/profile.svg';
 import out from '../../public/logout.svg'; 
+import logo from '/logo.svg';
+
 
 export const AdminNavbar = () => {
   const [visible, setVisible] = useState(false);
@@ -47,14 +49,11 @@ export const AdminNavbar = () => {
     `hover:text-[#20B486] ${activeLink === linkName ? 'text-[#20B486]' : 'text-[#6D737A]'}`;
 
   return (
-    <div className='sticky'>
-      <div className='w-full z-50 bg-white py-2 border border-x-0 border-b-1'>
-        <div className="sticky h-[50px] flex items-center justify-between w-[90%] mx-auto">
-          <h3 className="text-[20px] font-pt-serif">
-            <span className='text-[#ffc107] font-bold italic'>Talent</span>
-            <span className='text-[#20b486] italic font-bold mr-6'>Campus</span>
-          </h3>
-          <SearchBar />
+    <div className=''>
+          <div className='w-full z-50 bg-white py-2 border border-x-0 border-b-1'>
+          <div className="  h-[50px] items-center flex justify-between  w-[90%] mx-auto  ">
+        <img className='md:w-[150px] sm:w-[120px] w-[110px]' src={logo}/>
+         <SearchBar />
           {!visible && (
             <img
               className='sm:hidden h-8 cursor-pointer block'
@@ -69,7 +68,7 @@ export const AdminNavbar = () => {
               onClick={handleToggle}
             />
           )}
-          <div className="sm:flex font-medium hidden items-center space-x-6 ml-20 mr-20">
+          <div className="sm:flex font-medium hidden items-center space-x-6 ml-10 mr-10">
             <ul className="text-[13px] flex items-center space-x-4">
               <li>
                 <Link
@@ -98,6 +97,15 @@ export const AdminNavbar = () => {
                   User Management
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="./jobs"
+                  onClick={() => setActiveLink('Jobs')}
+                  className={linkClasses('Jobs')}
+                >
+                  Jobs
+                </Link>
+              </li>
             </ul>
             {isConnected ? (
               <img
@@ -108,7 +116,7 @@ export const AdminNavbar = () => {
             ) : (
               <div className="flex items-center justify-end ">
                 <button
-                  className="w-[40px] h-[40px] rounded-full flex items-center justify-center"
+                  className="w-[40px] h-[40px] rounded-full flex items-center justify-center ml-10"
                   onClick={() => goToProfile()}
                 >
                   <Link to="/profile">

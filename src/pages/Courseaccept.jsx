@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { sampleCourses } from '../data/data';
 import { AdminNavbar } from '../components/AdminNavbar';
 import { Footer } from '../components/Footerlyna';
@@ -8,11 +8,16 @@ import Correct from "../../public/Correct.svg";
 
 export const Courseaccept = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const course = sampleCourses.find(course => course.id === parseInt(id));
 
   if (!course) {
     return <div>Course not found</div>;
   }
+
+  const handleNavigation = () => {
+    navigate(`/admin/courseshold/course/${id}`);
+  };
 
   const renderModuleContent = (module) => (
     <div key={module.title} className="mb-4">
@@ -55,19 +60,19 @@ export const Courseaccept = () => {
         <div className="fixed inset-0 flex justify-center items-center z-30">
           <div className="bg-white shadow-md rounded-lg p-10 w-[50%] relative">
             <div className="absolute top-2 right-2">
-              <button className="text-white px-1 py-1 rounded">
+              <button className="text-white px-1 py-1 rounded" onClick={handleNavigation}>
                 <img src={x} className='w-[40px] h-[40px]' alt="Close" />
               </button>
             </div>
             <div>
               <h1 className="font-bold mb-10">Course added successfully!</h1>
               <div className="flex space-x-4 mb-10 flex items-center">
-                <img src={Correct} alt="correct"  />
-                <h1> The course has been successfully added to the platform. A notification will be sent to the course creator for confirmation.</h1>
+                <img src={Correct} alt="correct" />
+                <h1>The course has been successfully added to the platform. A notification will be sent to the course creator for confirmation.</h1>
               </div>
             </div>
             <div className="flex justify-end space-x-4 mb-2">
-              <button className="bg-[#20B486] text-white px-10 py-2 rounded">Ok</button>
+              <button className="bg-[#20B486] text-white px-10 py-2 rounded" onClick={handleNavigation}>Ok</button>
             </div>
           </div>
         </div>

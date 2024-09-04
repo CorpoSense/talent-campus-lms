@@ -4,8 +4,8 @@ import Dribbble from '../../public/Dribbble.svg';
 import linkedin from '../../public/linkedin.svg';
 import insta from '../../public/insta.svg';
 import Behance from '../../public/Behance.svg';
+import logo from '../../public/logo.svg'; // Ensure this path is correct for your project
 
-// If using React Router for navigation
 import { Link } from 'react-router-dom';
 
 export const Footer = () => {
@@ -78,10 +78,7 @@ export const Footer = () => {
 
         {/* Logo and Company Name */}
         <div className="mb-4 md:mb-0 mt-10">
-          <h3 className="text-[45px] font-pt-serif">
-            <span className='text-[#ffc107] font-bold italic'>Talent</span>
-            <span className='text-[#20b486] italic font-bold mr-6'>Campus</span>
-          </h3>
+          <img className='md:w-[350px] sm:w-[320px] w-[310px]' src={logo} alt="Talent Campus Logo" />
         </div>
       </div>
 

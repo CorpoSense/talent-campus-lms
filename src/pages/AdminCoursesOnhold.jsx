@@ -62,7 +62,7 @@ export const AdminCoursesOnhold = () => {
             {Object.keys(categories).map(category => (
               <li key={category}>
                 <button
-                  className={`focus:outline-none ${activeCategory === category ? 'text-[#06A4FF] font-bold underline underline-offset-8' : 'text-gray-600'}`}
+                  className={`focus:outline-none ${activeCategory === category ? 'text-[#20B486] font-bold underline underline-offset-8' : 'text-gray-600'}`}
                   onClick={() => setActiveCategory(category)}
                 >
                   {category}

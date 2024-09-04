@@ -1,16 +1,25 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { sampleCourses } from '../data/data';
 import { AdminNavbar } from '../components/AdminNavbar';
 import { Footer } from '../components/Footerlyna';
 
 export const CourseDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const course = sampleCourses.find(course => course.id === parseInt(id));
 
   if (!course) {
     return <div>Course not found</div>;
   }
+
+  const handleDeleteClick = () => {
+    navigate(`/admin/courseshold/course/${id}/delete`);
+  };
+
+  const handleAcceptClick = () => {
+    navigate(`/admin/courseshold/course/${id}/accept`);
+  };
 
   const renderModuleContent = (module) => (
     <div key={module.title} className="mb-4">
@@ -75,8 +84,16 @@ export const CourseDetail = () => {
 
           {/* Buttons */}
           <div className="flex justify-end space-x-4 mr-8 mt-8 mb-10">
-            <button className="bg-[#F2A5A5] text-red-500 px-10 py-2 rounded">Delete</button>
-            <button className="bg-[#20B486] text-white px-10 py-2 rounded">Accept</button>
+            <button 
+              className="bg-[#F2A5A5] text-red-500 px-10 py-2 rounded"
+              onClick={handleDeleteClick}
+            >
+              Delete
+            </button>
+            <button className="bg-[#20B486] text-white px-10 py-2 rounded "
+                          onClick={handleAcceptClick}
+
+            >Accept</button>
           </div>
         </div>
       </div>
