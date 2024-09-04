@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build --emptyOutDir",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --dom --run"
   },
   "dependencies": {
     "@vueuse/core": "^10.11.0",
@@ -23,6 +24,9 @@
     "@types/node": "^22.1.0",
     "@types/nprogress": "^0.2.3",
     "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^15.7.3",
+    "jsdom": "^25.0.0",
     "typescript": "^5.2.2",
     "unplugin-auto-import": "^0.18.2",
     "unplugin-icons": "^0.19.1",
