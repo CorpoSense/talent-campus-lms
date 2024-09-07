@@ -2,17 +2,17 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os 
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
-load_dotenv()
-
-
-
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER='corposenseteam@gmail.com'
-EMAIL_HOST_PASSWORD='ixcyyceomkflmzcl'
+EMAIL_BACKEND=env("EMAIL_BACKEND")
+EMAIL_HOST=env("EMAIL_HOST")
+EMAIL_PORT=env("EMAIL_PORT")
+EMAIL_USE_TLS=env("EMAIL_USE_TLS")
+EMAIL_HOST_USER=env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD=env("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,7 +125,7 @@ STATIC_URL = 'static/'
 DEBUG=True
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Set the access token lifetime
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),  # Set the access token lifetime
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Set the refresh token lifetime
     'ROTATE_REFRESH_TOKENS': False,  # Whether to rotate refresh tokens on each use
     'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old refresh tokens after rotation

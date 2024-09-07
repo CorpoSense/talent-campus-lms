@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError,AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 import json
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse_lazy
 from rest_framework.response import Response
@@ -25,59 +27,77 @@ from django.utils.decorators import method_decorator
 from rest_framework.permissions import AllowAny
 #import json
 class RegisterUserView(APIView):
-    permission_classes=[AllowAny]
+    #permission_classes=[AllowAny]
     def post(self,request):
+        # Basic validation for required fields
+        required_fields = ["type", "username", "email", "password", "firstName", "lastName","industry_name"]
+        missing_fields = [field for field in required_fields if not request.data.get(field)]
+        
+        if missing_fields:
+            return Response({
+                "error": True,
+                "message": f"Missing fields: {', '.join(missing_fields)}"
+            }, status=400)
         userType = request.data['type']
         existingStd = User.objects.filter(email=request.data["email"]).exists()
         if(existingStd):
                 raise ValidationError({
-                    "error":True,
-                    "message":"email is already linked to another account"
+                    "error":True
                 })
-        else:
-            user = User.objects.create(email = request.data["email"],username = request.data["username"],password=request.data["password"])
-            # setup profile information 
-            if(request.data["type"]):
-                user.type = request.data["type"]
-            user.save()
-            profile = user.profile 
-            profile.firstName = request.data["firstName"]
-            profile.lastName = request.data["lastName"]
-            profile.save()
-            #profile.phoneNumber = request.data["phoneNumber"]
-            if(userType == "student"):
-                #print("called from student")
-                #print("hello world")
-                stdSkills = request.data["skills"]
-                #print(stdSkills)
-                stdInterests=  request.data["interests"]
-                # create student entity
-                student = Student.objects.create(user=user,industry=request.data["industry_name"])
+        
 
-                # handle skills 
-                for skill_data in stdSkills:
-                    #print(skill_data)
-                    skill,created = Skill.objects.get_or_create(name = skill_data)
-                    student.skills.add(skill)
-                for interest_data in stdInterests:
-                    #print(skill_data)
-                    ineterst,created = Interest.objects.get_or_create(interest = interest_data)
-                    student.interests.add(ineterst)
+         # Additional validation based on user type
+        if userType == "student" or userType == "employee":
+            # Check if skills and interests are provided
+            if not request.data.get("skills") or not request.data.get("interests"):
+                return Response({
+                    "error": True,
+                    "message": "Skills and interests are required for students and employees"
+                }, status=400)
+    
+        user = User.objects.create(email = request.data["email"],username = request.data["username"],password=request.data["password"])
+        # setup profile information 
+        if(request.data["type"]):
+            user.type = request.data["type"]
+        user.save()
+        profile = user.profile 
+        profile.firstName = request.data["firstName"]
+        profile.lastName = request.data["lastName"]
+        profile.save()
+            #profile.phoneNumber = request.data["phoneNumber"]
+        if(userType == "student"):
+            #print("called from student")
+            #print("hello world")
+            stdSkills = request.data["skills"]
+            #print(stdSkills)
+            stdInterests=  request.data["interests"]
+            # create student entity
+            student = Student.objects.create(user=user,industry=request.data["industry_name"])
+
+            # handle skills 
+            for skill_data in stdSkills:
+                #print(skill_data)
+                skill,created = Skill.objects.get_or_create(name = skill_data)
+                student.skills.add(skill)
+            for interest_data in stdInterests:
+                #print(skill_data)
+                ineterst,created = Interest.objects.get_or_create(interest = interest_data)
+                student.interests.add(ineterst)
                 #learner_group= Group.objects.get(name="Learner")
                 #user.groups.add(learner_group)
-                student.save()
+            student.save()
                 #print(student)
-                return Response({
-                    "success": True,"message":"student created successufully"
-                },status=201)
-            elif(request.data["type"]=="employee") :
-                ## case Employee 
-                employee_skills=request.data["skills"]
-                employee_interets=request.data["interests"]
-                #emp_jobPosting = request.data["job"]
-                employee = Employee.objects.create(user=user,industry = request.data["industry_name"])
-                #job_posting = JobApplication.objects.create(employee=employee,title=emp_jobPosting["title"],description=emp_jobPosting["description"],
-                 #                                      experience=emp_jobPosting["experience"],companyName=emp_jobPosting["companyName"],
+            return Response({
+                "success": True,"message":"student created successufully"
+            },status=201)
+        elif(request.data["type"]=="employee") :
+            ## case Employee 
+            employee_skills=request.data["skills"]
+            employee_interets=request.data["interests"]
+            #emp_jobPosting = request.data["job"]
+            employee = Employee.objects.create(user=user,industry = request.data["industry_name"])
+            #job_posting = JobApplication.objects.create(employee=employee,title=emp_jobPosting["title"],description=emp_jobPosting["description"],
+             #                                      experience=emp_jobPosting["experience"],companyName=emp_jobPosting["companyName"],
                   #                                     date_posed=emp_jobPosting["date_posed"],region=emp_jobPosting["region"],
                    #                                    contract=emp_jobPosting["contract"],industry=emp_jobPosting["industry"])
                 #for lang in emp_jobPosting["languages"]:
@@ -86,31 +106,30 @@ class RegisterUserView(APIView):
                    # job_posting.save()
         
                 # handle skills 
-                for skill_data in employee_skills:
-                    #print(skill_data)
-                    skill,created = Skill.objects.get_or_create(name = skill_data)
-                    employee.skills.add(skill)
+            for skill_data in employee_skills:
+                #print(skill_data)
+                skill,created = Skill.objects.get_or_create(name = skill_data)
+                employee.skills.add(skill)
 
-                for interest_data in employee_interets:
-                    #print(skill_data)
-                    ineterst,created = Interest.objects.get_or_create(interest = interest_data)
-                    employee.interests.add(ineterst)
+            for interest_data in employee_interets:
+                #print(skill_data)
+                ineterst,created = Interest.objects.get_or_create(interest = interest_data)                    
+                employee.interests.add(ineterst)
                 #user.groups.add(learner_group)
-                employee.save()
-                return Response({
-                    "success": True,"message":"Employee created successufuly"
-                },status=201)
-            else : 
-                # Instructor
-                instructor = Instructor.objects.create(user = user,industry=request.data["industry_name"])
-                # add permission to instructor 
-                #instructor_group = Group.objects.get(name="Instructor")
-                #user.groups.add(instructor_group)
-                instructor.save()
-                return Response({
-                    "success":True,
-                    "message":"Instructor created successufully"
-                },status=201)
+            employee.save()
+            return Response({
+                "success": True,"message":"Employee created successufuly"
+            },status=201)
+        else : 
+            # Instructor
+            instructor = Instructor.objects.create(user = user,industry=request.data["industry_name"])                # add permission to instructor 
+            #instructor_group = Group.objects.get(name="Instructor")
+            #user.groups.add(instructor_group)
+            instructor.save()
+            return Response({    
+                "success":True,
+                "message":"Instructor created successufully"
+            },status=201)
 
 
 
@@ -128,6 +147,15 @@ class LoginUserView(APIView):
             raise ValidationError("invalid password !")
         
     def post(self,request):
+        # Basic validation for required fields
+        required_fields = ["email", "password"]
+        missing_fields = [field for field in required_fields if not request.data.get(field)]
+        
+        if missing_fields:
+            return Response({
+                "error": True,
+                "message": f"Missing fields: {', '.join(missing_fields)}"
+            }, status=400)
         try:
             user = self.authenticateUser(email = request.data.get("email"),password=request.data.get("password"))
         except ValidationError as e:
@@ -163,6 +191,7 @@ class CustomPasswordResetView(PasswordResetView):
     def form_valid(self, form):
         email = form.cleaned_data['email']
         domain = self.request.headers["Host"]
+        print(email,domain)
         existUser = User.objects.get(email=email)
         print(existUser)
         if not existUser:
@@ -183,10 +212,11 @@ class CustomPasswordResetView(PasswordResetView):
         }
         email_content = render_to_string(email_template_name,c)
         #print(email_content)
+        #print(existUser.email,subject,email_content)
         try:
-            send_mail(subject,email_content,EMAIL_HOST_USER,[existUser.email],fail_silently=False)
-        except BadHeaderError:
-            return HttpResponse("invalid header found.")
+            send_mail(subject, email_content, EMAIL_HOST_USER, [existUser.email], fail_silently=False)
+        except Exception as e:
+            print(f"Error sending email: {e}")
         return redirect("/auth/password_reset_done/")
 
 class customResetPasswordDone(PasswordResetDoneView):
@@ -229,11 +259,12 @@ class customPasswordResetCompleteView(PasswordResetCompleteView):
 class ProfileView(APIView):
     def get(self,request,user_id):
         # get request headers 
-        auth_header = request.headers.get("Authorization")
-        if(auth_header is None or not auth_header):
+        try:
+            authorized = validToken(request.headers.get("Authorization"),user_id)
+        except ValueError as e:
             return Response({
                 "error":True,
-                "message":"Unauthorized action"
+                "message":str(e)
             },status=401)
         try:
             user= User.objects.get(pk=user_id)
@@ -244,7 +275,7 @@ class ProfileView(APIView):
             })
         # get the profile 
         profile = user.profile 
-        print("here",user.profile)
+        #print("here",user.profile)
         # prepare the data 
          # Prepare the response data
         data = {}
@@ -288,11 +319,12 @@ class ProfileView(APIView):
             }
         return Response(data)
     def put(self,request,user_id):
-        auth_header = request.headers.get("Authorization")
-        if(auth_header is None or not auth_header):
+        try:
+            authorized = validToken(request.headers.get("Authorization"),user_id)
+        except ValueError as e:
             return Response({
                 "error":True,
-                "message":"Unauthorized action"
+                "message":str(e)
             },status=401)
         try:
             user = User.objects.get(pk=user_id)
@@ -304,7 +336,7 @@ class ProfileView(APIView):
         # get profile to update 
         profile = user.profile
         # get request body 
-        body = json.loads(request.body)
+        body = request.data
         profile.firstName = body.get("first_name",profile.firstName) ## default value in case first_name absent
         profile.lastName = body.get("last_name",profile.lastName) ## default value in case last name not provided
         profile.sexe = body.get("sexe",profile.sexe)
@@ -338,11 +370,62 @@ class ProfileView(APIView):
             "success":True,
             "message":"Profile updated successfully"
         })
+
+## refersh token view 
+class RefreshTokenView(APIView):
+    @csrf_exempt
+    def post(self, request,user_id):
+        refresh_token = request.data.get("refreshToken")
+
+        if not refresh_token or not user_id:
+            return Response({
+                "error": True,
+                "message": "Missing refresh token or user ID."
+            }, status=400)
+
+        try:
+            # Verify if the user exists
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({
+                "error": True,
+                "message": "User not found."
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            # Decode the refresh token
+            token = RefreshToken(refresh_token)
+
+            # Verify if the refresh token is valid for the given user
+            if str(token.get("user_id")) != str(user_id):
+                return Response({
+                    "error": True,
+                    "message": "Token does not belong to the given user."
+                }, status=401)
+
+            # Generate a new access token
+            new_access_token = str(token.access_token)
+
+            return Response({
+                "success": True,
+                "accessToken": new_access_token
+            }, status=200)
+
+        except TokenError as e:
+            return Response({
+                "error": True,
+                "message": "Invalid refresh token."
+            }, status=401)
         
 
-
-
-
-
-
-
+def validToken(token,userId):
+    if not token:
+        raise ValueError('Authorization header is missing.')
+    try:
+        token_str = token.split(' ')[1]
+        accessToken = AccessToken(token_str)
+        if(str(accessToken.get("user_id")) != str(userId)):
+            raise ValueError("unauthorized action")
+        return True  # Token is valid
+    except (IndexError, InvalidToken, TokenError):
+        raise ValueError('Invalid or expired token.')

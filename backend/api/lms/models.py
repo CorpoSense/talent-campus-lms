@@ -10,6 +10,7 @@ class CourseCategorie(models.Model):
 class Course(models.Model):
     title = models.CharField(max_length=100)
     desc = models.TextField(max_length=300)
+    image = models.TextField(max_length=1000)
     instructor = models.ForeignKey(Instructor,on_delete=models.CASCADE,related_name="courses")
     categories = models.ManyToManyField(CourseCategorie,related_name="courses")
     rating = models.FloatField(default=1.0)

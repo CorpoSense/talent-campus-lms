@@ -1,57 +1,67 @@
 ### Register a new User
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/auth/register/
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/auth/register/
 Content-Type: application/json
 
 {
     "username":"ibrahim",
-    "email":"hassanebencharef@gmail.com",
+    "email":"lahcen@gmail.com",
     "password":"password",
     "firstName":"Hassane",
     "lastName":"BENCHAREF",    
-    "type":"instructor",
+    "type":"student",
+    "interests":["web dev"],
     "skills":["js"],
-    "interests":["devops"],
     "industry_name":"IT"
 }
 
 ### Login a user 
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/auth/login/
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/auth/login/
 Content-Type: application/json
 
 {
-    "email":"h.bencharef@esi-sba.dz",
-    "password":"password"
+   "email":"hassanebencharef@gmail.com",
+   "password":"password"
 }
 
 ### Reset Password View 
 GET https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/auth/password_reset/
 
 ### Get profile information 
-GET https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/auth/profile/3/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+GET https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/auth/profile/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzI5OTIxLCJpYXQiOjE3MjU3Mjc1MjEsImp0aSI6ImVkODI4MmVmMTlkMDQxNDY4OGI4ZjI1MDdmY2MwZjllIiwidXNlcl9pZCI6NH0.FVSL2kn91qzmHGKHvCmy-K-VJyQxFhdO4W4GPiVV9yI
 
 
 ### update profile information 
-PUT https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/auth/profile/3/
+PUT https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/auth/profile/4/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzMwMjY3LCJpYXQiOjE3MjU3Mjc4NjcsImp0aSI6IjdlMjg5NjlhMTZjYjRmNjliYTAwOGQ3YzIyMjZjMDQxIiwidXNlcl9pZCI6NH0.9M3shXSzMctYd-ASvjWoQZLUW9TIiUnKYMxoT1te-P0
 
 {
     "first_name":"Lahcen",
     "last_name":"lahcen",
-    "phone_number":"0674179417",
+    "phone_number":"0674171417",
     "sexe":"Male"
 }
 
-
-### course creation 
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/create/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+### refersh token when get expired
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/auth/refreshToken/3/
 Content-Type: application/json
 
 {
-    "instructor_id":4,
-    "course_name":"Introduction to PHP",
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNTkyMjM0NSwiaWF0IjoxNzI1MzE3NTQ1LCJqdGkiOiJmZjU2MmVkMjMyYmM0YzM4YmMwMjRkMzJlMzZjMzQ4ZCIsInVzZXJfaWQiOjN9.Pi7HyaxZVk_M1uUj3td68e6r76j22yETvJdfECXMzJc"
+}
+
+
+## course management
+
+
+### course creation 
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/create/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzMwMjY3LCJpYXQiOjE3MjU3Mjc4NjcsImp0aSI6IjdlMjg5NjlhMTZjYjRmNjliYTAwOGQ3YzIyMjZjMDQxIiwidXNlcl9pZCI6NH0.9M3shXSzMctYd-ASvjWoQZLUW9TIiUnKYMxoT1te-P0
+Content-Type: application/json
+
+{   "instructor_id":4,
+    "course_name":"Introduction to JAVASCRIPT",
     "course_descr":"course description 2",
     "course_categories":["AI","SE"],
     "video_links":[{
@@ -66,15 +76,20 @@ Content-Type: application/json
 }
 
 ### Course details 
-GET https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/2/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
-
-### Course update information 
-PUT https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/update/2/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzMwMjY3LCJpYXQiOjE3MjU3Mjc4NjcsImp0aSI6IjdlMjg5NjlhMTZjYjRmNjliYTAwOGQ3YzIyMjZjMDQxIiwidXNlcl9pZCI6NH0.9M3shXSzMctYd-ASvjWoQZLUW9TIiUnKYMxoT1te-P0
 Content-Type: application/json
 
 {
+    "user_id": 4
+}
+### Course update information 
+PUT https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/update/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzMwOTQzLCJpYXQiOjE3MjU3Mjg1NDMsImp0aSI6ImRmOTMzZmZjMzJkYjQ2ZmFiZTM4ZDVlYjg4MTc3MzYyIiwidXNlcl9pZCI6NH0._YWZM7r2mXGjPBGHQOQJXl1uvhMCp2qU-3Sxq1PH85w
+Content-Type: application/json
+
+{
+    "user_id":4,
 "videos":[
      {
         "url":"url2",
@@ -82,77 +97,92 @@ Content-Type: application/json
         "description":"description 1"
      }
 ],
-"title":"title",
+"title":"title","image":"cloudinary image",
 "description":"course description"
 }
 
 
 ### Delete course 
-DELETE https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/delete/2/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
-
-
-### Course Enrollement 
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/enroll/4/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+DELETE https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/delete/13/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzMwOTQzLCJpYXQiOjE3MjU3Mjg1NDMsImp0aSI6ImRmOTMzZmZjMzJkYjQ2ZmFiZTM4ZDVlYjg4MTc3MzYyIiwidXNlcl9pZCI6NH0._YWZM7r2mXGjPBGHQOQJXl1uvhMCp2qU-3Sxq1PH85w
+Content-Type: application/json
 
 {
     "user_id":4
 }
 
-### get my enrollements 
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/my_courses/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+### Course Enrollement 
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/enroll/4/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MzU4MTA4LCJpYXQiOjE3MjUzNTU3MDgsImp0aSI6ImI4YjY1NTNkMTZiNDRjOTRiM2NjOTI2NjFjMjZlMDBiIiwidXNlcl9pZCI6OX0.niPZAcKOSS5kDl1e5-qc9x74oeYl5XLXgv3qtH9N-E4
+Content-Type: application/json
 
 {
-    "user_id":3
+    "user_id":9
+}
+
+### get my enrollements 
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/my_courses/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
+Content-Type: application/json
+
+{
+    "user_id":4
 }
 
 ### enrolled course details
-GET https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/enrollement/2/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/enrollement/5/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
+Content-Type: application/json
 
+{
+    "user_id":4
+}
 
 ### rate a course 
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/rate/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/rate/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
+Content-Type: application/json
 
 {
     "course_id":3,
-    "user_id":3,
+    "user_id":4,
     "comment":"a very excellent course",
     "rating":4
 }
 
 ### manage course discussions 
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/discussion/add/3/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/discussion/add/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
 Content-Type: application/json
 
 {
-    "user_id":3,
+    "user_id":4,
     "title":"discussion title",
     "content":"content discussion"
 }
 
 
 ### get course discussions
-GET https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/course/discussions/3/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
-
-### add comments to discussion 
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/discussion/comment/1/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/course/discussions/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
 Content-Type: application/json
 
 {
-    "user_id":3,
+    "user_id":4
+}
+### add comments to discussion 
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/discussion/comment/1/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
+Content-Type: application/json
+
+{
+    "user_id":4,
     "content":"discussion comment example"
 }
 
 ### create a quiz
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/quiz/add/3/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/quiz/add/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
 Content-Type: application/json
 
 {
@@ -176,11 +206,12 @@ Content-Type: application/json
 }
 
 ### update a quiz
-PUT https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/quiz/update/2/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+PUT https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/quiz/update/4/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
 Content-Type: application/json
 
 {
+    "instructor_id":4,
     "title":"quiz title 1",
     "questions":[
         {
@@ -194,15 +225,20 @@ Content-Type: application/json
 }
 
 ### delete a quiz
-DELETE https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/quiz/delete/2/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
-
-### create an assessement
-POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/assessement/3/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+DELETE https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/quiz/delete/4/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
 Content-Type: application/json
 
 {
+    "instructor_id":4
+}
+### create an assessement
+POST https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/assessement/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
+Content-Type: application/json
+
+{
+    "instructor_id":4,
     "title":"assessement title",
     "description":"assessement description",
     "quiz_ids":[3],
@@ -210,5 +246,10 @@ Content-Type: application/json
 }
 
 ### delete an assessement
-DELETE  https://8000-corposense-talentcampus-0wid12991xq.ws-eu115.gitpod.io/lms/assessement/delete/3/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1MDg4OTY3LCJpYXQiOjE3MjUwODgwNjcsImp0aSI6ImNjNzZiMzZjYzgwNjQ1OWFhNGVmZDE0MmI1MmRmNGYxIiwidXNlcl9pZCI6M30.WvAovN4i7DeX_wMvISizExo1l_9MpeVesY9Vfz6F0ws
+DELETE  https://8000-corposense-talentcampus-0wid12991xq.ws-eu116.gitpod.io/lms/assessement/delete/3/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI1NzM2MzU3LCJpYXQiOjE3MjU3MjkxNTcsImp0aSI6IjFmMGYwMjljMjBhODRmOTY4ZTI1YWZlNzBiNzVmODQwIiwidXNlcl9pZCI6NH0.HULeFtyayYkHzKnKlXclqaDOvkZ2WjbPqZDnOObN-Zw
+Content-Type: application/json
+
+{
+    "instructor_id":4
+}

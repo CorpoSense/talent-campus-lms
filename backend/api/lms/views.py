@@ -4,30 +4,32 @@ from authApi.models import User
 from django.views import View
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from functools import wraps
+from django.http import JsonResponse
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 import json
 from .models import CourseCategorie,Course,Video,Question,Assessment,Enrollement,Quiz,QA,QuestionChoice,UserProgress,Review,Discussion,DiscussionComment,AssessmentType
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.mixins import PermissionRequiredMixin
-@method_decorator(csrf_exempt, name='dispatch')
+
 class CourseView(APIView):
-    #permission_required="lms.create_course"
-    #raise_exception=True
     def post(self,request):
-        auth_header = request.headers.get("Authorization")
-        if(auth_header is None or not auth_header):
+        try:
+            isAuthorized = validToken(request.headers.get("Authorization"),request.data.get("instructor_id"))
+        except ValueError as e:
             return Response({
                 "error":True,
-                "message":"Unauthorized action"
+                "message": str(e)
             },status=401)
-        data=json.loads(request.body)
-        print(data)
+        data=request.data
         if(not data.get("instructor_id")):
             return Response({
                 "error":True,
                 "message":"missing instructor id"
-            })
+            },status=400)
         try:
             instructor = User.objects.get(pk=data.get("instructor_id"))
             #print(instructor)
@@ -36,18 +38,28 @@ class CourseView(APIView):
                 "error":True,
                 "message":"invalid instructor id"
             })
+        
+        ## data validation
+        required_fields = ["course_name", "course_descr", "course_categories", "video_links","courseImage"]
+        missing_fields = [field for field in required_fields if not request.data.get(field)]
+        
+        if missing_fields:
+            return Response({
+                "error": True,
+                "message": f"Missing fields: {', '.join(missing_fields)}"
+            }, status=400)
         course_name = data.get("course_name")
         course_description=data.get("course_descr")
         course_categories=data.get("course_categories")
         course_videos = data.get("video_links")
-
-        if((not course_name) or (not course_description) or (not len(course_categories)) or (not len(course_videos))):
-            return Response({
-                "error":True,
-                "message":"some fields are required"
-            })
+        course_image = data.get("courseImage")
+        #if((not course_name) or (not course_description) or (not len(course_categories)) or (not len(course_videos))):
+         #   return Response({
+           #      "error":True,
+            #    "message":"some fields are required"
+            #})
         #categories
-        course = Course.objects.create(desc=course_description,title=course_name,instructor=instructor.instructor)
+        course = Course.objects.create(desc=course_description,title=course_name,image = course_image,instructor=instructor.instructor)
         for category in course_categories:
             cat,created=CourseCategorie.objects.get_or_create(categorieName=category)
             course.categories.add(cat)
@@ -76,12 +88,13 @@ class CourseView(APIView):
 
 
 class CourseViewDetails(APIView):
-    def get(self,request,course_id):
-        auth_header = request.headers.get("Authorization")
-        if(auth_header is None or not auth_header):
+    def post(self,request,course_id):
+        try:
+            authorized = validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
             return Response({
                 "error":True,
-                "message":"Unauthorized action"
+                "message":str(e)
             },status=401)
         if(not course_id):
             return Response({
@@ -100,6 +113,7 @@ class CourseViewDetails(APIView):
             "course_title" : course.title,
             "course_description" : course.desc,
             "course_categories": list(course.categories.values("categorieName")),
+            "course_image":course.image,
             #"course_videos" : list(course.videos.values("id","url","title","description")),
             "course_instructor" :  {
                 "id":course.instructor.user.pk,
@@ -111,18 +125,23 @@ class CourseViewDetails(APIView):
         return Response(data=data_to_return,status=200)
         
 class CourseUpdateView(APIView):
-    #permission_required="lms.change_course"
-    #raise_exception=True
     def put(self,request,course_id):
+        try:
+            authorized = validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
         try:
             existingCourse = Course.objects.get(pk=course_id)
         except Course.DoesNotExist:
             return Response({"error":True,"message":"course not found"},status=400)
-        data = json.loads(request.body)
+        data = request.data
         #print(data.get("videos"))
         existingCourse.title = data.get("title",existingCourse.title)
         existingCourse.desc= data.get("description",existingCourse.desc)
-
+        existingCourse.image = data.get("image",existingCourse.image)
         #set videos 
         if(not len(data.get("videos"))):
             existingCourse.save()
@@ -139,8 +158,15 @@ class CourseUpdateView(APIView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class CourseDeleteView(View):
+class CourseDeleteView(APIView):
     def delete(self,request,course_id):
+        try:
+            authorized = validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
         #print("hello world")
         if(not course_id):
             return JsonResponse({
@@ -166,12 +192,19 @@ class CourseDeleteView(View):
 class CourseEnrollementView(APIView):
     def post(self,request,course_id):
         try:
+            authorized = validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        try:
             course = Course.objects.get(pk=course_id)
         except Course.DoesNotExist:
             return Response({
                 "error":True,"message":"course not found"
             })
-        data = json.loads(request.body.decode('utf-8'))
+        data = request.data
         user_id = data.get('user_id')
         if(not user_id):
             return Response({
@@ -179,11 +212,12 @@ class CourseEnrollementView(APIView):
                 "message":"invalid user id"
             },status=400)
         user = get_object_or_404(User, pk=user_id)
+        print(user)
         if(user.type == "student"):
             ## create enrollment 
             enrollement = Enrollement.objects.create(course=course,student=user.student)
             UserProgress.objects.create(enrollement=enrollement,progress_percentage=0.0)
-            print(enrollement.pk)
+            #print(enrollement.pk)
             return Response({
                 "success":True,
                 "message": "student enroll the course successufully"
@@ -191,7 +225,7 @@ class CourseEnrollementView(APIView):
         elif(user.type == "employee"):
             ## create enrollment 
             enrollement = Enrollement.objects.create(course=course,student=user.employee)
-            print(enrollement.pk)
+            #print(enrollement.pk)
             UserProgress.objects.create(enrollement=enrollement,progress_percentage=0.0)
             return Response({
                 "success":True,
@@ -205,13 +239,20 @@ class CourseEnrollementView(APIView):
     
     def delete(self,request,course_id):
         try:
+            authorized = validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        try:
             course = Course.objects.get(pk=course_id)
         except Course.DoesNotExist:
             return Response({
                 "error":True,
                 "message":"course not found"
             })
-        data = json.loads(request.body.decode('utf-8'))
+        data = request.data
         user_id = data.get('user_id')
         try:
             user = get_object_or_404(User, pk=user_id)
@@ -240,7 +281,14 @@ class CourseEnrollementView(APIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class GetEnrolledCoursesView(APIView):
     def post(self,request):
-        body = json.loads(request.body)
+        try:
+            validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        body = request.data
         user_id = body.get("user_id")
         if(not user_id):
             return Response({
@@ -276,7 +324,14 @@ class GetEnrolledCoursesView(APIView):
         return Response(data,status=200)
     
 class EnrolledCourseViewDetails(APIView):
-    def get(self,request,enroll_id):
+    def post(self,request,enroll_id):
+        try:
+            validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
         try:
             enroll = Enrollement.objects.get(pk=enroll_id)
         except Enrollement.DoesNotExist:
@@ -308,7 +363,14 @@ class EnrolledCourseViewDetails(APIView):
 class RatingView(APIView):
     #permission_classes=[IsAuthenticated]
     def post(self,request):
-        data = json.loads(request.body)
+        try:
+            validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        data = request.data
         user_id = data.get("user_id")
         course_id = data.get("course_id")
         comment = data.get("comment")
@@ -359,11 +421,12 @@ class CreateDiscussionCourseView(APIView):
     #request paarms : course_id : Int 
     #request body : {user_id : Int,title:string,content : string}
     def post(self,request,course_id):
-        auth_header = request.headers.get("Authorization")
-        if(auth_header is None or not auth_header):
+        try:
+            validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
             return Response({
                 "error":True,
-                "message":"Unauthorized action"
+                "message":str(e)
             },status=401)
         try:
             course = Course.objects.get(pk=course_id)
@@ -372,16 +435,18 @@ class CreateDiscussionCourseView(APIView):
                 "error":True,
                 "message":"course not found"
             })
-        data = json.loads(request.body)
+        required_fields = ["user_id", "title", "content"]
+        missing_fields = [field for field in required_fields if not request.data.get(field)]
+        
+        if missing_fields:
+            return Response({
+                "error": True,
+                "message": f"Missing fields: {', '.join(missing_fields)}"
+            }, status=400)
+        data = request.data
         title = data.get("title")
         content = data.get("content")
         user_id = data.get("user_id")
-
-        if((not title) or (not content) or (not user_id)):
-            return Response({
-                "error":True,
-                "message":"something went wrong"
-            })
         user = User.objects.get(pk=user_id)
         discussion = Discussion.objects.create(course=course, user=user, title=title, discussion_content=content)
         return Response({"success": True, "message": "Discussion created successfully", "discussion_id": discussion.id})
@@ -389,7 +454,14 @@ class CreateDiscussionCourseView(APIView):
 class CourseDiscussionsView(APIView):
     # method == GET 
     # request params : course_id : Int
-    def get(self,request,course_id):
+    def post(self,request,course_id):
+        try:
+            validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
         try:
             course = Course.objects.get(pk=course_id)
         except Course.DoesNotExist :
@@ -421,14 +493,20 @@ class AddDiscussionCommentView(APIView):
     # params = discussion_id : Int
     def post(self, request, discussion_id):
         try:
+            validToken(request.headers.get("Authorization"),request.data.get("user_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        try:
             discussion = get_object_or_404(Discussion, pk=discussion_id)
         except Discussion.DoesNotExist:
             return Response({
                 "error":True,
                 "message":"discussion not found"
             })
-        print("callledd")
-        data = json.loads(request.body)
+        data = request.data
         userId = request.data.get("user_id")
         content = request.data.get("content")
 
@@ -443,6 +521,13 @@ class CreateQuizView(APIView):
     #permission_classes = [IsAuthenticated]
     def post(self, request, course_id):
         try:
+            validToken(request.headers.get("Authorization"),request.data.get("instructor_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        try:
             ##print("called",course_id)
             course = get_object_or_404(Course, pk=course_id)
         except Course.DoesNotExist:
@@ -450,6 +535,14 @@ class CreateQuizView(APIView):
                 "error":True,
                 "message":"course not found"
             })
+        required_fields = ["instructor_id", "questions", "title"]
+        missing_fields = [field for field in required_fields if not request.data.get(field)]
+        
+        if missing_fields:
+            return Response({
+                "error": True,
+                "message": f"Missing fields: {', '.join(missing_fields)}"
+            }, status=400)
         ##print(request.data)
         instructor_id = request.data.get("instructor_id")
         title = request.data.get('title')
@@ -486,6 +579,13 @@ class CreateQuizView(APIView):
 class QuizDeleteView(APIView):
     def delete(self,request,quiz_id):
         try:
+            validToken(request.headers.get("Authorization"),request.data.get("instructor_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        try:
             quiz=Quiz.objects.get(pk=quiz_id)
         except Quiz.DoesNotExist:
             return Response({
@@ -500,6 +600,13 @@ class QuizDeleteView(APIView):
 
 class UpdateQuizView(APIView):
     def put(self,request,quiz_id):
+        try:
+            validToken(request.headers.get("Authorization"),request.data.get("instructor_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
         try:
             quiz = Quiz.objects.get(pk=quiz_id)
             print(quiz.title)
@@ -539,6 +646,13 @@ class AssessmentView(APIView):
     #permission_classes = [IsAuthenticated]
 
     def post(self, request,course_id):
+        try:
+            validToken(request.headers.get("Authorization"),request.data.get("instructor_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
         try:
             course = Course.objects.get(pk=course_id)
         except Course.DoesNotExist:
@@ -589,6 +703,13 @@ class AssessmentView(APIView):
 class DeleteAssessementView(APIView):
     def delete(self,request,asse_id):
         try:
+            validToken(request.headers.get("Authorization"),request.data.get("instructor_id"))
+        except ValueError as e:
+            return Response({
+                "error":True,
+                "message":str(e)
+            },status=401)
+        try:
             assessement = Assessment.objects.get(pk=asse_id)
         except Assessment.DoesNotExist:
             return Response({
@@ -600,3 +721,20 @@ class DeleteAssessementView(APIView):
             "success":True,
             "message":"assessement deleted successufully"
         })
+
+
+def validToken(token,user_id):
+    if(not user_id):
+        raise ValueError("missing user_id !")
+    if not token:
+        raise ValueError('Authorization header is missing.')
+    try:
+        token_str = token.split(' ')[1]
+        accessToken = AccessToken(token_str)
+        #print(str(accessToken.get("user_id")) , str(user_id))
+        ## verify if token belongs to the right user:
+        if(str(accessToken.get("user_id")) != str(user_id)):
+            raise ValueError("aunauthorized action")
+        return True
+    except (IndexError, InvalidToken, TokenError):
+        raise ValueError('Invalid or expired token.')
