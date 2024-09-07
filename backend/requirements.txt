@@ -6,5 +6,6 @@ pytz
 sqlparse
 psycopg2-binary
 python-dotenv
-rest_framework_simplejwt
+rest-framework-simplejwt
 django-environ
+gunicorn==20.1.0
