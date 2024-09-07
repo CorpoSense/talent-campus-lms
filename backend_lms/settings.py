@@ -24,15 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-925a(n^=1$ib&zm$2&72&q*ciie-vdyt!+xjqk_2bhj1bw#kwo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'false').lower() != 'false'
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
     ALLOWED_HOSTS = [
-        os.environ['HOSTNAME'],
+        os.environ.get('HOSTNAME', '127.0.0.1'), '0.0.0.0'
     ]
-
+    # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", f"localhost,127.0.0.1,0.0.0.0,[::1]").split(",")
 
 # CORS_ORIGIN_ALLOW_ALL = True
 
@@ -66,6 +66,7 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -151,7 +152,7 @@ STATICFILES_DIRS = [
 ]
 
 # Media
-# MEDIA_URL='media/'
+MEDIA_URL='media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
