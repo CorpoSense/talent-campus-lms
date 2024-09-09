@@ -17,24 +17,37 @@ We envision a world where students are not only academically proficient but also
 - Community Engagement
 - Exclusive Offers and Discounts
 
-## Build
+## Build & Testing
 
 ```bash
 # Build the UI
-cd ui
+echo "Building UI"
+cd ui/
+pnpm i
+cp .env.example .env
+pnpm test
 pnpm build
 cd ..
 
+# Build the backend API
+echo "Building backend API ..."
+pip install -r requirements.txt
+cp .env.example .env
+# Generate a SECRET_KEY in .env file if necessary
+
 # Generate static assets
-python manage.py collectstatic
+python manage.py collectstatic --noinput
+python manage.py makemigrations --noinput
+python manage.py migrate --noinput
+python manage.py test
 
-# run dev server
-python manage.py collectstatic
+# Run dev server (DEBUG mode)
+echo "To run in DEBUG mode:"
+echo "DEBUG=True python manage.py runserver"
 
-# run prod server (WSGI)
-gunicorn backend_lms.wsgi:application --bind 0.0.0.0:8000 --workers 2
-
-# run prod server (ASGI)
-uvicorn backend_lms.asgi:application --host 0.0.0.0 --port 8000 --workers 2
+# Run prod server (ASGI)
+echo "To run in production mode:"
+echo "DEBUG=False uvicorn backend_lms.asgi:application --host 0.0.0.0 --port 8000 --workers 2"
 ```
-P.S. You may need to ajust `host`, `port`, `workers` (4, 8...) according to your requirements.
+
+P.S. You may need to adjust `host`, `port`, `workers` (4, 8...) according to your requirements.
