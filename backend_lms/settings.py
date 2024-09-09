@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 import mimetypes
 
@@ -17,24 +18,43 @@ import mimetypes
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# Load environment variables from .env file
+load_dotenv()
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-925a(n^=1$ib&zm$2&72&q*ciie-vdyt!+xjqk_2bhj1bw#kwo'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'false').lower() != 'false'
 
 if DEBUG:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ["localhost","127.0.0.1","0.0.0.0","[::1]"]
 else:
-    ALLOWED_HOSTS = [
-        os.environ.get('HOSTNAME', '127.0.0.1'), '0.0.0.0'
-    ]
-    # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", f"localhost,127.0.0.1,0.0.0.0,[::1]").split(",")
+    ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", f"localhost,127.0.0.1,0.0.0.0,[::1]").split(",")
 
-# CORS_ORIGIN_ALLOW_ALL = True
+# If True, all origins will be allowed. Other settings restricting allowed origins will be ignored. Defaults to False 
+# CORS_ALLOW_ALL_ORIGINS = True
+# (alias for: CORS_ORIGIN_ALLOW_ALL)
+
+# If True, cookies will be allowed to be included in cross-site HTTP requests. This sets the Access-Control-Allow-Credentials header in preflight and normal responses. Defaults to False.
+# CORS_ALLOW_CREDENTIALS = True
+
+# Security settings for production
+# if not DEBUG:
+#     SECURE_SSL_REDIRECT = True
+#     SESSION_COOKIE_SECURE = True
+#     CSRF_COOKIE_SECURE = True
+#     CSRF_COOKIE_HTTPONLY = True
+#     CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']  # adjust this to match your Vue app's URL
+#     CORS_ALLOWED_ORIGINS = [ 'http://127.0.0.1:8000' ] # (alias: CORS_ORIGIN_WHITELIST) A list of origins that are authorized to make cross-site HTTP requests. The origins in this setting will be allowed, and the requesting origin will be echoed back to the client in the access-control-allow-origin header. Defaults to []. Adjust this to match your SPA's URL.
+#     SECURE_BROWSER_XSS_FILTER = True
+#     SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Make sure to keep this True
+APPEND_SLASH = True
 
 # Application definition
 
@@ -48,12 +68,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'api', # this will load "vite_assets"
+    'corsheaders',
 ]
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # Use the following for CSRF token protection:
+        # 'rest_framework.authentication.SessionAuthentication',
     )
 }
 
@@ -69,11 +92,11 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend_lms.urls'
@@ -99,14 +122,24 @@ WSGI_APPLICATION = 'backend_lms.wsgi.application'
 
 # Database (We'll use PostgreSQL in production)
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# if DEBUG:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': os.environ.get('DB_NAME'),
+#             'USER': os.environ.get('DB_USER'),
+#             'PASSWORD': os.environ.get('DB_PASSWORD'),
+#             'HOST': os.environ.get('DB_HOST', 'localhost'),
+#             'PORT': os.environ.get('DB_PORT', '5432'),
+#         }
+#     }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -152,7 +185,7 @@ STATICFILES_DIRS = [
 ]
 
 # Media
-MEDIA_URL='media/'
+# MEDIA_URL='media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

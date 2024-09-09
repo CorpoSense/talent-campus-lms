@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from api.views import UserViewSet, GroupViewSet, ProfileView, CourseViewSet, index
+from api.views import UserViewSet, GroupViewSet, ProfileView, CourseViewSet, RegisterView
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import TemplateView
+# from django.views.decorators.csrf import ensure_csrf_cookie
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -38,7 +39,9 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/profile/', ProfileView.as_view(), name='profile'),
+    path('api/register/', RegisterView.as_view(), name='register'),
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    # path('', ensure_csrf_cookie(TemplateView.as_view(template_name='index.html')), name='home'),
     # re_path(r'^.*$', index, name='index'),
 ]
 

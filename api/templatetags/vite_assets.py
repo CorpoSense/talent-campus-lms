@@ -7,7 +7,9 @@ from django.templatetags.static import static
 register = template.Library()
 
 def get_manifest():
-    # Load the manifest file
+    # Load the manifest file from './static'
+    # manifest_path = settings.BASE_DIR / settings.STATIC_ROOT.split('/')[-1] / '.vite' / 'manifest.json'
+    # Load the manifest file from './dist'
     manifest_path = settings.BASE_DIR / settings.STATICFILES_DIRS[0] / '.vite' / 'manifest.json'
     with open(manifest_path) as f:
         manifest = json.load(f)
