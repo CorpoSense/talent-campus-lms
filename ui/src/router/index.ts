@@ -6,6 +6,7 @@ import NetworkError from "@/views/NetworkError.vue"
 import Home from '@/views/Home.vue'
 import MyCourses from '@/views/MyCourses.vue'
 import Signin from '@/views/Signin.vue'
+import Signup from '@/views/Signup.vue'
 
 
 const About = () => import(/* webpackChunkName: "about", */ '@/views/About.vue')
@@ -31,6 +32,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Signin
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Signup
     },
     {
       path: '/courses',

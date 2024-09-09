@@ -2,11 +2,12 @@ from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from tutorial.quickstart.serializers import GroupSerializer, UserSerializer
 from .models import Course
-from .serializers import CourseSerializer
+from .serializers import GroupSerializer, UserSerializer, CourseSerializer
 from django.shortcuts import render
-
+from rest_framework import status
+# from django.views.decorators.csrf import csrf_exempt
+# from django.utils.decorators import method_decorator
 
 def index(request):
     return render(request, 'index.html')
@@ -19,6 +20,18 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+# @method_decorator(csrf_exempt, name='dispatch')
+class RegisterView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class GroupViewSet(viewsets.ModelViewSet):
     """

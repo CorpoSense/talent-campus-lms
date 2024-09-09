@@ -1,11 +1,7 @@
 
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import client from './client'
 
-
-const client = axios.create({
-  baseURL: `${import.meta.env.VITE_HOSTNAME}/api`,
-})
 
 export const useApi = defineStore('api', {
   state: () => ({

@@ -53,7 +53,7 @@
 
           <b-button type="submit" variant="primary" size="lg" class="my-2">Login</b-button>
         </b-form>
-        <p>Don't have an account? <a href="#" @click.prevent="$router.push('/signup')">Signup</a></p>
+        <p>Don't have an account? <a href="#" @click.prevent="$router.push('/register')">Signup</a></p>
       </b-col>      
     </b-row>
   </template>
