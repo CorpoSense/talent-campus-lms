@@ -13,27 +13,49 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 import mimetypes
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+
+def create_env_file():
+    secret_key = get_random_secret_key()
+    with open('.env', 'a') as f:
+        f.write(f'\nSECRET_KEY={secret_key}\n')
+        # f.write(f'\DB_NAME=\n')
+        # f.write(f'\DB_USER=\n')
+        # f.write(f'\DB_PASSWORD=\n')
+        # f.write(f'\DB_HOST=localhost\n')
+        # f.write(f'\DB_PORT=5432\n')
+
+if not os.path.exists('.env'):
+    create_env_file()
+else:
+    with open('.env', 'r') as f:
+        if 'SECRET_KEY' not in f.read():
+            create_env_file()
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'false').lower() != 'false'
+PORT = os.getenv('PORT', 8000)
 
 if DEBUG:
     ALLOWED_HOSTS = ["localhost","127.0.0.1","0.0.0.0","[::1]"]
 else:
-    ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", f"localhost,127.0.0.1,0.0.0.0,[::1]").split(",")
+    # When DEBUG is False, you must explicitly define the hosts/domains that are allowed to serve your app:
+    ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0,[::1]").split(",")
+
+if os.getenv('GITPOD_HOST'):
+    ALLOWED_HOSTS.append(f"{str(PORT)}-{os.getenv('GITPOD_WORKSPACE_ID')}.{os.getenv('GITPOD_WORKSPACE_CLUSTER_HOST')}")
 
 # If True, all origins will be allowed. Other settings restricting allowed origins will be ignored. Defaults to False 
 # CORS_ALLOW_ALL_ORIGINS = True
