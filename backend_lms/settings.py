@@ -46,7 +46,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'false').lower() != 'false'
-PORT = os.getenv('PORT', 8000)
+PORT = int(os.getenv('PORT', 8000))
 
 if DEBUG:
     ALLOWED_HOSTS = ["localhost","127.0.0.1","0.0.0.0","[::1]"]

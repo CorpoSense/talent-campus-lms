@@ -1,5 +1,15 @@
 # TalentCampus - LMS
 
+<div align="center">
+  <a href="https://gitpod.io/from-referrer/">
+    <img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Logo" width="auto">
+  </a>
+
+  <a href="https://koyeb.com">
+    <img src="https://www.koyeb.com/static/images/icons/koyeb.svg" alt="Logo" width="80" height="80">
+  </a>
+</div>
+
 TalentCampus is an innovative Learning Management System (LMS) designed to bridge the gap between education and employment. Our platform provides a seamless, interactive, and comprehensive learning experience for students, educators, and employers.
 
 ## Project Vision
