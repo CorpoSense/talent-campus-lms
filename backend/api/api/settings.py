@@ -3,16 +3,20 @@ from datetime import timedelta
 from dotenv import load_dotenv
 import os 
 import environ
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
 
-EMAIL_BACKEND=env("EMAIL_BACKEND")
-EMAIL_HOST=env("EMAIL_HOST")
-EMAIL_PORT=env("EMAIL_PORT")
-EMAIL_USE_TLS=env("EMAIL_USE_TLS")
-EMAIL_HOST_USER=env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD=env("EMAIL_HOST_PASSWORD")
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialise environment variables
+# env = environ.Env()
+# environ.Env.read_env()
+
+EMAIL_BACKEND=os.getenv("EMAIL_BACKEND", '')
+EMAIL_HOST=os.getenv("EMAIL_HOST", '')
+EMAIL_PORT=os.getenv("EMAIL_PORT", '')
+EMAIL_USE_TLS=os.getenv("EMAIL_USE_TLS", '')
+EMAIL_HOST_USER=os.getenv("EMAIL_HOST_USER", '')
+EMAIL_HOST_PASSWORD=os.getenv("EMAIL_HOST_PASSWORD", '')
 DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
