@@ -81,7 +81,7 @@ export const AdminNavbar = () => {
               </li>
               <li>
                 <Link
-                  to="./courseshold"
+                  to="/admin/courseshold"
                   onClick={() => setActiveLink('Courses')}
                   className={linkClasses('Courses')}
                 >
@@ -90,7 +90,7 @@ export const AdminNavbar = () => {
               </li>
               <li>
                 <Link
-                  to="./users"
+                  to="/admin/users"
                   onClick={() => setActiveLink('User Management')}
                   className={linkClasses('User Management')}
                 >
@@ -99,7 +99,7 @@ export const AdminNavbar = () => {
               </li>
               <li>
                 <Link
-                  to="./jobs"
+                  to="/admin/jobs"
                   onClick={() => setActiveLink('Jobs')}
                   className={linkClasses('Jobs')}
                 >
@@ -146,7 +146,7 @@ export const AdminNavbar = () => {
           </li>
           <li className='text-center'>
             <Link
-              to="./courseshold"
+              to="/courseshold"
               onClick={() => setActiveLink('Courses')}
               className={linkClasses('Courses')}
             >
@@ -155,7 +155,7 @@ export const AdminNavbar = () => {
           </li>
           <li className='text-center'>
             <Link
-              to="./users"
+              to="/users"
               onClick={() => setActiveLink('User Management')}
               className={linkClasses('User Management')}
             >
@@ -187,7 +187,7 @@ export const AdminNavbar = () => {
           <ul className='space-y-6'>
             <li className='text-left text-[13px]'>
               <Link
-                to="./admin"
+                to="/admin"
                 onClick={() => setActiveLink('Dashboard')}
                 className={linkClasses('Dashboard')}
               >
@@ -196,7 +196,7 @@ export const AdminNavbar = () => {
             </li>
             <li className='text-left text-[13px]'>
               <Link
-                to="./courseshold"
+                to="/admin/courseshold"
                 onClick={() => setActiveLink('Courses')}
                 className={linkClasses('Courses')}
               >
@@ -205,7 +205,7 @@ export const AdminNavbar = () => {
             </li>
             <li className='text-left text-[13px]'>
               <Link
-                to="./users"
+                to="/admin/users"
                 onClick={() => setActiveLink('User Management')}
                 className={linkClasses('User Management')}
               >
